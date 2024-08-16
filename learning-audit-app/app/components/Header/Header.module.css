@@ -1,0 +1,9 @@
+.siteHeader {
+    background-color: lightcyan;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    letter-spacing: 0.1em;
+    border-top-left-radius: 0.25em;
+    border-top-right-radius: 0.25em;
+  }
