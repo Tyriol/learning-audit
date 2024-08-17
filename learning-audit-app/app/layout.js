@@ -1,8 +1,5 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header/Header.jsx";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Learning Audit App",
@@ -12,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <div className="wrapper">
           <Header />
           {children}

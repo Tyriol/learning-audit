@@ -7,7 +7,7 @@ export default function Home() {
       <section className={styles.contentInput}>
         <div className={styles.wide}>
           <form className={styles.siteForm} action="" method="post">
-            <label for="course-module">Add a new course Module:</label>
+            <label htmlFor="course-module">Add a new course Module:</label>
             <input
               type="text"
               name="course-module"
@@ -19,15 +19,15 @@ export default function Home() {
         </div>
         <div className={styles.wide}>
           <form className={styles.siteForm} action="" method="post">
-            <label for="learning">What did I learn?</label>
+            <label htmlFor="learning">What did I learn?</label>
             <input
               type="text"
               name="learning"
               id="learning"
               placeholder="Type here..."
             />
-            <select name="linked-course" id="linked-course">
-              <option value="" disabled selected>
+            <select name="linked-course" id="linked-course" defaultValue={0}>
+              <option value="default" disabled>
                 In which course?
               </option>
               <option value="dummy">dummy</option>
