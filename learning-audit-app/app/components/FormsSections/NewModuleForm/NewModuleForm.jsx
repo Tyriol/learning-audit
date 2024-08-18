@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./NewModuleForm.module.css"
+import styles from "../NewForm.module.css"
 
 export default function NewModuleForm() {
     return (
