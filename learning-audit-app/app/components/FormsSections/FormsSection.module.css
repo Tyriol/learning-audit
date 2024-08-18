@@ -1,0 +1,14 @@
+.siteForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
+  .contentInput {
+    display: flex;
+    background-color: lightgray;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 0.5rem;
+  }
