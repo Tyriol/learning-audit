@@ -1,9 +1,3 @@
-.siteForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-  
   .contentInput {
     display: flex;
     background-color: lightgray;

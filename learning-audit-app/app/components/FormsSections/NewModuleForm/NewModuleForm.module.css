@@ -1,0 +1,12 @@
+.wide {
+    width: 100%;
+    padding: 2em;
+    height: 30%;
+  }
+
+  .siteForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
