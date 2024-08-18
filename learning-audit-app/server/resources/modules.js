@@ -15,6 +15,7 @@ export async function getModules() {
 
 // Helper function to create a new module
 export async function createModule(module) {
+  console.log(module);
   const { module_name, description } = module;
   const query = `
     INSERT INTO modules (module_name, description)

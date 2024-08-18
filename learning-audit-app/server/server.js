@@ -11,6 +11,7 @@ const app = express();
 
 // middleware
 app.use(cors());
+app.use(express.json());
 
 // route handler to get all modules
 app.get("/api/modules/", async (req, res) => {

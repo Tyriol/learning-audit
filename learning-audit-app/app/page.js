@@ -15,8 +15,6 @@ export default function Home() {
     setMessage(payload);
   };
 
-  api();
-
   return (
     <main className={styles.main}>
       <FormsSection />
