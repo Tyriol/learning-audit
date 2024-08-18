@@ -1,27 +1,10 @@
 .main {
   display: grid;
   background-color: darkgray;
-  grid-template-columns: 0.5fr 1fr;
-  height: 90%;
+  /* grid-template-columns: 0.5fr 1fr; */
   padding: 2em;
   border-bottom-left-radius: 0.75em;
   border-bottom-right-radius: 0.75em;
-}
-
-.siteForm {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.contentInput {
-  display: flex;
-  background-color: lightgray;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  border-top-left-radius: 1em;
-  border-bottom-left-radius: 1em;
 }
 
 .display {
