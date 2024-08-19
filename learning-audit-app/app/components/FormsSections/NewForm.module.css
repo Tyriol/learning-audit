@@ -1,12 +1,19 @@
 .wide {
     width: 100%;
-    padding: 2em;
-    height: 30%;
+    padding: 2rem;
   }
 
   .siteForm {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+  }
+
+  .formLabel {
+    margin-bottom: 1rem;
+  }
+
+  .formInput {
+    width: 100%
   }
   

@@ -39,20 +39,12 @@ export default function NewModuleForm() {
     return (
         <div className={styles.wide}>
             <form className={styles.siteForm} onSubmit={handleNewModuleSubmit} method="post">
-                <label htmlFor="moduleName">Add a new course Module:</label>
-                <input
-                type="text"
-                name="moduleName"
-                id="moduleName"
-                placeholder="Module name..."
-                />
-                <label htmlFor="course-module-description">Module Description:</label>
-                <input
-                type="text"
-                name="description"
-                id="description"
-                placeholder="Description of the module..."
-                />
+                <label className ={styles.formLabel} htmlFor="moduleName">Add a new course Module:
+                    <input className={styles.formInput} type="text" name="moduleName" id="moduleName" placeholder="Module name..." />
+                </label>
+                <label className ={styles.formLabel} htmlFor="course-module-description">Module Description:
+                    <input className={styles.formInput} type="text" name="description" id="description" placeholder="Description of the module..." />
+                </label>
                 <button type="submit">ADD</button>
             </form>
         </div>
