@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
 import FormsSection from "./components/FormsSections/FormsSection";
+import ModuleList from "./components/ModuleList/ModuleList";
 
 export default function Home() {
   const [message, setMessage] = useState([]);
@@ -18,17 +19,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <FormsSection />
-      <section className={styles.display}>
-        <div className={styles.moduleDisplay}>
-          <h3>Onboarding</h3>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </div>
-      </section>
+      <ModuleList />
     </main>
   );
 }

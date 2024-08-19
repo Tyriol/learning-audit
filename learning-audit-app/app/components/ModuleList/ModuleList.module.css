@@ -1,0 +1,11 @@
+.display {
+
+    background-color: white;
+    padding: 2rem;
+    margin-top: 1.5rem;
+    border-radius: 0.5rem;
+  }
+
+  .uList {
+    list-style: none;
+  }
