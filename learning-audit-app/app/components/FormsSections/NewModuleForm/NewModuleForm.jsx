@@ -33,7 +33,8 @@ export default function NewModuleForm() {
             body: JSON.stringify(formJson)
           });
           const jsonResponse = await response.json();
-          alert(jsonResponse);
+          const newModule = JSON.stringify(jsonResponse)
+          alert(`New module added: ${newModule}`);
     }
 
     return (
