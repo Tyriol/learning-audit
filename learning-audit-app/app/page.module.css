@@ -1,15 +1,7 @@
 .main {
   display: grid;
-  background-color: darkgray;
-  /* grid-template-columns: 0.5fr 1fr; */
+  background-color: #ffecd1;
   padding: 2em;
   border-bottom-left-radius: 0.75em;
   border-bottom-right-radius: 0.75em;
-}
-
-.display {
-  background-color: white;
-  padding: 1em;
-  border-top-right-radius: 1em;
-  border-bottom-right-radius: 1em;
 }

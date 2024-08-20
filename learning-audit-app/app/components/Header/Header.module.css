@@ -1,13 +1,14 @@
 .siteHeader {
   display: flex;
-  height: 4rem;
-  background-color: rgb(134, 226, 226);
+  height: 8rem;
+  background-color: #15616d;
   justify-content: center;
   align-items: center;
   font-size: 2rem;
   letter-spacing: 0.3rem;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
+  color: #ffecd1;
   }
 
   .siteHeaderImage {
