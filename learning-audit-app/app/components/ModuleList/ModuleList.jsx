@@ -5,12 +5,31 @@ export default function ModuleList() {
     return (
         <section className={styles.display}>
         <div className={styles.moduleDisplay}>
-          <h3>Onboarding</h3>
           <ul className={styles.uList}>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li className={styles.uListItem}>
+              <button className={styles.button} type="button">
+                <h3>Onboarding</h3>
+                <p>Some stuff</p>
+              </button>
+            </li>
+            <li className={styles.uListItem}>
+              <button className={styles.button} type="button">
+                <h3>Onboarding</h3>
+                <p>Some stuff</p>
+              </button>
+            </li>
+            <li className={styles.uListItem}>
+              <button className={styles.button} type="button">
+                <h3>Onboarding</h3>
+                <p>Some stuff</p>
+              </button>
+            </li>
+            <li className={styles.uListItem}>
+              <button className={styles.button} type="button">
+                <h3>Onboarding</h3>
+                <p>Some stuff</p>
+              </button>
+            </li>
           </ul>
         </div>
       </section>
