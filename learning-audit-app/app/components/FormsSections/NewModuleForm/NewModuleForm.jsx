@@ -24,7 +24,7 @@ export default function NewModuleForm() {
         console.log(formJson);
         
 
-        await fetch("http://localhost:3010/api/modules", {
+        const response = await fetch("http://localhost:3010/api/modules", {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -32,8 +32,8 @@ export default function NewModuleForm() {
             },
             body: JSON.stringify(formJson)
           });
-        //   const response = await response.json();
-        //   console.log(response)
+          const jsonResponse = await response.json();
+          alert(jsonResponse);
     }
 
     return (
