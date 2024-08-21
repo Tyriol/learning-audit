@@ -6,14 +6,15 @@
   }
 
   .uList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
     list-style: none;
   }
 
   .uListItem {
-    width: 40%;
+    width: 100%;
   }
 
   .button {

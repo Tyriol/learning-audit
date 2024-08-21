@@ -9,7 +9,7 @@ export default function ModuleList() {
   // loop through the returned array and create module buttons
 
   // create state for storing the data returned from the api call, loading, and errors
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -22,7 +22,7 @@ export default function ModuleList() {
           throw new Error (`HTTP error: Status ${response.status}`);
         }
         let moduleData = await response.json();
-        setData(moduleData);
+        setData(moduleData.payload);
         setError(null);
       } catch (err) {
         setError(err.message);
@@ -33,30 +33,21 @@ export default function ModuleList() {
     };
     fetchModules();
   }, []);
-  console.log(data);
 
     return (
         <section className={styles.display}>
         <div className={styles.moduleDisplay}>
           <ul className={styles.uList}>
-            <li className={styles.uListItem}>
-              <button className={styles.button} type="button">
-                <h3>Onboarding</h3>
-                <p>Some stuff</p>
-              </button>
-            </li>
-            <li className={styles.uListItem}>
-              <button className={styles.button} type="button">
-                <h3>Onboarding</h3>
-                <p>Some stuff</p>
-              </button>
-            </li>
-            <li className={styles.uListItem}>
-              <button className={styles.button} type="button">
-                <h3>Onboarding</h3>
-                <p>Some stuff</p>
-              </button>
-            </li>
+            {data.map((module) => {
+              return (
+                <li key={module.id} className={styles.uListItem}>
+                  <button className={styles.button} type="button">
+                    <h3>{module.module_name}</h3>
+                  </button>
+                </li>
+                )
+            })
+            }
           </ul>
         </div>
       </section>
