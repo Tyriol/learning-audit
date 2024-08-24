@@ -56,20 +56,29 @@
     - Get a POST endpoint working ✅
 12. Create helper function file for learnings
     - Get a GET endpoint working ✅
-    - Get a POST endpoint working
+    - Get a POST endpoint working ✅
     - Get a GET Request endpoint working that returns a module AND it's linked learnings
-13. Link up the front end
+13. Link up the front end ✅
 
-    - Test a connection using Modules
+    - Test a connection using Modules ✅
     - Create a list of learnings linked to a module on the display panel
-    - Add ability to add a new module
+    - Add ability to add a new module ✅
     - Add ability to add a new learning
 
 14. Convert to a Next.js React app
 
-- Set up next app
-- install express and other dependencies
-- copy over code
-- create header component
-- create a component for the forms to live in
-- create form components?
+- Set up next app ✅
+- install express and other dependencies ✅
+- copy over code ✅
+- create header component ✅
+- create a component for the forms to live in ✅
+- create form components? ✅
+- refactor form to be controlled
+- build module component to contain
+  - module name
+  - description
+  - list of learnings
+    - Name
+    - Description
+    - RAG status (maybe a colour??)
+    - Notes \*\*
