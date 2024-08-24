@@ -1,11 +1,28 @@
 {
-  "name": "learning-audit",
-  "version": "1.0.0",
-  "description": "learning audit app for tracking your progress",
-  "main": "index.js",
+  "name": "learning-audit-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "server": "nodemon dotenv/config server/server.js",
+    "reset-database": "node -r dotenv/config server/db/scripts/reset-database.js"
   },
-  "author": "Ryan Smith",
-  "license": "ISC"
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "next": "14.2.5",
+    "nodemon": "^3.1.4",
+    "pg": "^8.12.0",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5"
+  }
 }
