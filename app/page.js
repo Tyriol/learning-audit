@@ -7,7 +7,7 @@ import FormsSection from "./components/FormsSections/FormsSection";
 import ModuleList from "./components/ModuleList/ModuleList";
 
 export default function Home() {
-  const [message, setMessage] = useState([]);
+  const [moduleList, setmoduleList] = useState([]);
 
   const api = async function () {
     const response = await fetch("http://localhost:3010/api/modules");

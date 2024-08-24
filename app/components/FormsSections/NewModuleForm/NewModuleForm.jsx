@@ -4,16 +4,7 @@ import styles from "../NewForm.module.css"
 
 export default function NewModuleForm() {
 
-    // function to post a new module
-    function gatherModuleData () {
-
-        // const newModuleDescription = document.querySelector("#course-module-description").value;
-        return {
-            module_name: "newModuleName",
-            description: "newModuleDescription"
-        };
-    };
-    
+    // handle submit of new module data to update db and re-render module list
     async function handleNewModuleSubmit (event) {
         event.preventDefault();
         const form = event.target;
@@ -23,7 +14,7 @@ export default function NewModuleForm() {
         const formJson = Object.fromEntries(formData.entries());
         console.log(formJson);
         
-
+        // post new module
         const response = await fetch("http://localhost:3010/api/modules", {
             method: 'POST',
             headers: {
@@ -33,8 +24,8 @@ export default function NewModuleForm() {
             body: JSON.stringify(formJson)
           });
           const jsonResponse = await response.json();
-          const newModule = JSON.stringify(jsonResponse)
-          alert(`New module added: ${newModule}`);
+          const newModule = jsonResponse.payload;
+          alert(`New module added: ${JSON.stringify(newModule.module_name)}`);
     }
 
     return (
