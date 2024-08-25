@@ -23,6 +23,7 @@ export default function NewModuleForm({ moduleList, setModuleList }) {
     const jsonResponse = await response.json();
     const newModule = jsonResponse.payload;
     console.log(newModule);
+    setModuleList((moduleList) => [...moduleList, newModule]);
     // setModuleList(moduleList.push(newModule));
 
     alert(`New module added: ${JSON.stringify(newModule.module_name)}`);
