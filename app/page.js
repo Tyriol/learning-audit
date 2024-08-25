@@ -1,25 +1,40 @@
 "use client";
 
-import Image from "next/image";
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
 import FormsSection from "./components/FormsSections/FormsSection";
 import ModuleList from "./components/ModuleList/ModuleList";
 
 export default function Home() {
-  const [moduleList, setmoduleList] = useState([]);
+  const [moduleList, setModuleList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const api = async function () {
-    const response = await fetch("http://localhost:3010/api/modules");
-    const data = await response.json();
-    const { payload } = data;
-    setMessage(payload);
-  };
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const response = await fetch("http://localhost:3010/api/modules");
+        if (!response.ok) {
+          throw new Error(`HTTP error: Status ${response.status}`);
+        }
+        let moduleData = await response.json();
+        setModuleList(moduleData.payload);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setModuleList(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchModules();
+  }, []);
+  console.log(moduleList);
 
   return (
     <main className={styles.main}>
-      <FormsSection />
-      <ModuleList />
+      <FormsSection moduleList={moduleList} setModuleList={setModuleList} />
+      <ModuleList moduleList={moduleList} loading={loading} />
     </main>
   );
 }
