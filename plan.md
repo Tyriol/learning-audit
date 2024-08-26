@@ -77,10 +77,10 @@
 - create form components? ✅
 - re-render module list when a new module is added
   - Lift state up to
-    - be able to get setState from form and
-    - use the state in the module list
-  - On page load call db to get modules and store results in state.
-  - When a new module is added push success payload to the state array and trigger a re-render.
+    - be able to get setState from form and ✅
+    - use the state in the module list ✅
+  - On page load call db to get modules and store results in state. ✅
+  - When a new module is added push success payload to the state array and trigger a re-render. ✅
 - refactor form to be controlled
 - build module component to contain
   - module name
