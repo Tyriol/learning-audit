@@ -9,7 +9,7 @@ export default function Home() {
   const [moduleList, setModuleList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  // Fetch modules and set the modulelist state for use elsewhere, or the loading state or error state
   useEffect(() => {
     const fetchModules = async () => {
       try {
@@ -29,7 +29,6 @@ export default function Home() {
     };
     fetchModules();
   }, []);
-  console.log(moduleList);
 
   return (
     <main className={styles.main}>

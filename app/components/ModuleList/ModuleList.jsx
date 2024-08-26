@@ -1,11 +1,6 @@
 import styles from "./ModuleList.module.css";
 
 export default function ModuleList({ moduleList, loading }) {
-  // on page load
-  // fetch all modules
-  // loop through the returned array and create module buttons
-  console.log(moduleList);
-
   return (
     <section className={styles.display}>
       {loading ? (
