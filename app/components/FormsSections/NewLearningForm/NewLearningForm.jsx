@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styles from "../NewForm.module.css";
 
-export default function NewLearningForm() {
+export default function NewLearningForm({ moduleList, loading }) {
   const [formData, setFormData] = useState({
-    learning_name: "",
+    learningName: "",
     module_id: "",
     rag_status: "",
     learning_notes: "",
@@ -14,41 +14,52 @@ export default function NewLearningForm() {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   }
 
+  console.log(formData);
+
   function handleSubmit(event) {
     event.preventDefault();
     alert(
-      `Name: ${formData.learning_name}, Module: ${formData.module_id}, RAG: ${formData.rag_status}, Notes: ${formData.learning_notes}`
+      `Name: ${formData.learningName}, Module: ${formData.module_id}, RAG: ${formData.rag_status}, Notes: ${formData.learning_notes}`
     );
   }
 
   return (
     <div className={styles.wide}>
       <form className={styles.siteForm} onSubmit={handleSubmit} method="post">
-        <label htmlFor="learning">What did I learn?</label>
-        <input
-          type="text"
-          name="learning"
-          id="learning"
-          onChange={handleChange}
-          value={formData.learning_name}
-        />
-        <label htmlFor="linked-course">
+        <label htmlFor="learningName">
+          What did I learn?
+          <input
+            type="text"
+            name="learningName"
+            id="learningName"
+            onChange={handleChange}
+            value={formData.learningName}
+          />
+        </label>
+        <label htmlFor="module_id">
           <select
-            name="linked-course"
-            id="linked-course"
+            name="module_id"
+            id="module_id"
             onChange={handleChange}
             value={formData.module_id}
           >
-            <option value="default" disabled>
-              In which course?
-            </option>
-            <option value="dummy">dummy</option>
+            {loading ? (
+              <option value="loading">Loading list...</option>
+            ) : (
+              moduleList.map((module) => {
+                return (
+                  <option key={module.id} value={module.id}>
+                    {module.module_name}
+                  </option>
+                );
+              })
+            )}
           </select>
         </label>
-        <label htmlFor="rag">
+        <label htmlFor="rag_status">
           <select
-            name="rag"
-            id="rag"
+            name="rag_status"
+            id="rag_status"
             onChange={handleChange}
             value={formData.rag_status}
           >
@@ -57,14 +68,16 @@ export default function NewLearningForm() {
             <option value="green">Green 🟢</option>
           </select>
         </label>
-        <textarea
-          rows="3"
-          name="learning-notes"
-          id="learning-notes"
-          placeholder="Thoughts worthy of noting in terms of my learning..."
-          onChange={handleChange}
-          value={formData.learning_notes}
-        ></textarea>
+        <label htmlFor="learning_notes">
+          <textarea
+            rows="3"
+            name="learning_notes"
+            id="learning_notes"
+            placeholder="Thoughts worthy of noting in terms of my learning..."
+            onChange={handleChange}
+            value={formData.learning_notes}
+          ></textarea>
+        </label>
         <button type="submit">ADD</button>
       </form>
     </div>

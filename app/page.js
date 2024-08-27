@@ -32,7 +32,11 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <FormsSection moduleList={moduleList} setModuleList={setModuleList} />
+      <FormsSection
+        moduleList={moduleList}
+        setModuleList={setModuleList}
+        loading={loading}
+      />
       <ModuleList moduleList={moduleList} loading={loading} />
     </main>
   );
