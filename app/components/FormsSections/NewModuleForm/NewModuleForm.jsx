@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import styles from "../NewForm.module.css";
 
-export default function NewModuleForm({ moduleList, setModuleList }) {
+export default function NewModuleForm({ setModuleList }) {
   // handle submit of new module data to update db and re-render module list
   async function handleNewModuleSubmit(event) {
     event.preventDefault();
@@ -22,7 +22,6 @@ export default function NewModuleForm({ moduleList, setModuleList }) {
     const jsonResponse = await response.json();
     const newModule = jsonResponse.payload;
     setModuleList((moduleList) => [...moduleList, newModule]);
-    // setModuleList(moduleList.push(newModule));
 
     alert(`New module added: ${JSON.stringify(newModule.module_name)}`);
   }
