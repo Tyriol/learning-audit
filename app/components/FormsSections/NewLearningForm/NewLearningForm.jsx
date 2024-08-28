@@ -26,22 +26,26 @@ export default function NewLearningForm({ moduleList, loading }) {
   return (
     <div className={styles.wide}>
       <form className={styles.siteForm} onSubmit={handleSubmit} method="post">
-        <label htmlFor="learningName">
+        <label className={styles.formLabel} htmlFor="learningName">
           What did I learn?
           <input
             type="text"
             name="learningName"
             id="learningName"
             onChange={handleChange}
+            placeholder="Concept, skill or language"
             value={formData.learningName}
+            className={styles.formInput}
           />
         </label>
-        <label htmlFor="module_id">
+        <label className={styles.formLabel} htmlFor="module_id">
+          For which module?S
           <select
             name="module_id"
             id="module_id"
             onChange={handleChange}
             value={formData.module_id}
+            className={styles.formInput}
           >
             {loading ? (
               <option value="loading">Loading list...</option>
@@ -56,19 +60,20 @@ export default function NewLearningForm({ moduleList, loading }) {
             )}
           </select>
         </label>
-        <label htmlFor="rag_status">
+        <label className={styles.formLabel} htmlFor="rag_status">
           <select
             name="rag_status"
             id="rag_status"
             onChange={handleChange}
             value={formData.rag_status}
+            className={styles.formInput}
           >
             <option value="red">Red 🔴</option>
             <option value="amber">Amber 🟠</option>
             <option value="green">Green 🟢</option>
           </select>
         </label>
-        <label htmlFor="learning_notes">
+        <label className={styles.formLabel} htmlFor="learning_notes">
           <textarea
             rows="3"
             name="learning_notes"
@@ -76,6 +81,7 @@ export default function NewLearningForm({ moduleList, loading }) {
             placeholder="Thoughts worthy of noting in terms of my learning..."
             onChange={handleChange}
             value={formData.learning_notes}
+            className={styles.formInput}
           ></textarea>
         </label>
         <button type="submit">ADD</button>
