@@ -5,6 +5,7 @@ import "dotenv/config";
 
 // helper imports
 import { getModules, createModule } from "./resources/modules.js";
+import { getLearnings, createLearning } from "./resources/learnings.js";
 
 // app setup
 const app = express();
@@ -38,6 +39,23 @@ app.post("/api/modules/", async (req, res) => {
     res.status(201).json({
       status: "success",
       payload: newModule,
+    });
+  } catch (e) {
+    res.status(500).json({
+      status: "failure",
+      payload: e.message,
+    });
+  }
+});
+
+// create a new learning
+app.post("/api/learnings/", async (req, res) => {
+  const data = req.body;
+  try {
+    const newLearning = await createLearning(data);
+    res.status(201).json({
+      status: "success",
+      payload: newLearning,
     });
   } catch (e) {
     res.status(500).json({

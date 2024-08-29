@@ -19,13 +19,13 @@ export async function getLearnings() {
 
 // Helper function to post a new learning
 export async function createLearning(data) {
-  const { learning_name, module_id, rag_status, learning_notes } = data;
+  const { learningName, moduleId, ragStatus, learningNotes } = data;
   const query = `
         INSERT INTO learnings (learning_name, module_id, rag_status, learning_notes)
         VALUES ($1, $2, $3, $4)
         RETURNING *;
     `;
-  const newLearning = [learning_name, module_id, rag_status, learning_notes];
+  const newLearning = [learningName, moduleId, ragStatus, learningNotes];
   try {
     const result = await pool.query(query, newLearning);
     return result.rows[0];
