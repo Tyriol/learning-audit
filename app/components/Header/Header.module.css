@@ -2,17 +2,21 @@
   display: flex;
   height: 8rem;
   background-color: #15616d;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  font-size: 2rem;
-  letter-spacing: 0.3rem;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
   color: #ffecd1;
   }
 
+  .siteHeading {
+    letter-spacing: 0.3rem;
+    font-size: 1.5rem;
+  }
+
   .siteHeaderImage {
-    height: 2rem;
+    height: 4rem;
     width: auto;
-    margin-left: 1rem;
+    margin: 0 2rem;
+    border-radius: 1rem;
   }
