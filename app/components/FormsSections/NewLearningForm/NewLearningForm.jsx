@@ -4,9 +4,9 @@ import styles from "../NewForm.module.css";
 export default function NewLearningForm({ moduleList, loading }) {
   const [formData, setFormData] = useState({
     learningName: "",
-    module_id: "",
-    rag_status: "",
-    learning_notes: "",
+    moduleId: "",
+    ragStatus: "",
+    learningNotes: "",
   });
 
   function handleChange(event) {
@@ -16,10 +16,24 @@ export default function NewLearningForm({ moduleList, loading }) {
 
   console.log(formData);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+
+    const response = await fetch("http://localhost:3010/api/learnings", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const jsonResponse = await response.json();
+    const newLearning = jsonResponse.payload;
+    console.log(newLearning);
+
     alert(
-      `Name: ${formData.learningName}, Module: ${formData.module_id}, RAG: ${formData.rag_status}, Notes: ${formData.learning_notes}`
+      `Name: ${formData.learningName}, Module: ${formData.moduleId}, RAG: ${formData.ragStatus}, Notes: ${formData.learningNotes}`
     );
   }
 
@@ -38,13 +52,13 @@ export default function NewLearningForm({ moduleList, loading }) {
             className={styles.formInput}
           />
         </label>
-        <label className={styles.formLabel} htmlFor="module_id">
+        <label className={styles.formLabel} htmlFor="moduleId">
           For which module?S
           <select
-            name="module_id"
-            id="module_id"
+            name="moduleId"
+            id="moduleId"
             onChange={handleChange}
-            value={formData.module_id}
+            value={formData.moduleId}
             className={styles.formInput}
           >
             {loading ? (
@@ -60,12 +74,12 @@ export default function NewLearningForm({ moduleList, loading }) {
             )}
           </select>
         </label>
-        <label className={styles.formLabel} htmlFor="rag_status">
+        <label className={styles.formLabel} htmlFor="ragStatus">
           <select
-            name="rag_status"
-            id="rag_status"
+            name="ragStatus"
+            id="ragStatus"
             onChange={handleChange}
-            value={formData.rag_status}
+            value={formData.ragStatus}
             className={styles.formInput}
           >
             <option value="red">Red 🔴</option>
@@ -73,14 +87,14 @@ export default function NewLearningForm({ moduleList, loading }) {
             <option value="green">Green 🟢</option>
           </select>
         </label>
-        <label className={styles.formLabel} htmlFor="learning_notes">
+        <label className={styles.formLabel} htmlFor="learningNotes">
           <textarea
             rows="3"
-            name="learning_notes"
-            id="learning_notes"
+            name="learningNotes"
+            id="learningNotes"
             placeholder="Thoughts worthy of noting in terms of my learning..."
             onChange={handleChange}
-            value={formData.learning_notes}
+            value={formData.learningNotes}
             className={styles.formInput}
           ></textarea>
         </label>
