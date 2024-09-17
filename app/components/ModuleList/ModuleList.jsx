@@ -2,13 +2,13 @@ import styles from "./ModuleList.module.css";
 
 export default function ModuleList({ moduleList, loading }) {
   // on button click
-  // it take module id
+  // it takes module id
   // and makes a get request to get all learnings associated with that module id
   // opens a modal***
   // displays the module title and a list of learnings in
 
-  function handleClick(e) {
-    console.log(e);
+  async function handleClick(e) {
+    console.log(e.target.id);
   }
 
   return (
@@ -24,7 +24,7 @@ export default function ModuleList({ moduleList, loading }) {
                   onClick={(e) => handleClick(e)}
                   className={styles.button}
                   type="button"
-                  id={"module" + module.id}
+                  id={module.id}
                 >
                   <h3>{module.module_name}</h3>
                 </button>

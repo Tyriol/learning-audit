@@ -1,0 +1,15 @@
+.modal_content {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    translate: (50%, 50%);
+    background-color: white;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
