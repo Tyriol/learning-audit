@@ -44,7 +44,7 @@ export default function Home() {
       />
       <ModuleList moduleList={moduleList} loading={loading} />
       <button onClick={() => setIsOpen(true)}>Open</button>
-      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal title="This works!" open={isOpen} onClose={() => setIsOpen(false)}>
         This is a modal
       </Modal>
     </main>
