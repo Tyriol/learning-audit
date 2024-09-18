@@ -8,9 +8,13 @@ export default function Modal({ open, onClose, children, title }) {
     <>
       <div className={styles.overlay} />
       <div className={styles.modal_content}>
-        <button onClick={onClose}>&#215;</button>
-        <h2>{title}</h2>
-        {children}
+        <header className={styles.header}>
+          <h2 className={styles.title}>{title}</h2>
+          <button className={styles.button} onClick={onClose}>
+            &#215;
+          </button>
+        </header>
+        <section className={styles.main}>{children}</section>
       </div>
     </>
   );

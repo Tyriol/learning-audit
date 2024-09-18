@@ -37,13 +37,13 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <button onClick={() => setIsOpen(true)}>Open</button>
       <FormsSection
         moduleList={moduleList}
         setModuleList={setModuleList}
         loading={loading}
       />
       <ModuleList moduleList={moduleList} loading={loading} />
-      <button onClick={() => setIsOpen(true)}>Open</button>
       <Modal title="This works!" open={isOpen} onClose={() => setIsOpen(false)}>
         This is a modal
       </Modal>
