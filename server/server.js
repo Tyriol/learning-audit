@@ -14,6 +14,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const port = process.env.PORT;
+
 // route handler to get all modules
 app.get("/api/modules/", async (req, res) => {
   try {
@@ -82,6 +84,6 @@ app.post("/api/learnings/", async (req, res) => {
   }
 });
 
-app.listen(3010, () => {
-  console.log(`We are live on port 3010`);
+app.listen(port, () => {
+  console.log(`We are live on port ${port}`);
 });

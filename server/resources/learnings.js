@@ -17,6 +17,22 @@ export async function getLearnings() {
   }
 }
 
+// Helper function to learnings for a specific module
+export async function getLearningsByModule(moduleId) {
+  const query = "SELECT * FROM learnings WHERE module_id = $1";
+  try {
+    const result = await pool.query(query, [moduleId]);
+    return result.rows;
+  } catch (e) {
+    console.error("Error executing query", {
+      message: e.message,
+      stack: e.stack,
+      query,
+    });
+    throw error;
+  }
+}
+
 // Helper function to post a new learning
 export async function createLearning(data) {
   const { learningName, moduleId, ragStatus, learningNotes } = data;
