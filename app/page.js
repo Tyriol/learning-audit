@@ -25,6 +25,7 @@ export default function Home() {
         setError(null);
       } catch (err) {
         setError(err.message);
+        console.log(error);
         setModuleList(null);
       } finally {
         setLoading(false);
