@@ -65,7 +65,7 @@
     - Test a connection using Modules ✅
     - Create a list of learnings linked to a module on the display panel
     - Add ability to add a new module ✅
-    - Add ability to add a new learning
+    - Add ability to add a new learning ✅
 
 14. Convert to a Next.js React app
 
@@ -75,13 +75,13 @@
 - create header component ✅
 - create a component for the forms to live in ✅
 - create form components? ✅
-- re-render module list when a new module is added
+- re-render module list when a new module is added ✅
   - Lift state up to
     - be able to get setState from form and ✅
     - use the state in the module list ✅
   - On page load call db to get modules and store results in state. ✅
   - When a new module is added push success payload to the state array and trigger a re-render. ✅
-- refactor form to be controlled
+- refactor module form to be controlled
 - build module component to contain
   - module name
   - description

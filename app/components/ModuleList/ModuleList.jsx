@@ -26,7 +26,7 @@ export default function ModuleList({ moduleList, loading }) {
                   type="button"
                   id={module.id}
                 >
-                  <h3>{module.module_name}</h3>
+                  {module.module_name}
                 </button>
               </li>
             );
