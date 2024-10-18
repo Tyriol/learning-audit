@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import FormsSection from "./components/FormsSections/FormsSection";
 import ModuleList from "./components/ModuleList/ModuleList";
 import Modal from "./components/Modal/Modal";
+import NewModuleForm from "./components/FormsSections/NewModuleForm/NewModuleForm";
 
 export default function Home() {
   const [moduleList, setModuleList] = useState([]);
@@ -44,10 +45,15 @@ export default function Home() {
         setModuleList={setModuleList}
         loading={loading}
       />
-      <ModuleList moduleList={moduleList} loading={loading} />
-      <Modal title="This works!" open={isOpen} onClose={() => setIsOpen(false)}>
-        This is a modal
-      </Modal>
+      <ModuleList
+        moduleList={moduleList}
+        loading={loading}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+      {/* <Modal title="This works!" open={isOpen} onClose={() => setIsOpen(false)}>
+        <NewModuleForm />
+      </Modal> */}
     </main>
   );
 }
