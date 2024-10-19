@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import styles from "./Header.module.css";
 
-import books from "../../../public/images/books.png";
 import logo from "../../../public/images/logo.png";
 
 export default function Header() {

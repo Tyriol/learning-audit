@@ -3,12 +3,6 @@ import Modal from "../Modal/Modal";
 import { useState } from "react";
 
 export default function ModuleList({ moduleList, loading, isOpen, setIsOpen }) {
-  // on button click
-  // it takes module id
-  // and makes a get request to get all learnings associated with that module id
-  // opens a modal***
-  // displays the module title and a list of learnings in
-
   const [moduleLearnings, setModuleLearnings] = useState([]);
 
   // function to fetch learnings by module id

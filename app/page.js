@@ -4,8 +4,6 @@ import styles from "./page.module.css";
 import { useState, useEffect } from "react";
 import FormsSection from "./components/FormsSections/FormsSection";
 import ModuleList from "./components/ModuleList/ModuleList";
-import Modal from "./components/Modal/Modal";
-import NewModuleForm from "./components/FormsSections/NewModuleForm/NewModuleForm";
 
 export default function Home() {
   const [moduleList, setModuleList] = useState([]);
@@ -35,11 +33,8 @@ export default function Home() {
     fetchModules();
   }, []);
 
-  // handle opening and closing of modals
-
   return (
     <main className={styles.main}>
-      <button onClick={() => setIsOpen(true)}>Open</button>
       <FormsSection
         moduleList={moduleList}
         setModuleList={setModuleList}
@@ -51,9 +46,6 @@ export default function Home() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      {/* <Modal title="This works!" open={isOpen} onClose={() => setIsOpen(false)}>
-        <NewModuleForm />
-      </Modal> */}
     </main>
   );
 }
