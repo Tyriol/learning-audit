@@ -22,7 +22,6 @@ export default function ModuleList({ moduleList, loading, isOpen, setIsOpen }) {
       }
       let learningData = await response.json();
       setModuleLearnings(learningData.payload);
-      console.log(moduleLearnings);
     } catch (err) {
       console.log(err);
       return null;
@@ -30,8 +29,7 @@ export default function ModuleList({ moduleList, loading, isOpen, setIsOpen }) {
   };
 
   async function handleClick(e) {
-    console.log(e.target.id);
-    fetchLearningsByID(e.target.id);
+    await fetchLearningsByID(e.target.id);
     setIsOpen(true);
   }
 
@@ -61,6 +59,7 @@ export default function ModuleList({ moduleList, loading, isOpen, setIsOpen }) {
         moduleLearnings={moduleLearnings}
         open={isOpen}
         onClose={() => setIsOpen(false)}
+        title={module.module_name}
       >
         {moduleLearnings.map((learning) => {
           return <li key={learning.id}>{learning.learning_name}</li>;
