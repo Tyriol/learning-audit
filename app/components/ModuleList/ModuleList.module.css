@@ -25,6 +25,7 @@
     color: #001524;
     background-color: #ff7d00;
     box-shadow:  0.5rem 0.25rem 0.25rem black;
+    padding: 0.25rem;
   }
 
   .button:hover {

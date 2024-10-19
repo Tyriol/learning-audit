@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import styles from "../NewForm.module.css";
 
 export default function NewModuleForm({ setModuleList }) {

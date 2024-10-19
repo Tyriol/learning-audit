@@ -14,8 +14,6 @@ export default function NewLearningForm({ moduleList, loading }) {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   }
 
-  console.log(formData);
-
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -30,7 +28,6 @@ export default function NewLearningForm({ moduleList, loading }) {
 
     const jsonResponse = await response.json();
     const newLearning = jsonResponse.payload;
-    console.log(newLearning);
 
     alert(
       `Name: ${formData.learningName}, Module: ${formData.moduleId}, RAG: ${formData.ragStatus}, Notes: ${formData.learningNotes}`

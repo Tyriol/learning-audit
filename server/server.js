@@ -5,7 +5,11 @@ import "dotenv/config";
 
 // helper imports
 import { getModules, createModule } from "./resources/modules.js";
-import { getLearnings, createLearning } from "./resources/learnings.js";
+import {
+  getLearnings,
+  createLearning,
+  getLearningsByModule,
+} from "./resources/learnings.js";
 
 // app setup
 const app = express();
@@ -13,6 +17,8 @@ const app = express();
 // middleware
 app.use(cors());
 app.use(express.json());
+
+const port = process.env.PORT;
 
 // route handler to get all modules
 app.get("/api/modules/", async (req, res) => {
@@ -48,7 +54,7 @@ app.post("/api/modules/", async (req, res) => {
   }
 });
 
-// route handler to get all modules
+// route handler to get all learnings
 app.get("/api/learnings/", async (req, res) => {
   try {
     const learnings = await getLearnings();
@@ -82,6 +88,24 @@ app.post("/api/learnings/", async (req, res) => {
   }
 });
 
-app.listen(3010, () => {
-  console.log(`We are live on port 3010`);
+// fetch learnings by module id
+app.get("/api/learnings/:moduleId", async (req, res) => {
+  const moduleId = req.params.moduleId;
+  try {
+    const learnings = await getLearningsByModule(moduleId);
+    res.status(200).json({
+      status: "success",
+      payload: learnings,
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      status: "failure",
+      payload: e,
+    });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`We are live on port ${port}`);
 });

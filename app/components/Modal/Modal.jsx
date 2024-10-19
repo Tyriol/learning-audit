@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styles from "./Modal.module.css";
 
 export default function Modal({ open, onClose, children, title }) {

@@ -4,7 +4,6 @@ import styles from "./page.module.css";
 import { useState, useEffect } from "react";
 import FormsSection from "./components/FormsSections/FormsSection";
 import ModuleList from "./components/ModuleList/ModuleList";
-import Modal from "./components/Modal/Modal";
 
 export default function Home() {
   const [moduleList, setModuleList] = useState([]);
@@ -25,6 +24,7 @@ export default function Home() {
         setError(null);
       } catch (err) {
         setError(err.message);
+        console.log(error);
         setModuleList(null);
       } finally {
         setLoading(false);
@@ -33,20 +33,19 @@ export default function Home() {
     fetchModules();
   }, []);
 
-  // handle opening and closing of modals
-
   return (
     <main className={styles.main}>
-      <button onClick={() => setIsOpen(true)}>Open</button>
       <FormsSection
         moduleList={moduleList}
         setModuleList={setModuleList}
         loading={loading}
       />
-      <ModuleList moduleList={moduleList} loading={loading} />
-      <Modal title="This works!" open={isOpen} onClose={() => setIsOpen(false)}>
-        This is a modal
-      </Modal>
+      <ModuleList
+        moduleList={moduleList}
+        loading={loading}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
     </main>
   );
 }
