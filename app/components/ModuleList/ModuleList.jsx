@@ -9,7 +9,7 @@ export default function ModuleList({ moduleList, loading, isOpen, setIsOpen }) {
   const fetchLearningsByID = async (moduleId) => {
     try {
       const response = await fetch(
-        `http://localhost:3010/api/learnings/${moduleId}`
+        `https://learning-audit.onrender.com/api/learnings/${moduleId}`
       );
       if (!response.ok) {
         throw new Error(`HTTP error: Status ${response.status}`);

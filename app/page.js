@@ -15,7 +15,9 @@ export default function Home() {
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const response = await fetch("http://localhost:3010/api/modules");
+        const response = await fetch(
+          "https://learning-audit.onrender.com/api/modules"
+        );
         if (!response.ok) {
           throw new Error(`HTTP error: Status ${response.status}`);
         }

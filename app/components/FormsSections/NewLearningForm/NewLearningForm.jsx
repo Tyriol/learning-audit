@@ -17,14 +17,17 @@ export default function NewLearningForm({ moduleList, loading }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const response = await fetch("http://localhost:3010/api/learnings", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      "https://learning-audit.onrender.com/api/learnings",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
     const jsonResponse = await response.json();
     const newLearning = jsonResponse.payload;

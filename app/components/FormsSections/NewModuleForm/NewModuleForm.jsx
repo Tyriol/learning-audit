@@ -10,14 +10,17 @@ export default function NewModuleForm({ setModuleList }) {
     const formJson = Object.fromEntries(formData.entries());
 
     // post new module
-    const response = await fetch("http://localhost:3010/api/modules", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formJson),
-    });
+    const response = await fetch(
+      "https://learning-audit.onrender.com/api/modules",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formJson),
+      }
+    );
     const jsonResponse = await response.json();
     const newModule = jsonResponse.payload;
     setModuleList((moduleList) => [...moduleList, newModule]);
