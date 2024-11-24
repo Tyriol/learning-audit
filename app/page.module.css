@@ -1,7 +1,7 @@
 .main {
   display: grid;
-  background-color: #ffecd1;
-  padding: 2em;
+  background-color: #fff;
+  padding: 1.5em;
   border-bottom-left-radius: 0.75em;
   border-bottom-right-radius: 0.75em;
 }

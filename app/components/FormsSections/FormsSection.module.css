@@ -1,8 +1,8 @@
   .contentInput {
     display: flex;
-    background-color: lightgray;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     border-radius: 0.5rem;
+    gap: 2rem;
   }

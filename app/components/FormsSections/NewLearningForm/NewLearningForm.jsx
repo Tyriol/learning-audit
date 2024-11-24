@@ -99,7 +99,9 @@ export default function NewLearningForm({ moduleList, loading }) {
             className={styles.formInput}
           ></textarea>
         </label>
-        <button type="submit">ADD</button>
+        <button className={styles.button} type="submit">
+          ADD
+        </button>
       </form>
     </div>
   );

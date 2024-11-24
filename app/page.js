@@ -42,12 +42,12 @@ export default function Home() {
         setModuleList={setModuleList}
         loading={loading}
       />
-      <ModuleList
+      {/* <ModuleList
         moduleList={moduleList}
         loading={loading}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-      />
+      /> */}
     </main>
   );
 }

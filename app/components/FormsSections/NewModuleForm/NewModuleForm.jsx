@@ -55,7 +55,9 @@ export default function NewModuleForm({ setModuleList }) {
             placeholder="Description of the module..."
           />
         </label>
-        <button type="submit">ADD</button>
+        <button className={styles.button} type="submit">
+          ADD
+        </button>
       </form>
     </div>
   );
