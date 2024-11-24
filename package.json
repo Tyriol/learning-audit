@@ -7,9 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "server": "nodemon dotenv/config server/server.js",
-    "reset-database": "node -r dotenv/config server/db/scripts/reset-database.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "cors": "^2.8.5",
