@@ -2,7 +2,9 @@
 
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
+
 import FormsSection from "./components/FormsSections/FormsSection";
+import SiteNavigationButton from "./components/SiteNavigationButton/SiteNavigationButton";
 import ModuleList from "./components/ModuleList/ModuleList";
 
 export default function Home() {
@@ -42,6 +44,7 @@ export default function Home() {
         setModuleList={setModuleList}
         loading={loading}
       />
+      <SiteNavigationButton title="Modules" link="/modules" />
       {/* <ModuleList
         moduleList={moduleList}
         loading={loading}
