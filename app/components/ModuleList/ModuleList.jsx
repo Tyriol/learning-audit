@@ -30,7 +30,7 @@ export default function ModuleList({ moduleList, loading, isOpen, setIsOpen }) {
   return (
     <section className={styles.display}>
       {loading ? (
-        <p>Words</p>
+        <p>Your Modules Are Loading....</p>
       ) : (
         <ul className={styles.uList}>
           {moduleList.map((module) => {
