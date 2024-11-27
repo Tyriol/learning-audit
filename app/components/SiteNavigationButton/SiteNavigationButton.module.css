@@ -1,0 +1,15 @@
+.buttonLink {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
+
+.button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #001524;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
