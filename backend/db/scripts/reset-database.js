@@ -15,7 +15,8 @@ async function resetDatabase() {
         id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         user_name VARCHAR(25) NOT NULL,
         email VARCHAR(50) NOT NULL,
-        password VARCHAR(72) NOT NULL
+        password VARCHAR(72) NOT NULL,
+        refresh_token VARCHAR(72)
         );
       `);
 
