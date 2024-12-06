@@ -59,11 +59,9 @@ router.post("/signup", async (req, res) => {
 router.post("/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
 
     const findUserQuery = "SELECT * FROM users WHERE email = $1";
     const user = await pool.query(findUserQuery, [email]);
-    console.log("User", user.rows);
     if (user.rows.length === 0)
       return res.status(500).json({
         message: "User doesn't exist! 😢 Try signing in.",
@@ -71,7 +69,6 @@ router.post("/signin", async (req, res) => {
       });
 
     const isPassMatch = await bcrypt.compare(password, user.rows[0].password);
-    console.log("Is pass Match?", isPassMatch);
     if (!isPassMatch)
       return res.status(500).json({
         message: "Password is incorrect! ⚠️",
@@ -79,20 +76,17 @@ router.post("/signin", async (req, res) => {
       });
 
     const accessToken = createAccessToken(user.rows[0].id);
-    console.log(accessToken);
     const refreshToken = createRefreshToken(user.rows[0].id);
     // add to db
     const refreshTokenQuery = ` UPDATE users 
                                 SET refresh_token = $1
                                 WHERE id = $2
                                 RETURNING *`;
-    console.log("refresh", refreshToken);
     // try {
     const addRefreshToken = await pool.query(refreshTokenQuery, [
       refreshToken,
       user.rows[0].id,
     ]);
-    console.log("addrefresh", addRefreshToken.rows);
     if (addRefreshToken.rows.length === 1) {
       sendRefreshToken(res, refreshToken);
       sendAccessToken(req, res, accessToken);
