@@ -36,11 +36,7 @@ router.post("/signup", async (req, res) => {
     const newUserQuery = `INSERT INTO users (email, user_name, password)
                           VALUES ($1, $2, $3)
                           RETURNING *`;
-    const addNewUser = await pool.query(newUserQuery, [
-      email,
-      user_name,
-      hashedPassword,
-    ]);
+    const addNewUser = await pool.query(newUserQuery, [email, user_name, hashedPassword]);
     if (addNewUser.rows)
       res.status(200).json({
         message: "User created successfully! 🥳",
@@ -76,17 +72,17 @@ router.post("/signin", async (req, res) => {
       });
 
     const accessToken = createAccessToken(user.rows[0].id);
+    console.log(accessToken);
     const refreshToken = createRefreshToken(user.rows[0].id);
     // add to db
     const refreshTokenQuery = ` UPDATE users 
                                 SET refresh_token = $1
                                 WHERE id = $2
                                 RETURNING *`;
+    console.log("refresh", refreshToken);
     // try {
-    const addRefreshToken = await pool.query(refreshTokenQuery, [
-      refreshToken,
-      user.rows[0].id,
-    ]);
+    const addRefreshToken = await pool.query(refreshTokenQuery, [refreshToken, user.rows[0].id]);
+    console.log("addrefresh", addRefreshToken.rows);
     if (addRefreshToken.rows.length === 1) {
       sendRefreshToken(res, refreshToken);
       sendAccessToken(req, res, accessToken);
