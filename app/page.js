@@ -5,13 +5,11 @@ import { useState, useEffect } from "react";
 
 import FormsSection from "./components/FormsSections/FormsSection";
 import SiteNavigationButton from "./components/SiteNavigationButton/SiteNavigationButton";
-import ModuleList from "./components/ModuleList/ModuleList";
 
 export default function Home() {
   const [moduleList, setModuleList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
 
   // Fetch modules and set the modulelist state for use elsewhere, or the loading state or error state
   useEffect(() => {
@@ -45,12 +43,6 @@ export default function Home() {
         loading={loading}
       />
       <SiteNavigationButton title="Modules" link="/modules" />
-      {/* <ModuleList
-        moduleList={moduleList}
-        loading={loading}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      /> */}
     </main>
   );
 }
