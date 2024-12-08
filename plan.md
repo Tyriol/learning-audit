@@ -83,10 +83,14 @@
   - When a new module is added push success payload to the state array and trigger a re-render. ✅
 - refactor module form to be controlled
 - build module component to contain
+
   - module name
   - description
   - list of learnings
+
     - Name
     - Description
     - RAG status (maybe a colour??)
     - Notes \*\*
+
+- add data fetching library tanstack
