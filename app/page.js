@@ -2,9 +2,16 @@
 
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 import FormsSection from "./components/FormsSections/FormsSection";
 import SiteNavigationButton from "./components/SiteNavigationButton/SiteNavigationButton";
+
+const queryClient = new QueryClient();
 
 export default function Home() {
   const [moduleList, setModuleList] = useState([]);
@@ -38,13 +45,29 @@ export default function Home() {
   }, []);
 
   return (
-    <main className={styles.main}>
-      <FormsSection
-        moduleList={moduleList}
-        setModuleList={setModuleList}
-        loading={loading}
-      />
-      <SiteNavigationButton title="Modules" link="/modules" />
-    </main>
+    <QueryClientProvider client={queryClient}>
+      <main className={styles.main}>
+        <FormsSection
+          moduleList={moduleList}
+          setModuleList={setModuleList}
+          loading={loading}
+        />
+        <TestTanstack />
+        <SiteNavigationButton title="Modules" link="/modules" />
+      </main>
+    </QueryClientProvider>
   );
+}
+
+function TestTanstack() {
+  const { data, isPending, error } = useQuery({
+    queryKey: ["modules"],
+    queryFn: async () =>
+      await fetch("http://localhost:3010/api/modules").then((res) =>
+        res.json()
+      ),
+  });
+  if (isPending) return "Loading...";
+  if (error) return "An error has occurred: " + error.message;
+  return <p>{data.payload[0].module_name}</p>;
 }
