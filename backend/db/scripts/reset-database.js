@@ -24,7 +24,6 @@ async function resetDatabase() {
     await pool.query(`
             CREATE TABLE modules (
             id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-            user_id INT REFERENCES users(id),
             module_name VARCHAR(50) NOT NULL,
             description VARCHAR(255) NOT NULL
             );
@@ -36,7 +35,6 @@ async function resetDatabase() {
             id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             learning_name VARCHAR(50) NOT NULL,
             module_id INT REFERENCES modules(id),
-            user_id INT REFERENCES users(id),
             rag_status VARCHAR(5),
             learning_notes VARCHAR(255)
             );
@@ -50,15 +48,15 @@ async function resetDatabase() {
 
     // Insert Data into the modules table
     await pool.query(`
-            INSERT INTO modules (module_name, user_id, description)
-            VALUES ('Onboarding', 1, 'An intro to the team, problem solving, learning to learn and high performance routines')
+            INSERT INTO modules (module_name, description)
+            VALUES ('Onboarding', 'An intro to the team, problem solving, learning to learn and high performance routines')
         `);
 
     // Insert data into the learnings table
     await pool.query(`
-            INSERT INTO learnings (learning_name, module_id, user_id, rag_status, learning_notes)
+            INSERT INTO learnings (learning_name, module_id, rag_status, learning_notes)
             VALUES
-                ('Problem Solving', 1, 1, 'Amber', 'Through various games and challenges like Murdle and Puzzle king')
+                ('Problem Solving', 1, 'Amber', 'Through various games and challenges like Murdle and Puzzle king')
         `);
 
     console.log("Database reset successful");

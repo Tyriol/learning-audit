@@ -7,9 +7,11 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import FormsSection from "./components/FormsSections/FormsSection";
 import SiteNavigationButton from "./components/SiteNavigationButton/SiteNavigationButton";
+import TodoAdder from "./components/Modal/Test";
 
 const queryClient = new QueryClient();
 
@@ -53,8 +55,10 @@ export default function Home() {
           loading={loading}
         />
         <TestTanstack />
+        <TodoAdder />
         <SiteNavigationButton title="Modules" link="/modules" />
       </main>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
