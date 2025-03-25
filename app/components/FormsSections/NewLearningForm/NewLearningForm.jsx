@@ -18,7 +18,9 @@ export default function NewLearningForm({ moduleList, loading }) {
     event.preventDefault();
 
     const response = await fetch(
-      "https://learning-audit.onrender.com/api/learnings",
+      process.env.NODE_ENV === "production"
+        ? "https://learning-audit.onrender.com/api/learnings"
+        : "http://localhost:3010/api/learnings",
       {
         method: "POST",
         headers: {

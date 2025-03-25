@@ -16,7 +16,9 @@ export default function Modules() {
     const fetchModules = async () => {
       try {
         const response = await fetch(
-          "https://learning-audit.onrender.com/api/modules"
+          process.env.NODE_ENV === "production"
+            ? "https://learning-audit.onrender.com/api/modules"
+            : "http://localhost:3010/api/modules"
         );
         if (!response.ok) {
           throw new Error(`HTTP error: Status ${response.status}`);
@@ -37,12 +39,7 @@ export default function Modules() {
 
   return (
     <>
-      <ModuleList
-        moduleList={moduleList}
-        loading={loading}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      <ModuleList moduleList={moduleList} loading={loading} isOpen={isOpen} setIsOpen={setIsOpen} />
       <SiteNavigationButton title="Home Page" link="/" />
     </>
   );

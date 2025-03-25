@@ -11,7 +11,9 @@ export default function NewModuleForm({ setModuleList }) {
 
     // post new module
     const response = await fetch(
-      "https://learning-audit.onrender.com/api/modules",
+      process.env.NODE_ENV === "production"
+        ? "https://learning-audit.onrender.com/api/modules"
+        : "http://localhost:3010/api/modules",
       {
         method: "POST",
         headers: {
@@ -30,11 +32,7 @@ export default function NewModuleForm({ setModuleList }) {
 
   return (
     <div className={styles.wide}>
-      <form
-        className={styles.siteForm}
-        onSubmit={handleNewModuleSubmit}
-        method="post"
-      >
+      <form className={styles.siteForm} onSubmit={handleNewModuleSubmit} method="post">
         <label className={styles.formLabel} htmlFor="moduleName">
           Add a new course Module:
           <input

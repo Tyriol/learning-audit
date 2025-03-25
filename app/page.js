@@ -39,11 +39,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <FormsSection
-        moduleList={moduleList}
-        setModuleList={setModuleList}
-        loading={loading}
-      />
+      <FormsSection moduleList={moduleList} setModuleList={setModuleList} loading={loading} />
       <SiteNavigationButton title="Modules" link="/modules" />
     </main>
   );
