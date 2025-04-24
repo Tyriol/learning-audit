@@ -10,6 +10,7 @@ import {
   sendAccessToken,
   sendRefreshToken,
 } from "../utils/tokens.js";
+import verifyAccess from "../utils/protected.js";
 
 const router = express.Router();
 
@@ -152,6 +153,27 @@ router.post("/refresh_token", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Error refreshing token!",
+      type: "error",
+      error,
+    });
+  }
+});
+
+router.get("/protected", verifyAccess, async (req, res) => {
+  try {
+    if (req.user) {
+      return res.json({
+        message: "You are logged in! 😁",
+        type: "success",
+      });
+    }
+    return res.status(500).json({
+      message: "You are not logged in! 😢",
+      type: "error",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error getting protected route 💀",
       type: "error",
       error,
     });
