@@ -3,7 +3,7 @@ import { pool } from "../db/index.js";
 const { verify } = pkg;
 
 const verifyAccess = async (req, res, next) => {
-  const authorisation = req.headers["authorisation"];
+  const authorisation = req.headers["authorization"];
   if (!authorisation) {
     return res.status(500).json({
       message: "No token 🤔",
