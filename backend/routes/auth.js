@@ -1,5 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
+import pkg from "jsonwebtoken";
+const { verify } = pkg;
 
 import { pool } from "../db/index.js";
 import {
@@ -92,12 +94,68 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.post("./logout", (req, res) => {
+router.post("/logout", (req, res) => {
   res.clearCookie("refreshtoken");
   return res.json({
     message: "Logged out successfully 👋",
     type: "success",
   });
+});
+
+router.post("/refresh_token", async (req, res) => {
+  try {
+    const { refreshtoken } = req.cookies;
+    if (!refreshtoken) {
+      return res.status(500).json({
+        message: "No refresh token 🤔",
+        type: "error",
+      });
+    }
+    let id;
+    try {
+      id = verify(refreshtoken, process.env.REFRESH_TOKEN_SECRET).id;
+    } catch (error) {
+      res.status(500).json({
+        message: "Invalid refresh token 🤔",
+        type: "error",
+      });
+    }
+    if (!id) {
+      return res.status(500).json({
+        message: "Invalid refresh token 🤔",
+        type: "error",
+      });
+    }
+    const findUserQuery = "SELECT * FROM users WHERE id = $1";
+    const user = await pool.query(findUserQuery, [id]);
+    if (!user) {
+      return res.status(500).json({
+        message: "User does not exist 😢",
+        type: "error",
+      });
+    }
+    const accessToken = createAccessToken(user.rows[0].id);
+    const newRefreshToken = createRefreshToken(user.rows[0].id);
+    const refreshTokenQuery = ` UPDATE users 
+                                SET refresh_token = $1
+                                WHERE id = $2
+                                RETURNING *`;
+    const addRefreshToken = await pool.query(refreshTokenQuery, [newRefreshToken, user.rows[0].id]);
+    if (addRefreshToken.rows.length === 1) {
+      sendRefreshToken(res, newRefreshToken);
+      return res.json({
+        message: "Refreshed Successfully 😁",
+        type: "success",
+        accessToken,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Error refreshing token!",
+      type: "error",
+      error,
+    });
+  }
 });
 
 export default router;
