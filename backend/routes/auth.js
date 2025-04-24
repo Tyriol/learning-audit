@@ -78,15 +78,11 @@ router.post("/signin", async (req, res) => {
                                 SET refresh_token = $1
                                 WHERE id = $2
                                 RETURNING *`;
-    // try {
     const addRefreshToken = await pool.query(refreshTokenQuery, [refreshToken, user.rows[0].id]);
     if (addRefreshToken.rows.length === 1) {
       sendRefreshToken(res, refreshToken);
       sendAccessToken(req, res, accessToken);
     }
-    // } catch (err) {
-    //   console.log(err);
-    // }
   } catch (error) {
     res.status(500).json({
       type: "error",
