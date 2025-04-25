@@ -48,13 +48,13 @@ router.post("/signup", async (req, res) => {
                           RETURNING *`;
     const addNewUser = await pool.query(newUserQuery, [email, user_name, hashedPassword]);
     if (addNewUser.rows)
-      res.status(200).json({
+      return res.status(200).json({
         message: "User created successfully! 🥳",
         type: "success",
         user: addNewUser.rows[0],
       });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       type: "error",
       message: "Error creating user!",
       error: error.message,
@@ -94,7 +94,7 @@ router.post("/signin", async (req, res) => {
       sendAccessToken(req, res, accessToken);
     }
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       type: "error",
       message: "Error signing in!",
       error,
@@ -123,7 +123,7 @@ router.post("/refresh_token", async (req, res) => {
     try {
       id = verify(refreshtoken, process.env.REFRESH_TOKEN_SECRET).id;
     } catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         message: "Invalid refresh token 🤔",
         type: "error",
       });
@@ -136,7 +136,7 @@ router.post("/refresh_token", async (req, res) => {
     }
     const findUserQuery = "SELECT * FROM users WHERE id = $1";
     const user = await pool.query(findUserQuery, [id]);
-    if (!user) {
+    if (user.rows.length === 0) {
       return res.status(500).json({
         message: "User does not exist 😢",
         type: "error",
@@ -158,7 +158,7 @@ router.post("/refresh_token", async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Error refreshing token!",
       type: "error",
       error,
@@ -192,13 +192,13 @@ router.post("/send-password-reset-email", async (req, res) => {
     const { email } = req.body;
     const findUserQuery = "SELECT * FROM users WHERE email = $1";
     const user = await pool.query(findUserQuery, [email]);
-    if (!user) {
+    if (user.rows.length === 0) {
       return res.status(500).json({
         message: "User with that email does not exist 😢",
         type: "error",
       });
     }
-    const token = createPasswordResetToken({ ...user.rows[0] }); // why the date.now?
+    const token = createPasswordResetToken({ ...user.rows[0] });
     const url = createPasswordResetUrl(user.rows[0].id, token);
     const mailOptions = passwordResetTemplate(user.rows[0], url);
     transporter.sendMail(mailOptions, (err, info) => {
@@ -214,7 +214,7 @@ router.post("/send-password-reset-email", async (req, res) => {
       });
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Error sending email!",
       type: "error",
       error,
@@ -228,8 +228,8 @@ router.post("/reset-password/:id/:token", async (req, res) => {
     const { newPassword } = req.body;
     const findUserQuery = "SELECT * FROM users WHERE id = $1";
     const user = await pool.query(findUserQuery, [id]);
-    if (!user) {
-      res.status(500).json({
+    if (user.rows.length === 0) {
+      return res.status(500).json({
         message: "User does not exist 😢",
         type: "error",
       });
@@ -237,7 +237,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
     const isValid = verify(token, user.rows[0].password);
 
     if (!isValid) {
-      res.status(500).json({
+      return res.status(500).json({
         message: "Invalid token 😢",
         type: "error",
       });
@@ -271,7 +271,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
       });
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       type: "error",
       message: "Error sending email!",
       error,
