@@ -12,14 +12,14 @@ export const transporter = createTransport({
 });
 
 export const passwordResetTemplate = (user, url) => {
-  const { username, email } = user;
+  const { user_name, email } = user;
   return {
-    from: `Mail - <${process.env.EMAIL_USER}>`,
+    from: `The Learning Audit - <${process.env.EMAIL_USER}>`,
     to: email,
     subject: `Reset Password`,
     html: `
         <h2>Password Reset Link</h2>
-        <p>Hi ${username} we've received a request to reset your password</p>
+        <p>Hi ${user_name} we've received a request to reset your password</p>
         <p>You can do that by clicking on the link below:</p>
         <a href=${url}><button>Reset Password</button></a>
         <br />
@@ -37,7 +37,7 @@ export const passwordResetTemplate = (user, url) => {
 export const passwordResetConfirmationTemplate = (user) => {
   const { email } = user;
   return {
-    from: `Mail - <${process.env.EMAIL_USER}>`,
+    from: `The Learning Audit - <${process.env.EMAIL_USER}>`,
     to: email,
     subject: `Password Reset Successful`,
     html: `
