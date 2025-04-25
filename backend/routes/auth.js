@@ -7,9 +7,16 @@ import { pool } from "../db/index.js";
 import {
   createAccessToken,
   createRefreshToken,
+  createPasswordResetToken,
   sendAccessToken,
   sendRefreshToken,
 } from "../utils/tokens.js";
+import {
+  transporter,
+  createPasswordResetUrl,
+  passwordResetTemplate,
+  passwordResetConfirmationTemplate,
+} from "../utils/email.js";
 import verifyAccess from "../utils/protected.js";
 
 const router = express.Router();
@@ -174,6 +181,41 @@ router.get("/protected", verifyAccess, async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: "Error getting protected route 💀",
+      type: "error",
+      error,
+    });
+  }
+});
+
+router.post("/send-password-reset-email", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const findUserQuery = "SELECT * FROM users WHERE email = $1";
+    const user = await pool.query(findUserQuery, [email]);
+    if (!user) {
+      return res.status(500).json({
+        message: "User with that email does not exist 😢",
+        type: "error",
+      });
+    }
+    const token = createPasswordResetToken({ ...user.rows[0] }); // why the date.now?
+    const url = createPasswordResetUrl(user.rows[0].id, token);
+    const mailOptions = passwordResetTemplate(user.rows[0], url);
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        return res.status(500).json({
+          message: "Error sending email 😢",
+          type: "error",
+        });
+      }
+      return res.json({
+        message: "Password reset link has been sent to your email 📫",
+        type: "success",
+      });
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error sending email!",
       type: "error",
       error,
     });
