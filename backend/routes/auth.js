@@ -69,7 +69,7 @@ router.post("/signin", async (req, res) => {
     const findUserQuery = "SELECT * FROM users WHERE email = $1";
     const user = await pool.query(findUserQuery, [email]);
     if (user.rows.length === 0)
-      return res.status(500).json({
+      return res.status(404).json({
         message: "User doesn't exist! 😢 Try signing in.",
         type: "error",
       });
@@ -137,7 +137,7 @@ router.post("/refresh_token", async (req, res) => {
     const findUserQuery = "SELECT * FROM users WHERE id = $1";
     const user = await pool.query(findUserQuery, [id]);
     if (user.rows.length === 0) {
-      return res.status(500).json({
+      return res.status(404).json({
         message: "User does not exist 😢",
         type: "error",
       });
@@ -193,7 +193,7 @@ router.post("/send-password-reset-email", async (req, res) => {
     const findUserQuery = "SELECT * FROM users WHERE email = $1";
     const user = await pool.query(findUserQuery, [email]);
     if (user.rows.length === 0) {
-      return res.status(500).json({
+      return res.status(404).json({
         message: "User with that email does not exist 😢",
         type: "error",
       });
@@ -229,7 +229,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
     const findUserQuery = "SELECT * FROM users WHERE id = $1";
     const user = await pool.query(findUserQuery, [id]);
     if (user.rows.length === 0) {
-      return res.status(500).json({
+      return res.status(404).json({
         message: "User does not exist 😢",
         type: "error",
       });
@@ -251,7 +251,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
       hashedNewPassword,
       user.rows[0].id,
     ]);
-    if (!addNewPassword) {
+    if (addNewPassword.rows.length === 0) {
       return res.status(500).json({
         message: "Error saving new password",
         type: "error",
