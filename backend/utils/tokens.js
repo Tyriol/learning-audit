@@ -19,6 +19,13 @@ export const createVerifyEmailToken = (id) => {
   });
 };
 
+export const createPasswordResetToken = ({ id, email, password }) => {
+  const secret = password;
+  return sign({ id, email }, secret, {
+    expiresIn: 15 * 60,
+  });
+};
+
 export const sendAccessToken = (_req, res, accesstoken) => {
   res.json({
     accesstoken,
