@@ -1,7 +1,7 @@
 import { createTransport } from "nodemailer";
 
 export const createPasswordResetUrl = (id, token) =>
-  `${process.env.CLIENT_URL}/reset-password/${id}/${token}`;
+  `${process.env.CLIENT_URL}/auth/reset-password/${id}/${token}`;
 
 export const transporter = createTransport({
   service: process.env.EMAIL_HOST,
@@ -14,7 +14,7 @@ export const transporter = createTransport({
 export const passwordResetTemplate = (user, url) => {
   const { user_name, email } = user;
   return {
-    from: `The Learning Audit - <${process.env.EMAIL_USER}>`,
+    from: `The Learning Audit <${process.env.EMAIL_USER}>`,
     to: email,
     subject: `Reset Password`,
     html: `
@@ -22,12 +22,12 @@ export const passwordResetTemplate = (user, url) => {
         <p>Hi ${user_name} we've received a request to reset your password</p>
         <p>You can do that by clicking on the link below:</p>
         <a href=${url}><button>Reset Password</button></a>
+        <p>If this wasn't you, please ignore!</p>
         <br />
         <br />
         <small><a style="color: #38A169" href=${url}>${url}</a></small>
         <br />
         <small>The link will expire in 15 mins!</small>
-        <small>If you haven't requested password reset, please ignore!</small>
         <br /><br />
         <p>Thanks,</p>
         <p>The Learning Audit Team</p>`,
@@ -37,7 +37,7 @@ export const passwordResetTemplate = (user, url) => {
 export const passwordResetConfirmationTemplate = (user) => {
   const { email } = user;
   return {
-    from: `The Learning Audit - <${process.env.EMAIL_USER}>`,
+    from: `The Learning Audit <${process.env.EMAIL_USER}>`,
     to: email,
     subject: `Password Reset Successful`,
     html: `
@@ -46,6 +46,6 @@ export const passwordResetConfirmationTemplate = (user) => {
         <small>If you did not change your password, reset it from your account.</small>
         <br /><br />
         <p>Thanks,</p>
-        <p>Authentication API</p>`,
+        <p>The Learning Audit Team</p>`,
   };
 };
