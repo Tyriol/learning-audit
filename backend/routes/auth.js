@@ -222,4 +222,61 @@ router.post("/send-password-reset-email", async (req, res) => {
   }
 });
 
+router.post("/reset-password/:id/:token", async (req, res) => {
+  try {
+    const { id, token } = req.params;
+    const { newPassword } = req.body;
+    const findUserQuery = "SELECT * FROM users WHERE id = $1";
+    const user = await pool.query(findUserQuery, [id]);
+    if (!user) {
+      res.status(500).json({
+        message: "User does not exist 😢",
+        type: "error",
+      });
+    }
+    const isValid = verify(token, user.rows[0].password);
+
+    if (!isValid) {
+      res.status(500).json({
+        message: "Invalid token 😢",
+        type: "error",
+      });
+    }
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    const updatePasswordQuery = ` UPDATE users 
+                                SET password = $1
+                                WHERE id = $2
+                                RETURNING *`;
+    const addNewPassword = await pool.query(updatePasswordQuery, [
+      hashedNewPassword,
+      user.rows[0].id,
+    ]);
+    if (!addNewPassword) {
+      return res.status(500).json({
+        message: "Error saving new password",
+        type: "error",
+      });
+    }
+    const mailOptions = passwordResetConfirmationTemplate(user.rows[0]);
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        return res.status(500).json({
+          message: "Error sending email! 😢",
+          type: "error",
+        });
+      }
+      return res.json({
+        message: "Email sent 📫",
+        type: "success",
+      });
+    });
+  } catch (error) {
+    res.status(500).json({
+      type: "error",
+      message: "Error sending email!",
+      error,
+    });
+  }
+});
+
 export default router;
