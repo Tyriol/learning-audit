@@ -2,21 +2,40 @@
   display: flex;
   height: 8rem;
   background-color: #15616d;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
   color: #ffecd1;
-  }
+}
 
-  .siteHeading {
-    letter-spacing: 0.3rem;
-    font-size: 1.5rem;
-  }
+.logoTitle {
+  display: flex;
+  align-items: center;
+}
 
-  .siteHeaderImage {
-    height: 4rem;
-    width: auto;
-    margin: 0 2rem;
-    border-radius: 1rem;
-  }
+.siteHeading {
+  letter-spacing: 0.3rem;
+  font-size: 1.5rem;
+}
+
+.siteHeaderImage {
+  height: 4rem;
+  width: auto;
+  margin: 0 2rem;
+  border-radius: 1rem;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  margin-right: 2rem;
+  list-style: none;
+}
+
+.navLink {
+  text-decoration: none;
+  font-size: 1.25rem;
+  letter-spacing: 0.2rem;
+  color: inherit;
+}
