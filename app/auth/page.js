@@ -1,6 +1,7 @@
 "use client";
 import styles from "./page.module.css";
-import { useState } from "react";
+import { useState, useActionState } from "react";
+import { useRouter } from "next/navigation";
 
 // check if signed in or not
 // if not show sign in form
@@ -17,17 +18,17 @@ import { useState } from "react";
 // forgot password form should have
 // email
 export default function Auth() {
-  const [signIn, setSignIn] = useState(false);
-  console.log("Test", signIn);
+  const router = useRouter();
+  const [formView, setFormView] = useState("signin");
   return (
     <div className={styles.container}>
-      <h2>{signIn ? "Sign In" : "Sign Up"}</h2>
+      <h2>{formView === "signin" ? "Sign In" : "Sign Up"}</h2>
       <form>
         <label className={styles.formInput}>
           Email Address:
           <input type="email"></input>
         </label>
-        {signIn ? (
+        {formView === "signin" ? (
           <label className={styles.formInput}>
             Username:
             <input type="text"></input>
