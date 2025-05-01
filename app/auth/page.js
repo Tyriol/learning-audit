@@ -127,7 +127,9 @@ export default function Auth() {
           Password:
         </label>
         <input id="password" name="password" type="password"></input>
-        <button type="submit">{formView === "signin" ? "Sign In" : "Sign Up"}</button>
+        <button type="submit">
+          {isPending ? "signing in" : formView === "signin" ? "Sign In" : "Sign Up"}
+        </button>
       </form>
       {state && <p>{state.response.message}</p>}
       <button onClick={toggleFormView}>
