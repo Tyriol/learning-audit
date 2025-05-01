@@ -3,20 +3,6 @@ import styles from "./page.module.css";
 import { useState, useActionState } from "react";
 import { useRouter } from "next/navigation";
 
-// check if signed in or not
-// if not show sign in form
-// else redirect to home page
-// on sign in give option to sign up and vice versa
-// sign in form should have option to reset password
-// sign up form should have
-// email
-// username
-// password
-// sign in form should have
-// email
-// password
-// forgot password form should have
-// email
 const handleSubmit = async (formView, email, username, password) => {
   try {
     let endPoint = "";
@@ -71,6 +57,7 @@ const handleSubmit = async (formView, email, username, password) => {
 export default function Auth() {
   const router = useRouter();
   const [formView, setFormView] = useState("signin");
+  const [initialState, setInitialState] = useState(null);
   const [state, submitAction, isPending] = useActionState(async (prev, formData) => {
     const email = formData.get("email");
     const username = formData.get("username");
@@ -102,11 +89,10 @@ export default function Auth() {
     return {
       response,
     };
-  });
+  }, initialState);
 
   const toggleFormView = () => {
     setFormView(formView === "signin" ? "signup" : "signin");
-    ReactDOM.requestFormReset(formData);
   };
 
   return (
