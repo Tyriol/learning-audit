@@ -46,25 +46,24 @@ const handleSubmit = async (formView, email, username, password) => {
         break;
     }
 
-    const response = await fetch(
+    const baseUrl =
       process.env.NODE_ENV === "production"
         ? `https://learning-audit.onrender.com${endPoint}`
-        : `http://localhost:3010${endPoint}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+        : `http://localhost:3010${endPoint}`;
+
+    const response = await fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
     const data = await response.json();
     return data;
   } catch (error) {
     return {
       type: "error",
-      message: "Error submiting the form",
-      error,
+      message: `Error submiting the form - ${error}`,
     };
   }
 };
