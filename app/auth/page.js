@@ -99,23 +99,27 @@ export default function Auth() {
   return (
     <div className={styles.container}>
       <h2>{formView === "signin" ? "Sign In" : "Sign Up"}</h2>
-      <form action={submitAction}>
-        <label htmlFor="email" className={styles.formInput}>
-          Email Address:
-        </label>
-        <input id="email" name="email" type="email"></input>
+      <form className={styles.form} action={submitAction}>
+        <div className={styles.input}>
+          <label htmlFor="email" className={styles.formInput}>
+            Email Address:
+          </label>
+          <input id="email" name="email" type="email"></input>
+        </div>
         {formView === "signup" ? (
-          <>
+          <div className={styles.input}>
             <label htmlFor="username" className={styles.formInput}>
               Username:
             </label>
             <input id="username" name="username" type="text"></input>
-          </>
+          </div>
         ) : null}
-        <label htmlFor="password" className={styles.formInput}>
-          Password:
-        </label>
-        <input id="password" name="password" type="password"></input>
+        <div className={styles.input}>
+          <label htmlFor="password" className={styles.formInput}>
+            Password:
+          </label>
+          <input id="password" name="password" type="password"></input>
+        </div>
         <button type="submit">
           {isPending ? "signing in" : formView === "signin" ? "Sign In" : "Sign Up"}
         </button>

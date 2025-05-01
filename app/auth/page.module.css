@@ -5,3 +5,30 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin: 1rem auto;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  gap: 1rem;
+}
+
+.form > button {
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.form > button:hover {
+  cursor: pointer;
+  background-color: darkgrey;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input > input {
+  padding: 0.25rem;
+}
