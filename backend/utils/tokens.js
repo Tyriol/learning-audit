@@ -37,5 +37,9 @@ export const sendAccessToken = (_req, res, accesstoken) => {
 export const sendRefreshToken = (res, refreshtoken) => {
   res.cookie("refreshtoken", refreshtoken, {
     httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 90 * 24 * 60 * 60 * 1000,
   });
 };
