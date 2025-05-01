@@ -20,7 +20,7 @@ const handleSubmit = async (formView, email, username, password) => {
         (endPoint = "/auth/signup"),
           (payload = {
             email: email,
-            username: username,
+            user_name: username,
             password: password,
           });
         break;
@@ -42,6 +42,7 @@ const handleSubmit = async (formView, email, username, password) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(payload),
     });
     const data = await response.json();
