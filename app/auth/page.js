@@ -94,7 +94,10 @@ export default function Auth() {
     }
 
     const response = await handleSubmit(formView, email, username, password);
-    console.log("state", state);
+    if ((formView === "signin" || formView === "signup") && response.accesstoken) {
+      localStorage.setItem("accesstoken", response.accesstoken);
+      setTimeout(() => router.push("/"), 1500);
+    }
 
     return {
       response,
