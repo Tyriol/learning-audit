@@ -91,7 +91,8 @@ router.post("/signin", async (req, res) => {
     const addRefreshToken = await pool.query(refreshTokenQuery, [refreshToken, user.rows[0].id]);
     if (addRefreshToken.rows.length === 1) {
       sendRefreshToken(res, refreshToken);
-      sendAccessToken(req, res, accessToken);
+      const responseData = sendAccessToken(req, res, accessToken);
+      return res.json(responseData);
     }
   } catch (error) {
     return res.status(500).json({
