@@ -96,9 +96,12 @@ export default function Auth() {
     setFormView(formView === "signin" ? "signup" : "signin");
   };
 
+  const pageTitle = formView === "signin" ? "Sign In" : "Sign Up";
+  const submitButtonText = isPending ? "signing in" : formView === "signin" ? "Sign In" : "Sign Up";
+
   return (
     <div className={styles.container}>
-      <h2>{formView === "signin" ? "Sign In" : "Sign Up"}</h2>
+      <h2>{pageTitle}</h2>
       <form className={styles.form} action={submitAction}>
         <div className={styles.input}>
           <label htmlFor="email" className={styles.formInput}>
@@ -120,9 +123,7 @@ export default function Auth() {
           </label>
           <input id="password" name="password" type="password"></input>
         </div>
-        <button type="submit">
-          {isPending ? "signing in" : formView === "signin" ? "Sign In" : "Sign Up"}
-        </button>
+        <button type="submit">{submitButtonText}</button>
       </form>
       {state && <p>{state.response.message}</p>}
       <button onClick={toggleFormView}>
