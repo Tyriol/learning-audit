@@ -125,7 +125,9 @@ export default function Auth() {
         </div>
         <button type="submit">{submitButtonText}</button>
       </form>
-      {state && <p>{state.response.message}</p>}
+      {state !== null && state.response.type === "error" && (
+        <p className={styles.error}>{state.response.message}</p>
+      )}
       <button onClick={toggleFormView}>
         {formView === "signin"
           ? "Don't have an account? Sign up instead"
