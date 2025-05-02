@@ -46,13 +46,25 @@ router.post("/signup", async (req, res) => {
     const newUserQuery = `INSERT INTO users (email, user_name, password)
                           VALUES ($1, $2, $3)
                           RETURNING *`;
-    const addNewUser = await pool.query(newUserQuery, [email, user_name, hashedPassword]);
-    if (addNewUser.rows)
-      return res.status(200).json({
-        message: "User created successfully! 🥳",
-        type: "success",
-        user: addNewUser.rows[0],
-      });
+    const newUser = await pool.query(newUserQuery, [email, user_name, hashedPassword]);
+    if (newUser.rows) {
+      // TODO: Swap the following out for sending an access and refresh token
+      const accessToken = createAccessToken(newUser.rows[0].id);
+      const refreshToken = createRefreshToken(newUser.rows[0].id);
+      const refreshTokenQuery = ` UPDATE users 
+                                SET refresh_token = $1
+                                WHERE id = $2
+                                RETURNING *`;
+      const addRefreshToken = await pool.query(refreshTokenQuery, [
+        refreshToken,
+        newUser.rows[0].id,
+      ]);
+      if (addRefreshToken.rows.length === 1) {
+        sendRefreshToken(res, refreshToken);
+        const responseData = sendAccessToken(req, res, accessToken);
+        return res.json(responseData);
+      }
+    }
   } catch (error) {
     return res.status(500).json({
       type: "error",
