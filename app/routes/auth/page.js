@@ -1,7 +1,8 @@
 "use client";
 import styles from "./page.module.css";
-import { useState, useActionState } from "react";
+import { useState, useActionState, useContext } from "react";
 import { useRouter } from "next/navigation";
+import { AuthContext } from "@/app/context/authContext";
 
 const handleSubmit = async (formView, email, username, password) => {
   try {
@@ -57,6 +58,8 @@ const handleSubmit = async (formView, email, username, password) => {
 
 export default function Auth() {
   const router = useRouter();
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  console.log(isAuthenticated);
   const [formView, setFormView] = useState("signin");
   const [initialState, setInitialState] = useState(null);
   const [state, submitAction, isPending] = useActionState(async (prev, formData) => {
@@ -82,8 +85,10 @@ export default function Auth() {
     }
 
     const response = await handleSubmit(formView, email, username, password);
-    if ((formView === "signin" || formView === "signup") && response.accesstoken) {
+    if ((formView === "signin" || formView === "signup") && response.accesstoken && !isPending) {
       localStorage.setItem("accesstoken", response.accesstoken);
+      setIsAuthenticated(true);
+      console.log("You're Authenticated", isAuthenticated);
       setTimeout(() => router.push("/"), 1500);
     }
 

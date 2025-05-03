@@ -1,4 +1,6 @@
 import "./globals.css";
+import { AuthProvider } from "./context/authContext";
+
 import Header from "./components/Header/Header.jsx";
 
 export const metadata = {
@@ -11,8 +13,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className="wrapper">
-          <Header />
-          {children}
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
         </div>
       </body>
     </html>
