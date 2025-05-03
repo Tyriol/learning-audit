@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 
-import ModuleList from "../components/ModuleList/ModuleList";
-import SiteNavigationButton from "../components/SiteNavigationButton/SiteNavigationButton";
+import ModuleList from "../../components/ModuleList/ModuleList";
+import SiteNavigationButton from "../../components/SiteNavigationButton/SiteNavigationButton";
 
 export default function Modules() {
   const [moduleList, setModuleList] = useState([]);

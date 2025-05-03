@@ -30,12 +30,12 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link href="/modules" className={styles.navLink}>
+            <Link href="/routes/modules" className={styles.navLink}>
               Modules
             </Link>
           </li>
           <li>
-            <Link href="/auth" className={styles.navLink}>
+            <Link href="/routes/auth" className={styles.navLink}>
               Auth Page
             </Link>
           </li>
