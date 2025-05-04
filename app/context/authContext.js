@@ -32,11 +32,10 @@ export function AuthProvider({ children }) {
         const data = await response.json();
         setIsAuthenticated(true);
         setUser(data.user);
+        return true;
       } else {
-        console.log("no dice");
+        await refreshToken();
       }
-      console.log("access token:", accessToken);
-      setUser("test");
     } catch (error) {
       console.error("Authentication check failed:", error);
       setIsAuthenticated(false);
@@ -44,7 +43,26 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const value = { isAuthenticated, setIsAuthenticated };
+  const refreshToken = async () => {
+    try {
+      const response = await fetch("http://localhost:3010/auth/refresh_token", {
+        method: "POST",
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("accesstoken", data.accessToken);
+        setIsAuthenticated(true);
+        setUser(data.user);
+        return true;
+      }
+    } catch (error) {
+      console.log("error refreshing token");
+      // TODO: add logout if refreshing fails
+    }
+  };
+
+  const value = { isAuthenticated, setIsAuthenticated, user, checkAuth };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
