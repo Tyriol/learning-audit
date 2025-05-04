@@ -16,9 +16,24 @@ export function AuthProvider({ children }) {
     try {
       const accessToken = localStorage.getItem("accesstoken");
       if (!accessToken) {
+        console.log("no access token");
         setIsAuthenticated(false);
         setUser(null);
         return;
+      }
+      const response = await fetch("http://localhost:3010/auth/protected", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setIsAuthenticated(true);
+        setUser(data.user);
+      } else {
+        console.log("no dice");
       }
       console.log("access token:", accessToken);
       setUser("test");
