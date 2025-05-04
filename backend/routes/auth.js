@@ -48,7 +48,6 @@ router.post("/signup", async (req, res) => {
                           RETURNING *`;
     const newUser = await pool.query(newUserQuery, [email, user_name, hashedPassword]);
     if (newUser.rows) {
-      // TODO: Swap the following out for sending an access and refresh token
       const accessToken = createAccessToken(newUser.rows[0].id);
       const refreshToken = createRefreshToken(newUser.rows[0].id);
       const refreshTokenQuery = ` UPDATE users 
@@ -179,12 +178,20 @@ router.post("/refresh_token", async (req, res) => {
   }
 });
 
+// router.get("/verify-token", verifyAccess, async (req, res) => {
+//   try{
+//     if(req.user)
+//   }
+// });
+
 router.get("/protected", verifyAccess, async (req, res) => {
+  const user = req.user;
   try {
-    if (req.user) {
+    if (user) {
       return res.json({
         message: "You are logged in! 😁",
         type: "success",
+        user: user.user_name,
       });
     }
     return res.status(500).json({

@@ -34,7 +34,7 @@ const verifyAccess = async (req, res, next) => {
       type: "error",
     });
   }
-  req.user = user;
+  req.user = user.rows[0];
   next();
 };
 
