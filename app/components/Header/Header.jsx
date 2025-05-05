@@ -1,11 +1,14 @@
-import React from "react";
+"use client";
+import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Header.module.css";
+import { AuthContext } from "@/app/context/authContext";
 
 import logo from "../../../public/images/logo.png";
 
 export default function Header() {
+  const { isAuthenticated, user, handleLogout } = useContext(AuthContext);
   return (
     <header className={styles.siteHeader}>
       <div className={styles.logoTitle}>
@@ -35,9 +38,15 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link href="/routes/auth" className={styles.navLink}>
-              Auth Page
-            </Link>
+            {!isAuthenticated ? (
+              <Link href="/routes/auth" className={styles.navLink}>
+                Auth Page
+              </Link>
+            ) : (
+              <button onClick={handleLogout} className={styles.navLink}>
+                Logout
+              </button>
+            )}
           </li>
         </ul>
       </nav>
