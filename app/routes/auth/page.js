@@ -98,7 +98,8 @@ export default function Auth() {
     setFormView(formView === "signin" ? "signup" : "signin");
   };
 
-  const pageTitle = formView === "signin" ? "Sign In" : "Sign Up";
+  const pageTitle =
+    formView === "signin" ? "Sign In" : formView === "resetPassword" ? "Reset Password" : "Sign Up";
   const submitButtonText = isPending ? "signing in" : formView === "signin" ? "Sign In" : "Sign Up";
 
   return (
@@ -119,22 +120,35 @@ export default function Auth() {
             <input id="username" name="username" type="text"></input>
           </div>
         ) : null}
-        <div className={styles.input}>
-          <label htmlFor="password" className={styles.formInput}>
-            Password:
-          </label>
-          <input id="password" name="password" type="password"></input>
-        </div>
+        {formView !== "resetPassword" ? (
+          <div className={styles.input}>
+            <label htmlFor="password" className={styles.formInput}>
+              Password:
+            </label>
+            <input id="password" name="password" type="password"></input>
+          </div>
+        ) : null}
         <button type="submit">{submitButtonText}</button>
       </form>
       {state !== null && state.response.type === "error" && (
         <p className={styles.error}>{state.response.message}</p>
       )}
-      <button onClick={toggleFormView}>
-        {formView === "signin"
-          ? "Don't have an account? Sign up instead"
-          : "Already have an account? Sign in instead"}
-      </button>
+      <p>
+        {formView === "signin" ? "Don't have an account? " : "Already have an account? "}
+        <a href="#" onClick={toggleFormView}>
+          {formView === "signin" ? "Sign up" : "Sign in"}
+        </a>{" "}
+        instead
+      </p>
+      {formView !== "resetPassword" ? (
+        <p>
+          Forgot your password?
+          <a href="#" onClick={() => setFormView("resetPassword")}>
+            {" "}
+            Reset it here
+          </a>
+        </p>
+      ) : null}
     </div>
   );
 }
