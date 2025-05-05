@@ -58,7 +58,7 @@ const handleSubmit = async (formView, email, username, password) => {
 
 export default function Auth() {
   const router = useRouter();
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated, handleLogin } = useContext(AuthContext);
   const [formView, setFormView] = useState("signin");
   const [initialState, setInitialState] = useState(null);
   const [state, submitAction, isPending] = useActionState(async (prev, formData) => {
@@ -85,9 +85,8 @@ export default function Auth() {
 
     const response = await handleSubmit(formView, email, username, password);
     if ((formView === "signin" || formView === "signup") && response.accesstoken && !isPending) {
-      localStorage.setItem("accesstoken", response.accesstoken);
-      setIsAuthenticated(true);
-      setTimeout(() => router.push("/"), 1500);
+      handleLogin(response.accesstoken, username);
+      router.push("/");
     }
 
     return {
