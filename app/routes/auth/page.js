@@ -26,7 +26,7 @@ const handleSubmit = async (formView, email, username, password) => {
           });
         break;
       case "resetPassword":
-        (endPoint = "/auth/reset-password"),
+        (endPoint = "/auth/send-password-reset-email"),
           (payload = {
             email: email,
           });
