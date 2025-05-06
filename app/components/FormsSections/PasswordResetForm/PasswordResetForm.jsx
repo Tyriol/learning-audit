@@ -3,7 +3,7 @@ import styles from "../../../routes/auth/page.module.css";
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function (handleSubmit, id, token) {
+export default function PasswordResetForm(handleSubmit, id, token) {
   const router = useRouter();
   const [state, submitPasswordReset, isPending] = useActionState(async (prev, formData) => {
     const password = formData.get("password");
