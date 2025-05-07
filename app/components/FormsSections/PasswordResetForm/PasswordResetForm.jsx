@@ -3,7 +3,7 @@ import styles from "../../../routes/auth/page.module.css";
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function PasswordResetForm(handleSubmit, id, token) {
+export default function PasswordResetForm({ id, token }) {
   const router = useRouter();
   const [state, submitPasswordReset, isPending] = useActionState(async (prev, formData) => {
     const password = formData.get("password");
@@ -14,7 +14,7 @@ export default function PasswordResetForm(handleSubmit, id, token) {
       };
 
     try {
-      const response = await fetch(`http://localhost:3010/auth/${id}/${token}`, {
+      const response = await fetch(`http://localhost:3010/auth/reset-password/${id}/${token}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default function PasswordResetForm(handleSubmit, id, token) {
           <label htmlFor="password" className={styles.formInput}>
             New Password:
           </label>
-          <input id="password" name="password" type="password"></input>
+          <input id="password" name="password" type="password" autoComplete="new-password"></input>
         </div>
         <button type="submit" disabled={isPending}>
           Submit
