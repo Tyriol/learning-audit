@@ -71,7 +71,7 @@ export function AuthProvider({ children }) {
   const handleLogin = (token, userData) => {
     localStorage.setItem("accesstoken", token);
     setIsAuthenticated(true);
-    setUser(user);
+    setUser(userData);
   };
 
   const handleLogout = async () => {
