@@ -1,7 +1,7 @@
 import { createTransport } from "nodemailer";
 
 export const createPasswordResetUrl = (id, token) =>
-  `${process.env.CLIENT_URL}/auth/reset-password/${id}/${token}`;
+  `${process.env.CLIENT_URL}/routes/auth/reset-password/${id}/${token}`;
 
 export const transporter = createTransport({
   service: process.env.EMAIL_HOST,

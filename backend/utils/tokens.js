@@ -27,15 +27,19 @@ export const createPasswordResetToken = ({ id, email, password }) => {
 };
 
 export const sendAccessToken = (_req, res, accesstoken) => {
-  res.json({
+  return {
     accesstoken,
     message: "Sign in Successful 🥳",
     type: "success",
-  });
+  };
 };
 
 export const sendRefreshToken = (res, refreshtoken) => {
   res.cookie("refreshtoken", refreshtoken, {
     httpOnly: true,
+    sameSite: "none",
+    secure: true,
+    path: "/",
+    maxAge: 90 * 24 * 60 * 60 * 1000,
   });
 };

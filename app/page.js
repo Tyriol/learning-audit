@@ -3,6 +3,7 @@
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
 
+import ProtectedRoute from "./routes/ProtectedRoute";
 import FormsSection from "./components/FormsSections/FormsSection";
 import SiteNavigationButton from "./components/SiteNavigationButton/SiteNavigationButton";
 
@@ -39,8 +40,10 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <FormsSection moduleList={moduleList} setModuleList={setModuleList} loading={loading} />
-      <SiteNavigationButton title="Modules" link="/modules" />
+      <ProtectedRoute>
+        <FormsSection moduleList={moduleList} setModuleList={setModuleList} loading={loading} />
+        <SiteNavigationButton title="Modules" link="/modules" />
+      </ProtectedRoute>
     </main>
   );
 }

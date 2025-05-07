@@ -12,7 +12,15 @@ import authRouter from "./routes/auth.js";
 const app = express();
 
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://learning-audit.saffagonerogue.me/"
+        : "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

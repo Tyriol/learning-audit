@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 
-import ModuleList from "../components/ModuleList/ModuleList";
-import SiteNavigationButton from "../components/SiteNavigationButton/SiteNavigationButton";
+import ProtectedRoute from "../ProtectedRoute";
+import ModuleList from "../../components/ModuleList/ModuleList";
+import SiteNavigationButton from "../../components/SiteNavigationButton/SiteNavigationButton";
 
 export default function Modules() {
   const [moduleList, setModuleList] = useState([]);
@@ -38,9 +39,9 @@ export default function Modules() {
   }, []);
 
   return (
-    <>
+    <ProtectedRoute>
       <ModuleList moduleList={moduleList} loading={loading} isOpen={isOpen} setIsOpen={setIsOpen} />
       <SiteNavigationButton title="Home Page" link="/" />
-    </>
+    </ProtectedRoute>
   );
 }
