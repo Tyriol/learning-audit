@@ -40,12 +40,12 @@ export default function Header() {
           <li>
             {!isAuthenticated ? (
               <Link href="/routes/auth" className={styles.navLink}>
-                Auth Page
+                Login
               </Link>
             ) : (
-              <button onClick={handleLogout} className={styles.navLink}>
+              <Link href="#" onClick={handleLogout} className={styles.navLink}>
                 Logout
-              </button>
+              </Link>
             )}
           </li>
         </ul>

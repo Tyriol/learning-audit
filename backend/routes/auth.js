@@ -285,7 +285,6 @@ router.post("/reset-password/:id/:token", async (req, res) => {
           type: "error",
         });
       }
-      console.log("this worked");
       return res.json({
         message: "Email sent 📫",
         type: "success",
