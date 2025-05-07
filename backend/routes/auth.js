@@ -245,7 +245,7 @@ router.post("/send-password-reset-email", async (req, res) => {
 router.post("/reset-password/:id/:token", async (req, res) => {
   try {
     const { id, token } = req.params;
-    const { newPassword } = req.body;
+    const { password } = req.body;
     const findUserQuery = "SELECT * FROM users WHERE id = $1";
     const user = await pool.query(findUserQuery, [id]);
     if (user.rows.length === 0) {
@@ -262,7 +262,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
         type: "error",
       });
     }
-    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    const hashedNewPassword = await bcrypt.hash(password, 10);
     const updatePasswordQuery = ` UPDATE users 
                                 SET password = $1
                                 WHERE id = $2
@@ -285,6 +285,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
           type: "error",
         });
       }
+      console.log("this worked");
       return res.json({
         message: "Email sent 📫",
         type: "success",
