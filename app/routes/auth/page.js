@@ -100,7 +100,13 @@ export default function Auth() {
 
   const pageTitle =
     formView === "signin" ? "Sign In" : formView === "resetPassword" ? "Reset Password" : "Sign Up";
-  const submitButtonText = isPending ? "signing in" : formView === "signin" ? "Sign In" : "Sign Up";
+  const submitButtonText = isPending
+    ? "signing in"
+    : formView === "signin"
+    ? "Sign In"
+    : formView === "resetPassword"
+    ? "Get reset link"
+    : "Sign Up";
 
   return (
     <div className={styles.container}>
@@ -125,7 +131,12 @@ export default function Auth() {
             <label htmlFor="password" className={styles.formInput}>
               Password:
             </label>
-            <input id="password" name="password" type="password"></input>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+            ></input>
           </div>
         ) : null}
         <button type="submit">{submitButtonText}</button>
