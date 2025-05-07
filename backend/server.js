@@ -16,7 +16,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://learning-audit.saffagonerogue.me/"
+        ? "https://learning-audit.saffagonerogue.me"
         : "http://localhost:3000",
     credentials: true,
   })
