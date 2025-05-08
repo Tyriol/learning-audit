@@ -14,13 +14,16 @@ export default function PasswordResetForm({ id, token }) {
       };
 
     try {
-      const response = await fetch(`${process.env.SERVER_URL}/auth/reset-password/${id}/${token}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ password }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/reset-password/${id}/${token}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ password }),
+        }
+      );
       if (!response.ok)
         return {
           type: "error",

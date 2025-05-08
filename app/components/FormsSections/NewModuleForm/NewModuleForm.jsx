@@ -10,7 +10,7 @@ export default function NewModuleForm({ setModuleList }) {
     const formJson = Object.fromEntries(formData.entries());
 
     // post new module
-    const response = await fetch(`${process.env.SERVER_URL}/api/modules`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/modules`, {
       method: "POST",
       headers: {
         Accept: "application/json",
