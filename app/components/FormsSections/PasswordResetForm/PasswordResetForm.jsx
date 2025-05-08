@@ -14,7 +14,7 @@ export default function PasswordResetForm({ id, token }) {
       };
 
     try {
-      const response = await fetch(`http://localhost:3010/auth/reset-password/${id}/${token}`, {
+      const response = await fetch(`${process.env.SERVER_URL}/auth/reset-password/${id}/${token}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
