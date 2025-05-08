@@ -15,14 +15,13 @@ export async function getModules() {
 
 // Helper function to create a new module
 export async function createModule(module) {
-  console.log(module);
-  const { moduleName, description } = module;
+  const { moduleName, description, userId } = module;
   const query = `
-    INSERT INTO modules (module_name, description)
-    VALUES ($1, $2)
+    INSERT INTO modules (module_name, description, user_id)
+    VALUES ($1, $2, $3)
     RETURNING *;
   `;
-  const values = [moduleName, description];
+  const values = [moduleName, description, userId];
   try {
     const result = await pool.query(query, values);
     return result.rows[0];

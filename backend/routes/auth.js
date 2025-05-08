@@ -178,12 +178,6 @@ router.post("/refresh_token", async (req, res) => {
   }
 });
 
-// router.get("/verify-token", verifyAccess, async (req, res) => {
-//   try{
-//     if(req.user)
-//   }
-// });
-
 router.get("/protected", verifyAccess, async (req, res) => {
   const user = req.user;
   try {
@@ -191,7 +185,10 @@ router.get("/protected", verifyAccess, async (req, res) => {
       return res.json({
         message: "You are logged in! 😁",
         type: "success",
-        user: user.user_name,
+        user: {
+          username: user.user_name,
+          id: user.id,
+        },
       });
     }
     return res.status(500).json({

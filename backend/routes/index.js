@@ -2,11 +2,7 @@ import express from "express";
 
 // helper imports
 import { getModules, createModule } from "../utils/modules.js";
-import {
-  getLearnings,
-  createLearning,
-  getLearningsByModule,
-} from "../utils/learnings.js";
+import { getLearnings, createLearning, getLearningsByModule } from "../utils/learnings.js";
 
 const router = express.Router();
 

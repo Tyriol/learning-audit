@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "../NewForm.module.css";
+import { AuthContext } from "@/app/context/authContext";
 
 export default function NewModuleForm({ setModuleList }) {
+  const { user } = React.useContext(AuthContext);
   // handle submit of new module data to update db and re-render module list
   async function handleNewModuleSubmit(event) {
     event.preventDefault();
@@ -16,7 +18,7 @@ export default function NewModuleForm({ setModuleList }) {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formJson),
+      body: JSON.stringify({ ...formJson, userId: user.id }),
     });
     const jsonResponse = await response.json();
     const newModule = jsonResponse.payload;
