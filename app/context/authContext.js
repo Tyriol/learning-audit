@@ -18,7 +18,6 @@ export function AuthProvider({ children }) {
     try {
       const accessToken = localStorage.getItem("accesstoken");
       if (!accessToken) {
-        console.log("no access token");
         setIsAuthenticated(false);
         setUser(null);
         return;
