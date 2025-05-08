@@ -16,11 +16,7 @@ export default function Modules() {
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const response = await fetch(
-          process.env.NODE_ENV === "production"
-            ? "https://learning-audit.onrender.com/api/modules"
-            : "http://localhost:3010/api/modules"
-        );
+        const response = await fetch(`${process.env.SERVER_URL}/api/modules`);
         if (!response.ok) {
           throw new Error(`HTTP error: Status ${response.status}`);
         }

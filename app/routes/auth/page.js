@@ -33,10 +33,7 @@ const handleSubmit = async (formView, email, username, password) => {
         break;
     }
 
-    const baseUrl =
-      process.env.NODE_ENV === "production"
-        ? `https://learning-audit.onrender.com${endPoint}`
-        : `http://localhost:3010${endPoint}`;
+    const baseUrl = `${process.env.SERVER_URL}${endPoint}`;
 
     const response = await fetch(baseUrl, {
       method: "POST",
