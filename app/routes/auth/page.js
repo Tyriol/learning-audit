@@ -11,29 +11,29 @@ const handleSubmit = async (formView, email, username, password) => {
 
     switch (formView) {
       case "signin":
-        (endPoint = "/auth/signin"),
-          (payload = {
-            email: email,
-            password: password,
-          });
+        endPoint = "/auth/signin";
+        payload = {
+          email: email,
+          password: password,
+        };
         break;
       case "signup":
-        (endPoint = "/auth/signup"),
-          (payload = {
-            email: email,
-            user_name: username,
-            password: password,
-          });
+        endPoint = "/auth/signup";
+        payload = {
+          email: email,
+          user_name: username,
+          password: password,
+        };
         break;
       case "resetPassword":
-        (endPoint = "/auth/send-password-reset-email"),
-          (payload = {
-            email: email,
-          });
+        endPoint = "/auth/send-password-reset-email";
+        payload = {
+          email: email,
+        };
         break;
     }
 
-    const baseUrl = `${process.env.SERVER_URL}${endPoint}`;
+    const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}${endPoint}`;
 
     const response = await fetch(baseUrl, {
       method: "POST",

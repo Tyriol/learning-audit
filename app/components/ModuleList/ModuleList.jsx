@@ -8,7 +8,9 @@ export default function ModuleList({ moduleList, loading, isOpen, setIsOpen }) {
   // function to fetch learnings by module id
   const fetchLearningsByID = async (moduleId) => {
     try {
-      const response = await fetch(`${process.env.SERVER_URL}/api/learnings/${moduleId}`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings/${moduleId}`
+      );
       if (!response.ok) {
         throw new Error(`HTTP error: Status ${response.status}`);
       }

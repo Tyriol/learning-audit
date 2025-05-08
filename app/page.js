@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const response = await fetch(`${process.env.SERVER_URL}/api/modules`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/modules`);
         if (!response.ok) {
           throw new Error(`HTTP error: Status ${response.status}`);
         }

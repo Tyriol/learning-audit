@@ -17,7 +17,7 @@ export default function NewLearningForm({ moduleList, loading }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const response = await fetch(`${process.env.SERVER_URL}/api/learnings`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
       method: "POST",
       headers: {
         Accept: "application/json",

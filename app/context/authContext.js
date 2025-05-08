@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
         setUser(null);
         return;
       }
-      const response = await fetch(`${process.env.SERVER_URL}/auth/protected`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/protected`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -47,7 +47,7 @@ export function AuthProvider({ children }) {
 
   const refreshToken = async () => {
     try {
-      const response = await fetch(`${process.env.SERVER_URL}/auth/refresh_token`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/refresh_token`, {
         method: "POST",
         credentials: "include",
       });
@@ -76,7 +76,7 @@ export function AuthProvider({ children }) {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${process.env.SERVER_URL}/auth/logout`, {
+      await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
