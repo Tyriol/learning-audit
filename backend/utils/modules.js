@@ -2,10 +2,10 @@
 import { pool } from "../db/index.js";
 
 // Helper function to get all modules
-export async function getModules() {
-  const query = "SELECT * FROM modules";
+export async function getModules(userId) {
+  const query = "SELECT * FROM modules WHERE user_id=$1";
   try {
-    const result = await pool.query(query);
+    const result = await pool.query(query, [userId]);
     return result.rows;
   } catch (error) {
     console.error("Error executing query", error.stack);
