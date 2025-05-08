@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
         setUser(null);
         return;
       }
-      const response = await fetch("http://localhost:3010/auth/protected", {
+      const response = await fetch(`${process.env.SERVER_URL}/auth/protected`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
