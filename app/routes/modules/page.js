@@ -1,43 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 
+import { ContentContext } from "@/app/context/contentContext";
 import ProtectedRoute from "../ProtectedRoute";
 import ModuleList from "../../components/ModuleList/ModuleList";
-import SiteNavigationButton from "../../components/SiteNavigationButton/SiteNavigationButton";
 
 export default function Modules() {
-  const [moduleList, setModuleList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { moduleData, loading } = useContext(ContentContext);
   const [isOpen, setIsOpen] = useState(false);
-
-  // Fetch modules and set the modulelist state for use elsewhere, or the loading state or error state
-  useEffect(() => {
-    const fetchModules = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/modules`);
-        if (!response.ok) {
-          throw new Error(`HTTP error: Status ${response.status}`);
-        }
-        let moduleData = await response.json();
-        setModuleList(moduleData.payload);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-        console.log(error);
-        setModuleList(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchModules();
-  }, []);
 
   return (
     <ProtectedRoute>
-      <ModuleList moduleList={moduleList} loading={loading} isOpen={isOpen} setIsOpen={setIsOpen} />
-      <SiteNavigationButton title="Home Page" link="/" />
+      <ModuleList moduleList={moduleData} loading={loading} isOpen={isOpen} setIsOpen={setIsOpen} />
     </ProtectedRoute>
   );
 }

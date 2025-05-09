@@ -18,7 +18,6 @@ export function AuthProvider({ children }) {
     try {
       const accessToken = localStorage.getItem("accesstoken");
       if (!accessToken) {
-        console.log("no access token");
         setIsAuthenticated(false);
         setUser(null);
         return;
@@ -34,6 +33,7 @@ export function AuthProvider({ children }) {
         const data = await response.json();
         setIsAuthenticated(true);
         setUser(data.user);
+        router.push("/");
         return true;
       } else {
         await refreshToken();
@@ -68,10 +68,9 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const handleLogin = (token, userData) => {
+  const handleLogin = (token) => {
     localStorage.setItem("accesstoken", token);
-    setIsAuthenticated(true);
-    setUser(userData);
+    checkAuth();
   };
 
   const handleLogout = async () => {

@@ -4,11 +4,19 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./Header.module.css";
 import { AuthContext } from "@/app/context/authContext";
+import { ContentContext } from "@/app/context/contentContext";
 
 import logo from "../../../public/images/logo.png";
 
 export default function Header() {
   const { isAuthenticated, user, handleLogout } = useContext(AuthContext);
+  const { setModuleData } = useContext(ContentContext);
+
+  const logout = () => {
+    setModuleData([]);
+    handleLogout();
+  };
+
   return (
     <header className={styles.siteHeader}>
       <div className={styles.logoTitle}>
@@ -43,7 +51,7 @@ export default function Header() {
                 Login
               </Link>
             ) : (
-              <Link href="#" onClick={handleLogout} className={styles.navLink}>
+              <Link href="#" onClick={logout} className={styles.navLink}>
                 Logout
               </Link>
             )}

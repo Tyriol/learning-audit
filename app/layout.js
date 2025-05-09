@@ -1,5 +1,6 @@
 import "./globals.css";
 import { AuthProvider } from "./context/authContext";
+import { ContentProvider } from "./context/contentContext";
 
 import Header from "./components/Header/Header.jsx";
 
@@ -14,8 +15,10 @@ export default function RootLayout({ children }) {
       <body>
         <div className="wrapper">
           <AuthProvider>
-            <Header />
-            {children}
+            <ContentProvider>
+              <Header />
+              {children}
+            </ContentProvider>
           </AuthProvider>
         </div>
       </body>
