@@ -7,7 +7,6 @@ import { AuthContext } from "./context/authContext";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import FormsSection from "./components/FormsSections/FormsSection";
-import SiteNavigationButton from "./components/SiteNavigationButton/SiteNavigationButton";
 
 export default function Home() {
   const { refreshToken } = useContext(AuthContext);
@@ -52,7 +51,6 @@ export default function Home() {
     <main className={styles.main}>
       <ProtectedRoute>
         <FormsSection moduleList={moduleList} setModuleList={setModuleList} loading={loading} />
-        <SiteNavigationButton title="Modules" link="/modules" />
       </ProtectedRoute>
     </main>
   );
