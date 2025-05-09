@@ -15,6 +15,14 @@ export default function Home() {
     fetchAllData();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!moduleData || moduleData.length === 0) {
+    return <div>No modules available.</div>; // Handle empty or null moduleData
+  }
+
   return (
     <main className={styles.main}>
       <ProtectedRoute>
