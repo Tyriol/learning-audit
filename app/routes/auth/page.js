@@ -82,7 +82,7 @@ export default function Auth() {
 
     const response = await handleSubmit(formView, email, username, password);
     if ((formView === "signin" || formView === "signup") && response.accesstoken && !isPending) {
-      handleLogin(response.accesstoken, username);
+      handleLogin(response.accesstoken);
       router.push("/");
     }
 
