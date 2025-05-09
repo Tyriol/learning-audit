@@ -16,23 +16,25 @@ export default function NewLearningForm({ moduleList, loading }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+      const jsonResponse = await response.json();
+      const newLearning = jsonResponse.payload;
 
-    const jsonResponse = await response.json();
-    const newLearning = jsonResponse.payload;
-    console.log(newLearning);
-
-    alert(
-      `Name: ${formData.learningName}, Module: ${formData.moduleId}, RAG: ${formData.ragStatus}, Notes: ${formData.learningNotes}`
-    );
+      alert(
+        `Name: ${formData.learningName}, Module: ${formData.moduleId}, RAG: ${formData.ragStatus}, Notes: ${formData.learningNotes}`
+      );
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
