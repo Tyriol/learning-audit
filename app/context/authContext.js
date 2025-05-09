@@ -16,18 +16,12 @@ export function AuthProvider({ children }) {
 
   const checkAuth = async () => {
     try {
-      console.log("Looking for Access Token");
-
       const accessToken = localStorage.getItem("accesstoken");
       if (!accessToken) {
-        console.log("No access token");
-
         setIsAuthenticated(false);
         setUser(null);
         return;
       }
-      console.log("access token found");
-
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/protected`, {
         method: "GET",
         headers: {
@@ -36,15 +30,12 @@ export function AuthProvider({ children }) {
         credentials: "include",
       });
       if (response.ok) {
-        console.log("setting user info and auth status");
-
         const data = await response.json();
         setIsAuthenticated(true);
         setUser(data.user);
         router.push("/");
         return true;
       } else {
-        console.log("verifying id failed");
         await refreshToken();
       }
     } catch (error) {
