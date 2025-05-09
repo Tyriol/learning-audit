@@ -10,7 +10,6 @@ const router = express.Router();
 // route handler to get all modules
 router.get("/api/modules/", verifyAccess, async (req, res) => {
   const user = req.user;
-  console.log(user);
   try {
     if (user) {
       const modules = await getModules(user.id);
