@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "../NewForm.module.css";
+import { AuthContext } from "@/app/context/authContext";
 
 export default function NewLearningForm({ moduleList, loading }) {
+  const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     learningName: "",
     moduleId: "",
@@ -16,23 +18,23 @@ export default function NewLearningForm({ moduleList, loading }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...formData, userId: user.id }),
+      });
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+      const jsonResponse = await response.json();
+      const newLearning = jsonResponse.payload;
 
-    const jsonResponse = await response.json();
-    const newLearning = jsonResponse.payload;
-    console.log(newLearning);
-
-    alert(
-      `Name: ${formData.learningName}, Module: ${formData.moduleId}, RAG: ${formData.ragStatus}, Notes: ${formData.learningNotes}`
-    );
+      alert(`New Learning ${formData.learningName} added ... this message will be improved soon!`);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (

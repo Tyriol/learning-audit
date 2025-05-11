@@ -15,11 +15,17 @@ export default function Home() {
     fetchAllData();
   }, []);
 
+  const screenToDisplay = loading ? (
+    <div>Loading...</div>
+  ) : !moduleData || moduleData.length === 0 ? (
+    <div>No modules available.</div>
+  ) : (
+    <FormsSection moduleList={moduleData} setModuleList={setModuleData} loading={loading} />
+  );
+
   return (
     <main className={styles.main}>
-      <ProtectedRoute>
-        <FormsSection moduleList={moduleData} setModuleList={setModuleData} loading={loading} />
-      </ProtectedRoute>
+      <ProtectedRoute>{screenToDisplay}</ProtectedRoute>
     </main>
   );
 }

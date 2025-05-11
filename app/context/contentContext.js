@@ -17,12 +17,9 @@ export function ContentProvider({ children }) {
   }, []);
 
   const fetchAllData = async () => {
-    console.log("hello, lets start");
-
-    // if (!isAuthenticated) return false;
+    if (!isAuthenticated) return;
+    setLoading(true);
     try {
-      console.log("fetching access token");
-
       let accessToken = localStorage.getItem("accesstoken");
       if (!accessToken) {
         await refreshToken();
