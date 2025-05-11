@@ -31,7 +31,7 @@ export default function NewLearningForm({ moduleList, loading }) {
       const jsonResponse = await response.json();
       const newLearning = jsonResponse.payload;
 
-      alert(newLearning);
+      alert(`New Learning ${formData.learningName} added ... this message will be improved soon!`);
     } catch (err) {
       console.error(err);
     }
