@@ -15,19 +15,17 @@ export default function Home() {
     fetchAllData();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!moduleData || moduleData.length === 0) {
-    return <div>No modules available.</div>; // Handle empty or null moduleData
-  }
+  const screenToDisplay = loading ? (
+    <div>Loading...</div>
+  ) : !moduleData || moduleData.length === 0 ? (
+    <div>No modules available.</div>
+  ) : (
+    <FormsSection moduleList={moduleData} setModuleList={setModuleData} loading={loading} />
+  );
 
   return (
     <main className={styles.main}>
-      <ProtectedRoute>
-        <FormsSection moduleList={moduleData} setModuleList={setModuleData} loading={loading} />
-      </ProtectedRoute>
+      <ProtectedRoute>{screenToDisplay}</ProtectedRoute>
     </main>
   );
 }
