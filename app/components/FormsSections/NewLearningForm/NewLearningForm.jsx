@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "../NewForm.module.css";
+import { AuthContext } from "@/app/context/authContext";
 
 export default function NewLearningForm({ moduleList, loading }) {
+  const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     learningName: "",
     moduleId: "",
@@ -23,15 +25,13 @@ export default function NewLearningForm({ moduleList, loading }) {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, userId: user.id }),
       });
 
       const jsonResponse = await response.json();
       const newLearning = jsonResponse.payload;
 
-      alert(
-        `Name: ${formData.learningName}, Module: ${formData.moduleId}, RAG: ${formData.ragStatus}, Notes: ${formData.learningNotes}`
-      );
+      alert(newLearning);
     } catch (err) {
       console.error(err);
     }
