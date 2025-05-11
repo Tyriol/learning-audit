@@ -35,13 +35,13 @@ export async function getLearningsByModule(moduleId) {
 
 // Helper function to post a new learning
 export async function createLearning(data) {
-  const { learningName, moduleId, ragStatus, learningNotes } = data;
+  const { learningName, moduleId, ragStatus, learningNotes, userId } = data;
   const query = `
-        INSERT INTO learnings (learning_name, module_id, rag_status, learning_notes)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO learnings (learning_name, module_id, rag_status, learning_notes, user_id)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING *;
     `;
-  const newLearning = [learningName, moduleId, ragStatus, learningNotes];
+  const newLearning = [learningName, moduleId, ragStatus, learningNotes, userId];
   try {
     const result = await pool.query(query, newLearning);
     return result.rows[0];
