@@ -1,4 +1,4 @@
-import { useContext, useState, useActionState } from "react";
+import { useContext, useActionState } from "react";
 import styles from "../NewForm.module.css";
 import { AuthContext } from "@/app/context/authContext";
 
@@ -22,7 +22,7 @@ export default function NewLearningForm({ moduleList, loading }) {
       if (!response.ok)
         return {
           type: "error",
-          message: "there was an error while creating your new password",
+          message: "there was an error while creating your new learning entry",
         };
 
       const jsonResponse = await response.json();
