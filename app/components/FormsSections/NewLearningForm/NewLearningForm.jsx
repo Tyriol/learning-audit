@@ -1,23 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext, useActionState } from "react";
 import styles from "../NewForm.module.css";
 import { AuthContext } from "@/app/context/authContext";
 
 export default function NewLearningForm({ moduleList, loading }) {
   const { user } = useContext(AuthContext);
-  const [formData, setFormData] = useState({
-    learningName: "",
-    moduleId: "",
-    ragStatus: "",
-    learningNotes: "",
-  });
-
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
+  const [state, submitNewLearning, isPending] = useActionState(async (prev, formData) => {
+    const learningName = formData.get("learningName");
+    const moduleId = formData.get("moduleId");
+    const ragStatus = formData.get("ragStatus");
+    const learningNotes = formData.get("learningNotes");
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
         method: "POST",
@@ -25,63 +16,64 @@ export default function NewLearningForm({ moduleList, loading }) {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...formData, userId: user.id }),
+        body: JSON.stringify({ learningName, moduleId, ragStatus, learningNotes, userId: user.id }),
       });
+
+      if (!response.ok)
+        return {
+          type: "error",
+          message: "there was an error while creating your new learning entry",
+        };
 
       const jsonResponse = await response.json();
       const newLearning = jsonResponse.payload;
-
-      alert(`New Learning ${formData.learningName} added ... this message will be improved soon!`);
+      console.log(state);
+      alert(`New Learning ${learningName} added ... this message will be improved soon!`);
     } catch (err) {
       console.error(err);
+      return {
+        type: "error",
+        message: "An unexpected error occurred. Please try again.",
+      };
     }
-  }
+  });
 
   return (
     <div className={styles.wide}>
-      <form className={styles.siteForm} onSubmit={handleSubmit} method="post">
+      <form className={styles.siteForm} action={submitNewLearning}>
         <label className={styles.formLabel} htmlFor="learningName">
           What did I learn?
           <input
             type="text"
             name="learningName"
             id="learningName"
-            onChange={handleChange}
             placeholder="Concept, skill or language"
-            value={formData.learningName}
             className={styles.formInput}
           />
         </label>
         <label className={styles.formLabel} htmlFor="moduleId">
-          For which module?S
-          <select
-            name="moduleId"
-            id="moduleId"
-            onChange={handleChange}
-            value={formData.moduleId}
-            className={styles.formInput}
-          >
+          For which module?
+          <select name="moduleId" id="moduleId" className={styles.formInput}>
             {loading ? (
               <option value="loading">Loading list...</option>
             ) : (
-              moduleList.map((module) => {
-                return (
-                  <option key={module.id} value={module.id}>
-                    {module.module_name}
-                  </option>
-                );
-              })
+              <>
+                <option disabled value="">
+                  Select a module...
+                </option>
+                {moduleList.map((module) => {
+                  return (
+                    <option key={module.id} value={module.id}>
+                      {module.module_name}
+                    </option>
+                  );
+                })}
+              </>
             )}
           </select>
         </label>
         <label className={styles.formLabel} htmlFor="ragStatus">
-          <select
-            name="ragStatus"
-            id="ragStatus"
-            onChange={handleChange}
-            value={formData.ragStatus}
-            className={styles.formInput}
-          >
+          <select name="ragStatus" id="ragStatus" className={styles.formInput}>
             <option value="red">Red 🔴</option>
             <option value="amber">Amber 🟠</option>
             <option value="green">Green 🟢</option>
@@ -93,13 +85,12 @@ export default function NewLearningForm({ moduleList, loading }) {
             name="learningNotes"
             id="learningNotes"
             placeholder="Thoughts worthy of noting in terms of my learning..."
-            onChange={handleChange}
-            value={formData.learningNotes}
             className={styles.formInput}
           ></textarea>
         </label>
+        {state ? <p className="error">There was an error adding your new learning</p> : null}
         <button className={styles.button} type="submit">
-          ADD
+          {isPending ? "Adding your learning" : "ADD"}
         </button>
       </form>
     </div>
