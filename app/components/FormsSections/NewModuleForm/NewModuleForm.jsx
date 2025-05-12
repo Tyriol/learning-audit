@@ -22,7 +22,7 @@ export default function NewModuleForm() {
       if (!response.ok) {
         return {
           type: "error",
-          message: "there was an error while creating your new learning entry",
+          message: "there was an error while creating your new module entry",
         };
       }
       const jsonResponse = await response.json();
@@ -62,7 +62,7 @@ export default function NewModuleForm() {
             placeholder="Description of the module..."
           />
         </label>
-        {state ? <p className="error">There was an error adding your new learning</p> : null}
+        {state ? <p className="error">There was an error adding your new module</p> : null}
         <button className={styles.button} type="submit">
           {isPending ? "Adding your new module" : "ADD"}
         </button>
