@@ -53,7 +53,7 @@ export default function NewLearningForm({ moduleList, loading }) {
           />
         </label>
         <label className={styles.formLabel} htmlFor="moduleId">
-          For which module?S
+          For which module?
           <select
             name="moduleId"
             id="moduleId"
@@ -64,13 +64,18 @@ export default function NewLearningForm({ moduleList, loading }) {
             {loading ? (
               <option value="loading">Loading list...</option>
             ) : (
-              moduleList.map((module) => {
-                return (
-                  <option key={module.id} value={module.id}>
-                    {module.module_name}
-                  </option>
-                );
-              })
+              <>
+                <option disabled value="">
+                  Select a module...
+                </option>
+                {moduleList.map((module) => {
+                  return (
+                    <option key={module.id} value={module.id}>
+                      {module.module_name}
+                    </option>
+                  );
+                })}
+              </>
             )}
           </select>
         </label>
