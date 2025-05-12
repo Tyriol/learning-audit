@@ -113,7 +113,7 @@ export default function Auth() {
           <label htmlFor="email" className={styles.formInput}>
             Email Address:
           </label>
-          <input id="email" name="email" type="email"></input>
+          <input id="email" name="email" type="email" autoComplete="username"></input>
         </div>
         {formView === "signup" ? (
           <div className={styles.input}>
