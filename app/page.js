@@ -9,17 +9,13 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import FormsSection from "./components/FormsSections/FormsSection";
 
 export default function Home() {
-  const { fetchAllData, moduleData, setModuleData, loading } = useContext(ContentContext);
+  const { fetchAllData, loading } = useContext(ContentContext);
 
   useEffect(() => {
     fetchAllData();
   }, []);
 
-  const screenToDisplay = loading ? (
-    <div>Loading...</div>
-  ) : (
-    <FormsSection moduleList={moduleData} setModuleList={setModuleData} loading={loading} />
-  );
+  const screenToDisplay = loading ? <div>Loading...</div> : <FormsSection />;
 
   return (
     <main className={styles.main}>

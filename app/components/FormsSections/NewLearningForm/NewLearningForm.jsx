@@ -1,9 +1,11 @@
 import { useContext, useActionState } from "react";
 import styles from "../NewForm.module.css";
 import { AuthContext } from "@/app/context/authContext";
+import { ContentContext } from "@/app/context/contentContext";
 
-export default function NewLearningForm({ moduleList, loading }) {
+export default function NewLearningForm() {
   const { user } = useContext(AuthContext);
+  const { moduleData, setModuleData, loading } = useContext(ContentContext);
   const [state, submitNewLearning, isPending] = useActionState(async (prev, formData) => {
     const learningName = formData.get("learningName");
     const moduleId = formData.get("moduleId");
@@ -27,7 +29,6 @@ export default function NewLearningForm({ moduleList, loading }) {
 
       const jsonResponse = await response.json();
       const newLearning = jsonResponse.payload;
-      console.log(state);
       alert(`New Learning ${learningName} added ... this message will be improved soon!`);
     } catch (err) {
       console.error(err);
@@ -53,7 +54,7 @@ export default function NewLearningForm({ moduleList, loading }) {
         </label>
         <label className={styles.formLabel} htmlFor="moduleId">
           For which module?
-          <select name="moduleId" id="moduleId" className={styles.formInput}>
+          <select name="moduleId" id="moduleId" className={styles.formInput} defaultValue="">
             {loading ? (
               <option value="loading">Loading list...</option>
             ) : (
@@ -61,7 +62,7 @@ export default function NewLearningForm({ moduleList, loading }) {
                 <option disabled value="">
                   Select a module...
                 </option>
-                {moduleList.map((module) => {
+                {moduleData.map((module) => {
                   return (
                     <option key={module.id} value={module.id}>
                       {module.module_name}
