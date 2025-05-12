@@ -17,8 +17,6 @@ export default function Home() {
 
   const screenToDisplay = loading ? (
     <div>Loading...</div>
-  ) : !moduleData || moduleData.length === 0 ? (
-    <div>No modules available.</div>
   ) : (
     <FormsSection moduleList={moduleData} setModuleList={setModuleData} loading={loading} />
   );

@@ -13,6 +13,8 @@ async function resetDatabase() {
     await pool.query(`
         CREATE TABLE users (
         id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         user_name VARCHAR(25) NOT NULL,
         email VARCHAR(50) NOT NULL,
         password VARCHAR(72) NOT NULL,
@@ -24,6 +26,8 @@ async function resetDatabase() {
     await pool.query(`
             CREATE TABLE modules (
             id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
             user_id INT REFERENCES users(id),
             module_name VARCHAR(50) NOT NULL,
             description VARCHAR(255) NOT NULL
@@ -34,6 +38,8 @@ async function resetDatabase() {
     await pool.query(`
             CREATE TABLE learnings (
             id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
             learning_name VARCHAR(50) NOT NULL,
             module_id INT REFERENCES modules(id),
             user_id INT REFERENCES users(id),
