@@ -18,6 +18,7 @@ import {
   passwordResetConfirmationTemplate,
 } from "../utils/email.js";
 import verifyAccess from "../utils/protected.js";
+import validatePassword from "../utils/passwordValidation.js";
 
 const router = express.Router();
 
@@ -32,6 +33,13 @@ router.post("/signup", async (req, res) => {
     if (!email || !user_name || !password) {
       return res.status(400).json({
         message: "All fields are required!",
+        type: "error",
+      });
+    }
+    if (!validatePassword(password)) {
+      return res.status(400).json({
+        message:
+          "Password must be 8-16 characters with at least one uppercase letter, one lowercase letter, and one number",
         type: "error",
       });
     }
