@@ -11,6 +11,12 @@ export default function NewLearningForm() {
     const moduleId = formData.get("moduleId");
     const ragStatus = formData.get("ragStatus");
     const learningNotes = formData.get("learningNotes");
+    if (!learningName || !moduleId) {
+      return {
+        type: "error",
+        message: "You must include a Learning name and select the Module it belongs to",
+      };
+    }
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
         method: "POST",
@@ -89,7 +95,7 @@ export default function NewLearningForm() {
             className={styles.formInput}
           ></textarea>
         </label>
-        {state ? <p className="error">There was an error adding your new learning</p> : null}
+        {state ? <p className="error">{state.message}</p> : null}
         <button className={styles.button} type="submit">
           {isPending ? "Adding your learning" : "ADD"}
         </button>
