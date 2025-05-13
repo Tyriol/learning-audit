@@ -10,6 +10,11 @@ export default function NewModuleForm() {
   const [state, submitNewModule, isPending] = useActionState(async (prev, formData) => {
     const moduleName = formData.get("moduleName");
     const description = formData.get("description");
+    if (!moduleName)
+      return {
+        type: "error",
+        message: "A module name is required",
+      };
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/modules`, {
         method: "POST",
@@ -20,9 +25,10 @@ export default function NewModuleForm() {
         body: JSON.stringify({ moduleName, description, userId: user.id }),
       });
       if (!response.ok) {
+        console.error(response);
         return {
           type: "error",
-          message: "there was an error while creating your new module entry",
+          message: "There was an error while creating your new module entry",
         };
       }
       const jsonResponse = await response.json();
@@ -62,7 +68,7 @@ export default function NewModuleForm() {
             placeholder="Description of the module..."
           />
         </label>
-        {state ? <p className="error">There was an error adding your new module</p> : null}
+        {state ? <p className="error">{state.message}</p> : null}
         <button className={styles.button} type="submit">
           {isPending ? "Adding your new module" : "ADD"}
         </button>
