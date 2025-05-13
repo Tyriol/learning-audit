@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import { useState, useActionState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "@/app/context/authContext";
+import validatePassword from "@/app/utils/passwordValidation";
 
 const handleSubmit = async (formView, email, username, password) => {
   try {
@@ -62,6 +63,7 @@ export default function Auth() {
     const email = formData.get("email");
     const username = formData.get("username");
     const password = formData.get("password");
+    const validPassword = validatePassword(password);
 
     //
     if (
@@ -78,6 +80,12 @@ export default function Auth() {
         type: "error",
         message: "The email address is invalid",
       };
+    } else if (!validPassword) {
+      return {
+        type: "error",
+        message:
+          "Password must be 8-16 characters with at least one uppercase letter, one lowercase letter, and one number",
+      };
     }
 
     const response = await handleSubmit(formView, email, username, password);
@@ -86,9 +94,7 @@ export default function Auth() {
       router.push("/");
     }
 
-    return {
-      response,
-    };
+    return;
   }, initialState);
 
   const toggleFormView = () => {
@@ -136,11 +142,9 @@ export default function Auth() {
             ></input>
           </div>
         ) : null}
+        {state && state.type === "error" && <p className={styles.error}>{state.message}</p>}
         <button type="submit">{submitButtonText}</button>
       </form>
-      {state !== null && state.response.type === "error" && (
-        <p className={styles.error}>{state.response.message}</p>
-      )}
       <p>
         {formView === "signin" ? "Don't have an account? " : "Already have an account? "}
         <a href="#" onClick={toggleFormView}>
