@@ -16,6 +16,7 @@ export async function getModules(userId) {
 // Helper function to create a new module
 export async function createModule(module) {
   const { moduleName, description, userId } = module;
+  if (!moduleName) throw new Error("missing module name");
   const query = `
     INSERT INTO modules (module_name, description, user_id)
     VALUES ($1, $2, $3)
