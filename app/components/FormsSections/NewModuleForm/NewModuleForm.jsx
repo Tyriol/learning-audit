@@ -68,7 +68,7 @@ export default function NewModuleForm() {
             placeholder="Description of the module..."
           />
         </label>
-        {state ? <p className="error">{state.message}</p> : null}
+        {state && state.type === "error" ? <p className="error">{state.message}</p> : null}
         <button className={styles.button} type="submit">
           {isPending ? "Adding your new module" : "ADD"}
         </button>

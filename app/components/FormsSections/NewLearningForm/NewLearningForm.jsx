@@ -95,7 +95,7 @@ export default function NewLearningForm() {
             className={styles.formInput}
           ></textarea>
         </label>
-        {state ? <p className="error">{state.message}</p> : null}
+        {state && state.type === "error" ? <p className="error">{state.message}</p> : null}
         <button className={styles.button} type="submit">
           {isPending ? "Adding your learning" : "ADD"}
         </button>
