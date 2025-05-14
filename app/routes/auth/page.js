@@ -94,7 +94,10 @@ export default function Auth() {
       router.push("/");
     }
 
-    return;
+    return {
+      type: response.type,
+      message: response.message,
+    };
   }, initialState);
 
   const toggleFormView = () => {
