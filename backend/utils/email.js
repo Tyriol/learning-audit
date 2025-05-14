@@ -23,7 +23,7 @@ export const confirmEmailTemplate = (user, url) => {
     html: `
           <h2>Welcome to The Learning Audit ${user_name}!</h2>
           <p>Please confirm your email address by clicking the link below:</p>
-          <a href="${confirmationUrl}">Confirm Email</a>
+          <a href="${url}">Confirm Email</a>
           <p>This link will expire in 24 hours.</p>
         `,
   };

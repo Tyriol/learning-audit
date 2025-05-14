@@ -8,12 +8,15 @@ import {
   createAccessToken,
   createRefreshToken,
   createPasswordResetToken,
+  createVerifyEmailToken,
   sendAccessToken,
   sendRefreshToken,
 } from "../utils/tokens.js";
 import {
   transporter,
+  createEmailVerificationUrl,
   createPasswordResetUrl,
+  confirmEmailTemplate,
   passwordResetTemplate,
   passwordResetConfirmationTemplate,
 } from "../utils/email.js";
@@ -48,29 +51,38 @@ router.post("/signup", async (req, res) => {
     if (result.rows.length > 0)
       return res.status(409).json({
         message: "User already exists! Try logging in. 😄",
-        type: "warning",
+        type: "error",
       });
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUserQuery = `INSERT INTO users (email, user_name, password)
-                          VALUES ($1, $2, $3)
+    const newUserQuery = `INSERT INTO users (email, user_name, password, email_confirmed)
+                          VALUES ($1, $2, $3, false)
                           RETURNING *`;
     const newUser = await pool.query(newUserQuery, [email, user_name, hashedPassword]);
     if (newUser.rows) {
-      const accessToken = createAccessToken(newUser.rows[0].id);
-      const refreshToken = createRefreshToken(newUser.rows[0].id);
-      const refreshTokenQuery = ` UPDATE users 
-                                SET refresh_token = $1
-                                WHERE id = $2
-                                RETURNING *`;
-      const addRefreshToken = await pool.query(refreshTokenQuery, [
-        refreshToken,
-        newUser.rows[0].id,
-      ]);
-      if (addRefreshToken.rows.length === 1) {
-        sendRefreshToken(res, refreshToken);
-        const responseData = sendAccessToken(req, res, accessToken);
-        return res.json(responseData);
-      }
+      // generate jwt email-confirmation
+      const confirmationToken = createVerifyEmailToken(newUser.rows[0].id, email);
+      console.log("Token", confirmationToken);
+
+      // generate email url
+      const confirmationUrl = createEmailVerificationUrl(newUser.rows[0].id, confirmationToken);
+      console.log("url", confirmationUrl);
+
+      // send email
+      const mailOptions = confirmEmailTemplate(newUser.rows[0], confirmationUrl);
+      console.log("options", mailOptions);
+
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          return res.status(500).json({
+            message: "Error sending email 😢",
+            type: "error",
+          });
+        }
+        return res.json({
+          message: "Email confirmation link has been sent to your email 📫",
+          type: "success",
+        });
+      });
     }
   } catch (error) {
     return res.status(500).json({

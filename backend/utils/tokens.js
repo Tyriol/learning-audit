@@ -13,8 +13,8 @@ export const createRefreshToken = (id) => {
   });
 };
 
-export const createVerifyEmailToken = (id) => {
-  return sign({ id }, process.env.VERIFY_EMAIL_TOKEN_SECRET, {
+export const createVerifyEmailToken = (id, email) => {
+  return sign({ id, email }, process.env.VERIFY_EMAIL_TOKEN_SECRET, {
     expiresIn: "1d",
   });
 };
