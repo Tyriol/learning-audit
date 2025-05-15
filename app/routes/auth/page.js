@@ -93,7 +93,6 @@ export default function Auth() {
       handleLogin(response.accesstoken);
       router.push("/");
     } else if (formView === "signup" && !isPending) {
-      console.log("signed up");
       setCheckEmail(true);
     }
     return {

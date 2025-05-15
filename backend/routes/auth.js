@@ -59,17 +59,9 @@ router.post("/signup", async (req, res) => {
                           RETURNING *`;
     const newUser = await pool.query(newUserQuery, [email, user_name, hashedPassword]);
     if (newUser.rows) {
-      // generate jwt email-confirmation
       const confirmationToken = createVerifyEmailToken(newUser.rows[0].id, email);
-      console.log("Token", confirmationToken);
-
-      // generate email url
       const confirmationUrl = createEmailVerificationUrl(newUser.rows[0].id, confirmationToken);
-      console.log("url", confirmationUrl);
-
-      // send email
       const mailOptions = confirmEmailTemplate(newUser.rows[0], confirmationUrl);
-      console.log("options", mailOptions);
 
       transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
@@ -99,7 +91,7 @@ router.post("/confirm-email", async (req, res) => {
   try {
     const isTokenValid = verify(token, process.env.VERIFY_EMAIL_TOKEN_SECRET);
 
-    if (isTokenValid.id !== id) {
+    if (isTokenValid.id !== Number(id)) {
       return res.status(500).json({
         message: "Invalid token 😢",
         type: "error",
@@ -115,11 +107,8 @@ router.post("/confirm-email", async (req, res) => {
                                   RETURNING *`;
 
     const addRefreshToken = await pool.query(refreshTokenQuery, [refreshToken, id]);
-    console.log("Add refresh token result: ", addRefreshToken);
 
     if (addRefreshToken.rows.length === 1) {
-      console.log("here!");
-
       sendRefreshToken(res, refreshToken);
       const responseData = sendAccessToken(req, res, accessToken);
       return res.json(responseData);
