@@ -121,7 +121,7 @@ export default function Auth() {
       {checkEmail ? (
         <>
           <p>Check your email to confirm your email address</p>
-          <p>If you don't see it, check your spam folder for the.learning.audit@gmail.com</p>
+          <p>If you don&apos;t see it, check your spam folder for the.learning.audit@gmail.com</p>
         </>
       ) : (
         <>

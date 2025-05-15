@@ -99,7 +99,7 @@ router.post("/confirm-email", async (req, res) => {
   try {
     const isTokenValid = verify(token, process.env.VERIFY_EMAIL_TOKEN_SECRET);
 
-    if (!isTokenValid.id === id) {
+    if (isTokenValid.id !== id) {
       return res.status(500).json({
         message: "Invalid token 😢",
         type: "error",
