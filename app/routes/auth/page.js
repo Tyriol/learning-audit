@@ -56,7 +56,7 @@ const handleSubmit = async (formView, email, username, password) => {
 
 export default function Auth() {
   const router = useRouter();
-  const { handleLogin } = useContext(AuthContext);
+  const { handleLogin, authError } = useContext(AuthContext);
   const [formView, setFormView] = useState("signin");
   const [checkEmail, setCheckEmail] = useState(false);
   const [state, submitAction, isPending] = useActionState(async (prev, formData) => {
@@ -155,6 +155,7 @@ export default function Auth() {
               </div>
             ) : null}
             {state && state.type === "error" && <p className={styles.error}>{state.message}</p>}
+            {authError !== null && <p className={styles.error}>{authError}</p>}
             <button type="submit">{submitButtonText}</button>
           </form>
           <p>
