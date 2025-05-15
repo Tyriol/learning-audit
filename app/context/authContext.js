@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [authError, setAuthError] = useState(null);
 
   useEffect(() => {
     checkAuth();
@@ -29,8 +30,13 @@ export function AuthProvider({ children }) {
         },
         credentials: "include",
       });
+      const data = await response.json();
+      if (data.message === "User has not verified their email address 😢") {
+        setAuthError(data.message);
+        handleLogout();
+        return;
+      }
       if (response.ok) {
-        const data = await response.json();
         setIsAuthenticated(true);
         setUser(data.user);
         router.push("/");
@@ -62,6 +68,7 @@ export function AuthProvider({ children }) {
         return false;
       }
     } catch (error) {
+      setAuthError(error);
       console.error("Token refresh failed:", error);
       handleLogout();
       return false;
@@ -91,8 +98,9 @@ export function AuthProvider({ children }) {
 
   const value = {
     isAuthenticated,
-    setIsAuthenticated,
     user,
+    authError,
+    setIsAuthenticated,
     checkAuth,
     refreshToken,
     handleLogin,

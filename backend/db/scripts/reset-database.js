@@ -18,6 +18,7 @@ async function resetDatabase() {
         user_name VARCHAR(25) NOT NULL,
         email VARCHAR(50) NOT NULL,
         password VARCHAR(72) NOT NULL,
+        email_confirmed BOOLEAN,
         refresh_token VARCHAR(256)
         );
       `);
@@ -46,25 +47,6 @@ async function resetDatabase() {
             rag_status VARCHAR(5),
             learning_notes VARCHAR(255)
             );
-        `);
-
-    // Insert Data into the users table
-    await pool.query(`
-        INSERT INTO users (user_name, email, password)
-        VALUES ('Tyriol', 'ryanshaunsmith@gmail.com', 'aNoGoodPassword')
-      `);
-
-    // Insert Data into the modules table
-    await pool.query(`
-            INSERT INTO modules (module_name, user_id, description)
-            VALUES ('Onboarding', 1, 'An intro to the team, problem solving, learning to learn and high performance routines')
-        `);
-
-    // Insert data into the learnings table
-    await pool.query(`
-            INSERT INTO learnings (learning_name, module_id, user_id, rag_status, learning_notes)
-            VALUES
-                ('Problem Solving', 1, 1, 'Amber', 'Through various games and challenges like Murdle and Puzzle king')
         `);
 
     console.log("Database reset successful");

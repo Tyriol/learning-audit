@@ -33,6 +33,11 @@ const verifyAccess = async (req, res, next) => {
       message: "User does not exist 😢",
       type: "error",
     });
+  } else if (user.rows[0].email_confirmed === false) {
+    return res.status(400).json({
+      message: "User has not verified their email address 😢",
+      type: "error",
+    });
   }
   req.user = user.rows[0];
   next();

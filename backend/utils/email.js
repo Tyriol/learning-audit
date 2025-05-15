@@ -1,5 +1,8 @@
 import { createTransport } from "nodemailer";
 
+export const createEmailVerificationUrl = (id, token) =>
+  `${process.env.CLIENT_URL}/routes/auth/confirm-email/${id}/${token}`;
+
 export const createPasswordResetUrl = (id, token) =>
   `${process.env.CLIENT_URL}/routes/auth/reset-password/${id}/${token}`;
 
@@ -10,6 +13,21 @@ export const transporter = createTransport({
     pass: process.env.EMAIL_PASSWORD,
   },
 });
+
+export const confirmEmailTemplate = (user, url) => {
+  const { user_name, email } = user;
+  return {
+    from: `The Learning Audit <${process.env.EMAIL_USER}>`,
+    to: email,
+    subject: "Confirm Your Email Address",
+    html: `
+          <h2>Welcome to The Learning Audit ${user_name}!</h2>
+          <p>Please confirm your email address by clicking the link below:</p>
+          <a href="${url}">Confirm Email</a>
+          <p>This link will expire in 24 hours.</p>
+        `,
+  };
+};
 
 export const passwordResetTemplate = (user, url) => {
   const { user_name, email } = user;
