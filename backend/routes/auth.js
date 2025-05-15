@@ -93,6 +93,46 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+router.post("/confirm-email", async (req, res) => {
+  const { id, token } = req.body;
+
+  try {
+    const isTokenValid = verify(token, process.env.VERIFY_EMAIL_TOKEN_SECRET);
+
+    if (!isTokenValid.id === id) {
+      return res.status(500).json({
+        message: "Invalid token 😢",
+        type: "error",
+      });
+    }
+
+    const accessToken = createAccessToken(id);
+    const refreshToken = createRefreshToken(id);
+
+    const refreshTokenQuery = ` UPDATE users 
+                                  SET refresh_token = $1, email_confirmed = true
+                                  WHERE id = $2
+                                  RETURNING *`;
+
+    const addRefreshToken = await pool.query(refreshTokenQuery, [refreshToken, id]);
+    console.log("Add refresh token result: ", addRefreshToken);
+
+    if (addRefreshToken.rows.length === 1) {
+      console.log("here!");
+
+      sendRefreshToken(res, refreshToken);
+      const responseData = sendAccessToken(req, res, accessToken);
+      return res.json(responseData);
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error confirming email",
+      type: "error",
+      error,
+    });
+  }
+});
+
 router.post("/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
