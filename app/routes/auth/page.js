@@ -56,9 +56,9 @@ const handleSubmit = async (formView, email, username, password) => {
 
 export default function Auth() {
   const router = useRouter();
-  const { isAuthenticated, setIsAuthenticated, handleLogin } = useContext(AuthContext);
+  const { handleLogin } = useContext(AuthContext);
   const [formView, setFormView] = useState("signin");
-  const [initialState, setInitialState] = useState(null);
+  const [checkEmail, setCheckEmail] = useState(false);
   const [state, submitAction, isPending] = useActionState(async (prev, formData) => {
     const email = formData.get("email");
     const username = formData.get("username");
@@ -89,16 +89,18 @@ export default function Auth() {
     }
 
     const response = await handleSubmit(formView, email, username, password);
-    if ((formView === "signin" || formView === "signup") && response.accesstoken && !isPending) {
+    if (formView === "signin" && response.accesstoken && !isPending) {
       handleLogin(response.accesstoken);
       router.push("/");
+    } else if (formView === "signup" && !isPending) {
+      console.log("signed up");
+      setCheckEmail(true);
     }
-
     return {
       type: response.type,
       message: response.message,
     };
-  }, initialState);
+  });
 
   const toggleFormView = () => {
     setFormView(formView === "signin" ? "signup" : "signin");
@@ -116,54 +118,63 @@ export default function Auth() {
 
   return (
     <div className={styles.container}>
-      <h2>{pageTitle}</h2>
-      <form className={styles.form} action={submitAction}>
-        <div className={styles.input}>
-          <label htmlFor="email" className={styles.formInput}>
-            Email Address:
-          </label>
-          <input id="email" name="email" type="email" autoComplete="username"></input>
-        </div>
-        {formView === "signup" ? (
-          <div className={styles.input}>
-            <label htmlFor="username" className={styles.formInput}>
-              Username:
-            </label>
-            <input id="username" name="username" type="text"></input>
-          </div>
-        ) : null}
-        {formView !== "resetPassword" ? (
-          <div className={styles.input}>
-            <label htmlFor="password" className={styles.formInput}>
-              Password:
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-            ></input>
-          </div>
-        ) : null}
-        {state && state.type === "error" && <p className={styles.error}>{state.message}</p>}
-        <button type="submit">{submitButtonText}</button>
-      </form>
-      <p>
-        {formView === "signin" ? "Don't have an account? " : "Already have an account? "}
-        <a href="#" onClick={toggleFormView}>
-          {formView === "signin" ? "Sign up" : "Sign in"}
-        </a>{" "}
-        instead
-      </p>
-      {formView !== "resetPassword" ? (
-        <p>
-          Forgot your password?
-          <a href="#" onClick={() => setFormView("resetPassword")}>
-            {" "}
-            Reset it here
-          </a>
-        </p>
-      ) : null}
+      {checkEmail ? (
+        <>
+          <p>Check your email to confirm your email address</p>
+          <p>If you don't see it, check your spam folder for the.learning.audit@gmail.com</p>
+        </>
+      ) : (
+        <>
+          <h2>{pageTitle}</h2>
+          <form className={styles.form} action={submitAction}>
+            <div className={styles.input}>
+              <label htmlFor="email" className={styles.formInput}>
+                Email Address:
+              </label>
+              <input id="email" name="email" type="email" autoComplete="username"></input>
+            </div>
+            {formView === "signup" ? (
+              <div className={styles.input}>
+                <label htmlFor="username" className={styles.formInput}>
+                  Username:
+                </label>
+                <input id="username" name="username" type="text"></input>
+              </div>
+            ) : null}
+            {formView !== "resetPassword" ? (
+              <div className={styles.input}>
+                <label htmlFor="password" className={styles.formInput}>
+                  Password:
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                ></input>
+              </div>
+            ) : null}
+            {state && state.type === "error" && <p className={styles.error}>{state.message}</p>}
+            <button type="submit">{submitButtonText}</button>
+          </form>
+          <p>
+            {formView === "signin" ? "Don't have an account? " : "Already have an account? "}
+            <a href="#" onClick={toggleFormView}>
+              {formView === "signin" ? "Sign up" : "Sign in"}
+            </a>{" "}
+            instead
+          </p>
+          {formView !== "resetPassword" ? (
+            <p>
+              Forgot your password?
+              <a href="#" onClick={() => setFormView("resetPassword")}>
+                {" "}
+                Reset it here
+              </a>
+            </p>
+          ) : null}
+        </>
+      )}
     </div>
   );
 }
