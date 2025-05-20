@@ -17,7 +17,9 @@ export default function Dashboard() {
           <button>Add new module</button>
         </div>
         <div className={styles.learnings}>Some learnings</div>
-        <ModuleList className={styles.modules} />
+        <div className={styles.modules}>
+          <ModuleList />
+        </div>
       </div>
     </ProtectedRoute>
   );

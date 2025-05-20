@@ -1,34 +1,35 @@
 .display {
-    background-color: white;
-    padding: 2rem;
-    margin-top: 1.5rem;
-    border-radius: 0.5rem;
-  }
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
 
-  .uList {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1rem;
-    row-gap: 1rem;
-    list-style: none;
-  }
+.uList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+  row-gap: 1rem;
+  list-style: none;
+}
 
-  .uListItem {
-    width: 100%;
-  }
+.uListItem {
+  width: 100%;
+}
 
-  .button {
-    border: none;
-    width: 100%;
-    height: 8rem;
-    border-radius: 0.5rem;
-    color: #001524;
-    background-color: #ff7d00;
-    box-shadow:  0.5rem 0.25rem 0.25rem black;
-    padding: 0.25rem;
-  }
+.button {
+  border: none;
+  width: 100%;
+  height: 8rem;
+  border-radius: 0.5rem;
+  color: #001524;
+  background-color: #ff7d00;
+  box-shadow: 0.5rem 0.25rem 0.25rem black;
+  padding: 0.25rem;
+}
 
-  .button:hover {
-    background-color: #78290f;
-    color: #ff7d00;
-  }
+.button:hover {
+  background-color: #78290f;
+  color: #ff7d00;
+}
