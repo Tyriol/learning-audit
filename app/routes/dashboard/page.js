@@ -14,7 +14,9 @@ export default function Dashboard() {
       <div className={styles.container}>
         <div className={styles.info}>
           <h2>Hey again {user.username}</h2>
-          <button>Add new module</button>
+          <p>What are you going to focus on today</p>
+          <p>Or would you like to...</p>
+          <button>Add a new module</button>
         </div>
         <div className={styles.learnings}>Some learnings</div>
         <div className={styles.modules}>
