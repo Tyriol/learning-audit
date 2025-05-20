@@ -6,6 +6,7 @@ import ProtectedRoute from "../ProtectedRoute";
 import { AuthContext } from "@/app/context/authContext";
 
 import ModuleList from "@/app/components/ModuleList/ModuleList";
+import LearningList from "@/app/components/LearningList/LearningList";
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
@@ -18,8 +19,12 @@ export default function Dashboard() {
           <p>Or would you like to...</p>
           <button>Add a new module</button>
         </div>
-        <div className={styles.learnings}>Some learnings</div>
+        <div className={styles.learnings}>
+          <h3>Your Learnings</h3>
+          <LearningList />
+        </div>
         <div className={styles.modules}>
+          <h3>Your Modules</h3>
           <ModuleList />
         </div>
       </div>
