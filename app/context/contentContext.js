@@ -10,7 +10,7 @@ export function ContentProvider({ children }) {
   const [moduleData, setModuleData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  //   const [learningsData, setLearningsData] = useState(null);
+  const [learningData, setLearningData] = useState(null);
 
   useEffect(() => {
     fetchAllData();
@@ -25,31 +25,54 @@ export function ContentProvider({ children }) {
         await refreshToken();
         accessToken = localStorage.getItem("accesstoken");
       }
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/modules`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error: Status ${response.status}`);
-      }
-      let data = await response.json();
-      setModuleData(data.payload);
+      await fetchModules(accessToken);
+      await fetchLearnings(accessToken);
       setError(null);
     } catch (err) {
       setError(err.message);
       console.error(err);
       setModuleData(null);
+      setLearningData(null);
     } finally {
       setLoading(false);
     }
   };
 
+  const fetchModules = async (accessToken) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/modules`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error: Status ${response.status}`);
+    }
+    let data = await response.json();
+    setModuleData(data.payload);
+  };
+
+  const fetchLearnings = async (accessToken) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error: Status ${response.status}`);
+    }
+    let data = await response.json();
+    setLearningData(data.payload);
+  };
+
   const value = {
     moduleData,
+    learningData,
     setModuleData,
+    setLearningData,
     fetchAllData,
     loading,
     error,
