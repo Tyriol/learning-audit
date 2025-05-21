@@ -10,7 +10,7 @@ export function ContentProvider({ children }) {
   const [moduleData, setModuleData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [learningData, setLearningData] = useState(null);
+  const [learningData, setLearningData] = useState([]);
 
   useEffect(() => {
     fetchAllData();
