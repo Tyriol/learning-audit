@@ -23,10 +23,6 @@
   justify-content: center;
   gap: 0.5rem;
   background-color: #fff;
-
-  & button {
-    padding: 0.25rem 0.5rem;
-  }
 }
 
 .learnings {
