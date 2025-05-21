@@ -9,6 +9,8 @@ export default function LearningList() {
   const learningList = learningData.map((learning) => {
     return loading ? (
       <p>Loading</p>
+    ) : learningData.length === 0 ? (
+      <p>Add some learnings to see them here</p>
     ) : (
       <li className={styles.listItem} key={learning.id}>
         {learning.learning_name}
