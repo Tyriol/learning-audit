@@ -6,10 +6,11 @@ import { ContentContext } from "@/app/context/contentContext";
 
 export default function LearningList() {
   const { learningData, loading } = useContext(ContentContext);
-  if (learningData.length === 0) return <p>Add some learnings to see them here</p>;
   const learningList = learningData.map((learning) => {
     return loading ? (
       <p>Loading</p>
+    ) : learningData.length === 0 ? (
+      <p>Add some learnings to see them here</p>
     ) : (
       <li className={styles.listItem} key={learning.id}>
         {learning.learning_name}
