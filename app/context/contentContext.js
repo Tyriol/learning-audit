@@ -13,16 +13,21 @@ export function ContentProvider({ children }) {
   const [learningData, setLearningData] = useState([]);
 
   useEffect(() => {
-    fetchAllData();
-  }, []);
+    if (isAuthenticated) {
+      fetchAllData();
+    }
+  }, [isAuthenticated]);
 
   const fetchAllData = async () => {
-    if (!isAuthenticated) return;
     setLoading(true);
     try {
       let accessToken = localStorage.getItem("accesstoken");
-      if (!accessToken) {
-        await refreshToken();
+      if (!accessToken || !isAuthenticated) {
+        const refreshSuccessful = await refreshToken();
+        if (!refreshSuccessful) {
+          setError("Session expired. Please login again");
+          return;
+        }
         accessToken = localStorage.getItem("accesstoken");
       }
       await fetchModules(accessToken);

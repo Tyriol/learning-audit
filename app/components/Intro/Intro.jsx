@@ -4,6 +4,7 @@ import { useContext } from "react";
 
 export default function Intro() {
   const { user } = useContext(AuthContext);
+  if (!user) return <p>Loading your information...</p>;
   return (
     <>
       <h2>Hey again {user.username}</h2>
