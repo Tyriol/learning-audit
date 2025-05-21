@@ -1,6 +1,11 @@
+"use client";
+import { useContext } from "react";
+import Link from "next/link";
 import styles from "./landingPage.module.css";
+import { AuthContext } from "@/app/context/authContext";
 
 export default function LandingPage() {
+  const { isAuthenticated } = useContext(AuthContext);
   return (
     <div className={styles.container}>
       <section className={styles.heroMessage}>
@@ -11,7 +16,11 @@ export default function LandingPage() {
           <br />
           Take control of your progress with intention.
         </p>
-        <button>Start your Learning Audit now</button>
+        {!isAuthenticated ? (
+          <Link href="/routes/auth">
+            <button>Start your Learning Audit now</button>
+          </Link>
+        ) : null}
       </section>
       <section className={styles.screenshots}></section>
     </div>
