@@ -13,12 +13,14 @@ body {
   max-width: 100dvw;
   overflow-x: hidden;
   background-color: #f0f0f0;
+  height: 100%;
 }
 
 .wrapper {
+  display: grid;
   grid-template-rows: 8rem 1fr;
   width: 90%;
-  min-height: 90dvh;
+  height: 90dvh;
   margin: 1.5rem auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   border-radius: 0.5rem;

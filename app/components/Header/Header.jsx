@@ -46,6 +46,11 @@ export default function Header() {
             </Link>
           </li>
           <li>
+            <Link href="/routes/dashboard" className={styles.navLink}>
+              Dashboard
+            </Link>
+          </li>
+          <li>
             {!isAuthenticated ? (
               <Link href="/routes/auth" className={styles.navLink}>
                 Login
