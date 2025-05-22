@@ -1,7 +1,6 @@
 "use client";
 
 import styles from "./ModuleList.module.css";
-import Modal from "../Modal/Modal";
 import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { ContentContext } from "@/app/context/contentContext";
@@ -9,8 +8,6 @@ import { ContentContext } from "@/app/context/contentContext";
 export default function ModuleList() {
   const router = useRouter();
   const { moduleData, loading } = useContext(ContentContext);
-  const [moduleLearnings, setModuleLearnings] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
 
   async function handleClick(e) {
     router.push(`/routes/modules/${e.target.id}`);
@@ -38,16 +35,6 @@ export default function ModuleList() {
       ) : (
         <ul className={styles.uList}>{moduleCards}</ul>
       )}
-      <Modal
-        moduleLearnings={moduleLearnings}
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        title={module.module_name}
-      >
-        {moduleLearnings.map((learning) => {
-          return <li key={learning.id}>{learning.learning_name}</li>;
-        })}
-      </Modal>
     </section>
   );
 }
