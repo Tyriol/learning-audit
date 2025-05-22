@@ -17,6 +17,11 @@ router.get("/api/modules/", verifyAccess, async (req, res) => {
         status: "success",
         payload: modules,
       });
+    } else {
+      res.status(401).json({
+        status: "failure",
+        payload: "You don't have access to this resource",
+      });
     }
   } catch (e) {
     console.error(e);
@@ -53,6 +58,11 @@ router.get("/api/learnings/", verifyAccess, async (req, res) => {
       res.status(200).json({
         status: "success",
         payload: learnings,
+      });
+    } else {
+      res.status(401).json({
+        status: "failure",
+        payload: "You don't have access to this resource",
       });
     }
   } catch (e) {
