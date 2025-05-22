@@ -17,6 +17,11 @@ router.get("/api/modules/", verifyAccess, async (req, res) => {
         status: "success",
         payload: modules,
       });
+    } else {
+      res.status(401).json({
+        status: "failure",
+        payload: "You don't have access to this resource",
+      });
     }
   } catch (e) {
     console.error(e);
@@ -45,13 +50,21 @@ router.post("/api/modules/", async (req, res) => {
 });
 
 // route handler to get all learnings
-router.get("/api/learnings/", async (req, res) => {
+router.get("/api/learnings/", verifyAccess, async (req, res) => {
+  const user = req.user;
   try {
-    const learnings = await getLearnings();
-    res.status(200).json({
-      status: "success",
-      payload: learnings,
-    });
+    if (user) {
+      const learnings = await getLearnings(user.id);
+      res.status(200).json({
+        status: "success",
+        payload: learnings,
+      });
+    } else {
+      res.status(401).json({
+        status: "failure",
+        payload: "You don't have access to this resource",
+      });
+    }
   } catch (e) {
     console.error(e);
     res.status(500).json({

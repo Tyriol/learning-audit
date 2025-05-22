@@ -36,13 +36,8 @@ export default function Header() {
       <nav>
         <ul className={styles.nav}>
           <li>
-            <Link href="/" className={styles.navLink}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link href="/routes/modules" className={styles.navLink}>
-              Modules
+            <Link href="/routes/landingPage" className={styles.navLink}>
+              LP
             </Link>
           </li>
           <li>

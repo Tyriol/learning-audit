@@ -1,35 +1,16 @@
 "use client";
 
 import styles from "./ModuleList.module.css";
-import Modal from "../Modal/Modal";
 import { useState, useContext } from "react";
+import { useRouter } from "next/navigation";
 import { ContentContext } from "@/app/context/contentContext";
 
 export default function ModuleList() {
+  const router = useRouter();
   const { moduleData, loading } = useContext(ContentContext);
-  const [moduleLearnings, setModuleLearnings] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-
-  // function to fetch learnings by module id
-  const fetchLearningsByID = async (moduleId) => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings/${moduleId}`
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error: Status ${response.status}`);
-      }
-      let learningData = await response.json();
-      setModuleLearnings(learningData.payload);
-    } catch (err) {
-      console.log(err);
-      return null;
-    }
-  };
 
   async function handleClick(e) {
-    await fetchLearningsByID(e.target.id);
-    setIsOpen(true);
+    router.push(`/routes/modules/${e.target.id}`);
   }
 
   const moduleCards = moduleData.map((module) => {
@@ -54,16 +35,6 @@ export default function ModuleList() {
       ) : (
         <ul className={styles.uList}>{moduleCards}</ul>
       )}
-      <Modal
-        moduleLearnings={moduleLearnings}
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        title={module.module_name}
-      >
-        {moduleLearnings.map((learning) => {
-          return <li key={learning.id}>{learning.learning_name}</li>;
-        })}
-      </Modal>
     </section>
   );
 }

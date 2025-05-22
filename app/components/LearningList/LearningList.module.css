@@ -10,12 +10,12 @@
 .listItem {
   height: fit-content;
   min-width: 150px;
-  padding: 0.5rem 1rem;;
+  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   align-content: center;
   color: white;
   font-weight: 500;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   transition: background-color 0.2s ease-in-out;
 }
 

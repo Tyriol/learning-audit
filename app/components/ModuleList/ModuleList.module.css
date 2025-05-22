@@ -20,11 +20,12 @@
 .button {
   border: none;
   width: 100%;
-  height: 8rem;
+  height: 4rem;
   border-radius: 0.5rem;
   color: #001524;
   background-color: #ff7d00;
-  box-shadow: 0.5rem 0.25rem 0.25rem black;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.2s ease-in-out;
   padding: 0.25rem;
 }
 
