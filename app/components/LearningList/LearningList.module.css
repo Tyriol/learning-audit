@@ -8,8 +8,22 @@
 
 .listItem {
   height: 2rem;
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   align-content: center;
   border-radius: 0.25rem;
   box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.6);
+}
+
+.red {
+  background-color: red;
+  color: rgb(252, 222, 222);
+}
+
+.amber {
+  background-color: orange;
+}
+
+.green {
+  background-color: green;
+  color: lightgreen;
 }
