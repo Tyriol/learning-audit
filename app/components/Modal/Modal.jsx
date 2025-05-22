@@ -10,7 +10,7 @@ export default function Modal({ open, onClose, children, title }) {
         <header className={styles.header}>
           <h2 className={styles.title}>{title}</h2>
           <button className={styles.button} onClick={onClose}>
-            &#215;
+            Close
           </button>
         </header>
         <section className={styles.main}>{children}</section>

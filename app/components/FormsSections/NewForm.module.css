@@ -1,33 +1,32 @@
 .wide {
-    width: 100%;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
 
-  .siteForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
+.siteForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
 
-  .formLabel {
-    margin-bottom: 1rem;
-  }
+.formLabel {
+  margin-bottom: 1rem;
+}
 
-  .formInput {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-  }
+.formInput {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
 
-  .button {
-    width: 100%;
-    padding: 0.5rem;
-    background-color: #001524;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-  }
-  
+.button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #ffecd1;
+  color: #001524;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
