@@ -1,3 +1,4 @@
+import ModuleLearnings from "@/app/components/ModuleLearnings/ModuleLearnings";
 import ProtectedRoute from "../../ProtectedRoute";
 
 export default async function Modules({ params }) {
@@ -6,7 +7,7 @@ export default async function Modules({ params }) {
 
   return (
     <ProtectedRoute>
-      <h2>{id}</h2>
+      <ModuleLearnings moduleId={Number(id)} />
     </ProtectedRoute>
   );
 }
