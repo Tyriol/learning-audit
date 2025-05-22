@@ -1,15 +1,38 @@
 .list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   list-style: none;
   gap: 0.5rem;
   padding: 1rem;
 }
 
 .listItem {
-  height: 2rem;
-  background-color: aquamarine;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
   align-content: center;
-  border-radius: 0.25rem;
-  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.6);
+  color: white;
+  font-weight: 500;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.red {
+  background-color: #c23333;
+  &:hover {
+    background-color: #e04b4b;
+  }
+}
+
+.amber {
+  background-color: #d37506;
+  &:hover {
+    background-color: #f28c00;
+  }
+}
+
+.green {
+  background-color: #198754;
+  &:hover {
+    background-color: #27a36d;
+  }
 }
