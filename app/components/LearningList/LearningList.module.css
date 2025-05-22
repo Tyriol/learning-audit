@@ -1,14 +1,16 @@
 .list {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   list-style: none;
   gap: 0.5rem;
   padding: 1rem;
+  justify-content: center;
 }
 
 .listItem {
-  height: 2rem;
-  background-color: aquamarine;
+  height: fit-content;
+  min-width: 150px;
+  padding: 0.5rem 1rem;
   align-content: center;
   border-radius: 0.25rem;
   box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.6);
