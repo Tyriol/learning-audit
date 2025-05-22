@@ -9,7 +9,7 @@ import NewLearningForm from "../FormsSections/NewLearningForm/NewLearningForm";
 export default function ModuleLearnings({ moduleId }) {
   const { moduleData, learningData } = useContext(ContentContext);
   const [isOpen, setIsOpen] = useState(false);
-  const module = moduleData.find((module) => module.id === moduleId);
+  const currentModule = moduleData.find((module) => module.id === moduleId);
   const moduleLearningsArray = learningData.filter((learning) => learning.module_id === moduleId);
   const learnings = moduleLearningsArray.map((learning) => {
     return <p key={learning.id}>{learning.learning_name}</p>;
@@ -21,8 +21,8 @@ export default function ModuleLearnings({ moduleId }) {
 
   return (
     <section className={styles.container}>
-      <h2>{module.module_name}</h2>
-      <p>{module.description}</p>
+      <h2>{currentModule.module_name}</h2>
+      <p>{currentModule.description}</p>
       <button type="button" onClick={handleClick}>
         Add a new learning
       </button>
