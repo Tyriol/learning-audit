@@ -18,11 +18,11 @@ export default function LandingPage() {
         </p>
         {!isAuthenticated ? (
           <Link href="/routes/auth">
-            <button>Start your Learning Audit now</button>
+            <button type="button">Start your Learning Audit now</button>
           </Link>
         ) : null}
       </section>
-      <section className={styles.screenshots}></section>
+      <section aria-label="Screenshots section" className={styles.screenshots}></section>
     </div>
   );
 }

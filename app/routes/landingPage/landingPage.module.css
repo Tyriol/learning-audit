@@ -1,7 +1,6 @@
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* align-items: center; */
   padding: 1rem;
 }
 
@@ -12,17 +11,17 @@
   justify-content: center;
   text-align: center;
   gap: 2rem;
+}
 
-  h1 {
-    font-size: 5rem;
-    letter-spacing: 0.25rem;
-  }
+.heroMessage h1 {
+  font-size: 5rem;
+  letter-spacing: 0.25rem;
+}
 
-  p {
-    font-size: 1.25rem;
-  }
+.heroMessage p {
+  font-size: 1.25rem;
+}
 
-  button {
-    font-size: 1.5rem;
-  }
+.heroMessage button {
+  font-size: 1.5rem;
 }
