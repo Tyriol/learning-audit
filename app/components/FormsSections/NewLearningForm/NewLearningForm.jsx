@@ -5,7 +5,7 @@ import { ContentContext } from "@/app/context/contentContext";
 
 export default function NewLearningForm() {
   const { user } = useContext(AuthContext);
-  const { moduleData, setModuleData, loading } = useContext(ContentContext);
+  const { moduleData, setLearningData, loading } = useContext(ContentContext);
   const [state, submitNewLearning, isPending] = useActionState(async (prev, formData) => {
     const learningName = formData.get("learningName");
     const moduleId = formData.get("moduleId");
@@ -35,6 +35,7 @@ export default function NewLearningForm() {
 
       const jsonResponse = await response.json();
       const newLearning = jsonResponse.payload;
+      setLearningData((prevLearnings) => [...prevLearnings, newLearning]);
       alert(`New Learning ${learningName} added ... this message will be improved soon!`);
     } catch (err) {
       console.error(err);
