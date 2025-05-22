@@ -45,13 +45,16 @@ router.post("/api/modules/", async (req, res) => {
 });
 
 // route handler to get all learnings
-router.get("/api/learnings/", async (req, res) => {
+router.get("/api/learnings/", verifyAccess, async (req, res) => {
+  const user = req.user;
   try {
-    const learnings = await getLearnings();
-    res.status(200).json({
-      status: "success",
-      payload: learnings,
-    });
+    if (user) {
+      const learnings = await getLearnings(user.id);
+      res.status(200).json({
+        status: "success",
+        payload: learnings,
+      });
+    }
   } catch (e) {
     console.error(e);
     res.status(500).json({
