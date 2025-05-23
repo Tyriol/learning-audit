@@ -1,7 +1,7 @@
 import express from "express";
 
 // helper imports
-import { getModules, createModule } from "../utils/modules.js";
+import { getModules, createModule, updateModule } from "../utils/modules.js";
 import { getLearnings, createLearning, getLearningsByModule } from "../utils/learnings.js";
 import verifyAccess from "../utils/protected.js";
 
@@ -45,6 +45,39 @@ router.post("/api/modules/", async (req, res) => {
     res.status(500).json({
       status: "failure",
       payload: e.message,
+    });
+  }
+});
+
+// update a module
+router.patch("/api/modules/:id", verifyAccess, async (req, res) => {
+  const user = req.user;
+  const id = req.params.id;
+  const moduleUpdates = req.body;
+  try {
+    if (user) {
+      const updatedModule = await updateModule(moduleUpdates, id);
+      if (!updatedModule) {
+        return res.status(404).json({
+          status: "failure",
+          payload: "Module not found",
+        });
+      }
+      res.status(200).json({
+        status: "success",
+        payload: updatedModule,
+      });
+    } else {
+      res.status(401).json({
+        status: "failure",
+        payload: "You don't have access to this resource",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: "failure",
+      payload: error,
     });
   }
 });
