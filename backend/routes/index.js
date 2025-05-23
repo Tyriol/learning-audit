@@ -2,7 +2,12 @@ import express from "express";
 
 // helper imports
 import { getModules, createModule, updateModule } from "../utils/modules.js";
-import { getLearnings, createLearning, getLearningsByModule } from "../utils/learnings.js";
+import {
+  getLearnings,
+  createLearning,
+  getLearningsByModule,
+  updateLearning,
+} from "../utils/learnings.js";
 import verifyAccess from "../utils/protected.js";
 
 const router = express.Router();
@@ -82,7 +87,7 @@ router.patch("/api/modules/:id", verifyAccess, async (req, res) => {
   }
 });
 
-// route handler to get all learnings
+// route handler to get all learnings for a specific user
 router.get("/api/learnings/", verifyAccess, async (req, res) => {
   const user = req.user;
   try {
@@ -120,6 +125,39 @@ router.post("/api/learnings/", async (req, res) => {
     res.status(500).json({
       status: "failure",
       payload: e.message,
+    });
+  }
+});
+
+// update a learning
+router.patch("/api/learnings/:id", verifyAccess, async (req, res) => {
+  const user = req.user;
+  const id = req.params.id;
+  const learningUpdates = req.body;
+  try {
+    if (user) {
+      const updatedLearning = await updateLearning(learningUpdates, id);
+      if (!updatedLearning) {
+        return res.status(404).json({
+          status: "failure",
+          payload: "Learning not found",
+        });
+      }
+      res.status(200).json({
+        status: "success",
+        payload: updatedLearning,
+      });
+    } else {
+      res.status(401).json({
+        status: "failure",
+        payload: "You don't have access to this resource",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: "failure",
+      payload: error,
     });
   }
 });
