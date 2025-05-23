@@ -19,27 +19,24 @@ export default function Header() {
 
   return (
     <header className={styles.siteHeader}>
-      <div className={styles.logoTitle}>
-        <Image
-          className={styles.siteHeaderImage}
-          src={logo}
-          alt="stacked books"
-          width={512}
-          height={512}
-        />
-        <h1 className={styles.siteHeading}>
-          The
-          <br />
-          Learning Audit
-        </h1>
-      </div>
+      <Link href="/" className={styles.headerLink}>
+        <div className={styles.logoTitle}>
+          <Image
+            className={styles.siteHeaderImage}
+            src={logo}
+            alt="stacked books"
+            width={512}
+            height={512}
+          />
+          <h1 className={styles.siteHeading}>
+            The
+            <br />
+            Learning Audit
+          </h1>
+        </div>
+      </Link>
       <nav>
         <ul className={styles.nav}>
-          <li>
-            <Link href="/routes/landingPage" className={styles.navLink}>
-              LP
-            </Link>
-          </li>
           <li>
             <Link href="/routes/dashboard" className={styles.navLink}>
               Dashboard
