@@ -39,7 +39,6 @@ export function AuthProvider({ children }) {
       if (response.ok) {
         setIsAuthenticated(true);
         setUser(data.user);
-        router.push("/");
         return true;
       } else {
         await refreshToken();
@@ -78,6 +77,7 @@ export function AuthProvider({ children }) {
   const handleLogin = (token) => {
     localStorage.setItem("accesstoken", token);
     checkAuth();
+    router.push("/routes/dashboard");
   };
 
   const handleLogout = async () => {
@@ -92,7 +92,7 @@ export function AuthProvider({ children }) {
       localStorage.removeItem("accesstoken");
       setIsAuthenticated(false);
       setUser(null);
-      router.push("/routes/auth");
+      router.push("/");
     }
   };
 

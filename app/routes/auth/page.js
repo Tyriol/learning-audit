@@ -1,7 +1,6 @@
 "use client";
 import styles from "./page.module.css";
 import { useState, useActionState, useContext } from "react";
-import { useRouter } from "next/navigation";
 import { AuthContext } from "@/app/context/authContext";
 import validatePassword from "@/app/utils/passwordValidation";
 
@@ -55,7 +54,6 @@ const handleSubmit = async (formView, email, username, password) => {
 };
 
 export default function Auth() {
-  const router = useRouter();
   const { handleLogin, authError } = useContext(AuthContext);
   const [formView, setFormView] = useState("signin");
   const [checkEmail, setCheckEmail] = useState(false);
@@ -91,7 +89,6 @@ export default function Auth() {
     const response = await handleSubmit(formView, email, username, password);
     if (formView === "signin" && response.accesstoken && !isPending) {
       handleLogin(response.accesstoken);
-      router.push("/");
     } else if (formView === "signup" && !isPending) {
       setCheckEmail(true);
     }
