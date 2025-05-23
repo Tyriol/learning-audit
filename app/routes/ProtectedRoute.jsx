@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children }) {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/routes/auth");
+      router.push("/");
     }
   }, [isAuthenticated, router]);
 

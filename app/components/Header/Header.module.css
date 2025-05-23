@@ -9,6 +9,12 @@
   color: #ffecd1;
 }
 
+.headerLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .logoTitle {
   display: flex;
   align-items: center;

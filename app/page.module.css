@@ -1,8 +1,27 @@
-.main {
+.container {
   display: grid;
-  background-color: #fff;
-  padding: 1.5em;
-  border-bottom-left-radius: 0.75em;
-  border-bottom-right-radius: 0.75em;
-  height: 100%;
+  grid-template-columns: 1fr 1fr;
+  padding: 1rem;
+}
+
+.heroMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2rem;
+}
+
+.heroMessage h1 {
+  font-size: 5rem;
+  letter-spacing: 0.25rem;
+}
+
+.heroMessage p {
+  font-size: 1.25rem;
+}
+
+.heroMessage button {
+  font-size: 1.5rem;
 }
