@@ -5,3 +5,23 @@
   align-items: center;
   gap: 1rem;
 }
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.formInput {
+  width: 300px;
+  font-weight: 600;
+  font-style: italic;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.formButtons {
+  display: flex;
+  gap: 1rem;
+}
