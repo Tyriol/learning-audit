@@ -36,3 +36,45 @@ export async function createModule(module) {
     throw error;
   }
 }
+
+export async function updateModule(module, id) {
+  const setValues = [];
+  const queryParams = [];
+  let paramCounter = 1;
+
+  if (module.moduleName !== undefined) {
+    setValues.push(`module_name = $${paramCounter}`);
+    queryParams.push(module.moduleName);
+    paramCounter++;
+  }
+
+  if (module.description !== undefined) {
+    setValues.push(`description = $${paramCounter}`);
+    queryParams.push(module.description);
+    paramCounter++;
+  }
+
+  queryParams.push(id);
+
+  const queryText = `UPDATE modules SET ${setValues.join(
+    ", "
+  )} WHERE id = $${paramCounter} RETURNING *`;
+  console.log(queryText);
+  console.log(queryParams);
+
+  try {
+    console.log("running query");
+
+    const result = await pool.query(queryText, queryParams);
+    // console.log("result: ", result);
+
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error executing query:", {
+      message: error.message,
+      stack: error.stack,
+      query,
+      values,
+    });
+  }
+}
