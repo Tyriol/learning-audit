@@ -45,6 +45,7 @@ async function resetDatabase() {
             module_id INT REFERENCES modules(id),
             user_id INT REFERENCES users(id),
             rag_status VARCHAR(5),
+            focused BOOLEAN,
             learning_notes VARCHAR(255)
             );
         `);
