@@ -58,6 +58,40 @@ export function ContentProvider({ children }) {
     setModuleData(data.payload);
   };
 
+  const updateModule = async (moduleId, moduleName, description) => {
+    let accessToken = localStorage.getItem("accesstoken");
+    if (!accessToken || !isAuthenticated) {
+      const refreshSuccessful = await refreshToken();
+      if (!refreshSuccessful) {
+        setError("Session expired. Please login again");
+        return;
+      }
+      accessToken = localStorage.getItem("accesstoken");
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/modules/${moduleId}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ moduleName, description }),
+    });
+    if (!response.ok) {
+      console.error(response);
+      return {
+        type: "error",
+        message: "There was an error while creating your new module entry",
+      };
+    }
+    const jsonResponse = await response.json();
+    const updatedModule = jsonResponse.payload;
+    setModuleData((prevModuleData) =>
+      prevModuleData.map((module) => (module.id === moduleId ? updatedModule : module))
+    );
+  };
+
   const fetchLearnings = async (accessToken) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
       method: "GET",
@@ -78,6 +112,7 @@ export function ContentProvider({ children }) {
     learningData,
     setModuleData,
     setLearningData,
+    updateModule,
     fetchAllData,
     loading,
     error,

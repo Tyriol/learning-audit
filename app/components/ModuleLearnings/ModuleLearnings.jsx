@@ -7,7 +7,7 @@ import Modal from "../Modal/Modal";
 import NewLearningForm from "../FormsSections/NewLearningForm/NewLearningForm";
 
 export default function ModuleLearnings({ moduleId }) {
-  const { moduleData, learningData } = useContext(ContentContext);
+  const { moduleData, updateModule, learningData } = useContext(ContentContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -21,19 +21,28 @@ export default function ModuleLearnings({ moduleId }) {
     setIsOpen(true);
   };
 
-  const handleEdit = () => {
-    console.log("edit!");
+  const handleEdit = async (prev, formData) => {
+    const moduleName = formData.get("moduleName");
+    const description = formData.get("description");
+
+    if (!moduleName)
+      return {
+        type: "error",
+        message: "A module name is required",
+      };
+    try {
+      await updateModule(currentModule.id, moduleName, description);
+      setIsEditing(false);
+    } catch (err) {
+      console.error(err);
+      return {
+        type: "error",
+        message: "An unexpected error occurred. Please try again.",
+      };
+    }
   };
 
   const [editState, editAction, editPending] = useActionState(handleEdit, null);
-
-  // to edit the module
-  // click an edit button ✅
-  // set isEditing to true ✅
-  // Update edit button to say update ✅
-  // when isEditing is true, replace h2 and p with inputs pre-populated with current info ✅
-  // cancel button should revert to normal state ✅
-  // save button should fire off a PATCH request to the server
 
   return (
     <section className={styles.container}>
