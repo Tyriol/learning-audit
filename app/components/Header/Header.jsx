@@ -9,11 +9,12 @@ import { ContentContext } from "@/app/context/contentContext";
 import logo from "../../../public/images/logo.png";
 
 export default function Header() {
-  const { isAuthenticated, user, handleLogout } = useContext(AuthContext);
-  const { setModuleData } = useContext(ContentContext);
+  const { isAuthenticated, handleLogout } = useContext(AuthContext);
+  const { setModuleData, setLearningData } = useContext(ContentContext);
 
   const logout = () => {
     setModuleData([]);
+    setLearningData([]);
     handleLogout();
   };
 
