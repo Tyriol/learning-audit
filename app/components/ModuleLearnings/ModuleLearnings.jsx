@@ -5,6 +5,7 @@ import { useContext, useState, useActionState } from "react";
 import { ContentContext } from "@/app/context/contentContext";
 import Modal from "../Modal/Modal";
 import NewLearningForm from "../FormsSections/NewLearningForm/NewLearningForm";
+import LearningList from "../LearningList/LearningList";
 
 export default function ModuleLearnings({ moduleId }) {
   const { moduleData, updateModule, learningData, loading } = useContext(ContentContext);
@@ -13,9 +14,6 @@ export default function ModuleLearnings({ moduleId }) {
 
   const currentModule = moduleData.find((module) => module.id === moduleId);
   const moduleLearningsArray = learningData.filter((learning) => learning.module_id === moduleId);
-  const learnings = moduleLearningsArray.map((learning) => {
-    return <p key={learning.id}>{learning.learning_name}</p>;
-  });
 
   const handleClick = () => {
     setIsOpen(true);
@@ -84,7 +82,9 @@ export default function ModuleLearnings({ moduleId }) {
       <Modal open={isOpen} onClose={() => setIsOpen(false)} title="Add a new learning">
         <NewLearningForm />
       </Modal>
-      <div>{learnings}</div>
+      <div>
+        <LearningList learningData={moduleLearningsArray} loading={loading} />
+      </div>
     </section>
   );
 }
