@@ -9,6 +9,8 @@ export default function ModuleList() {
   const router = useRouter();
   const { moduleData, loading } = useContext(ContentContext);
 
+  if (moduleData.length === 0) return <p>Add some modules to see them here</p>;
+
   async function handleClick(e) {
     router.push(`/routes/modules/${e.target.id}`);
   }
