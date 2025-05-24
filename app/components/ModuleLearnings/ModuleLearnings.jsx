@@ -7,7 +7,7 @@ import Modal from "../Modal/Modal";
 import NewLearningForm from "../FormsSections/NewLearningForm/NewLearningForm";
 
 export default function ModuleLearnings({ moduleId }) {
-  const { moduleData, updateModule, learningData } = useContext(ContentContext);
+  const { moduleData, updateModule, learningData, loading } = useContext(ContentContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -46,7 +46,9 @@ export default function ModuleLearnings({ moduleId }) {
 
   return (
     <section className={styles.container}>
-      {isEditing ? (
+      {loading ? (
+        <p>Loading</p>
+      ) : isEditing ? (
         <form className={styles.editForm} action={editAction}>
           <input
             className={styles.formInput}
