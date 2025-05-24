@@ -1,7 +1,7 @@
 import styles from "./LearningList.module.css";
 import Learning from "../Learning/Learning";
 
-export default function LearningList({ learningData, loading, showDescription }) {
+export default function LearningList({ learningData, loading }) {
   const learningList = learningData.map((learning) => {
     return loading ? (
       <p>Loading</p>
