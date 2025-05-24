@@ -25,3 +25,14 @@
 .heroMessage button {
   font-size: 1.5rem;
 }
+
+.heroImgContainer {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.heroImg {
+  width: 90%;
+  height: auto;
+}
