@@ -14,9 +14,6 @@ export default function ModuleLearnings({ moduleId }) {
 
   const currentModule = moduleData.find((module) => module.id === moduleId);
   const moduleLearningsArray = learningData.filter((learning) => learning.module_id === moduleId);
-  // const learnings = moduleLearningsArray.map((learning) => {
-  //   return <Learning learning={learning} />;
-  // });
 
   const handleClick = () => {
     setIsOpen(true);
