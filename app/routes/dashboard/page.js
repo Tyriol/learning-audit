@@ -3,7 +3,7 @@ import ProtectedRoute from "../ProtectedRoute";
 
 import Intro from "@/app/components/Intro/Intro";
 import ModuleList from "@/app/components/ModuleList/ModuleList";
-import LearningList from "@/app/components/LearningList/LearningList";
+import DashBoardLearnings from "@/app/components/DashboardLearnings/DashboardLearnings";
 
 export default function Dashboard() {
   return (
@@ -14,7 +14,7 @@ export default function Dashboard() {
         </div>
         <div className={styles.learnings}>
           <h3>Your Learnings</h3>
-          <LearningList />
+          <DashBoardLearnings />
         </div>
         <div className={styles.modules}>
           <h3>Your Modules</h3>
