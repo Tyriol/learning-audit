@@ -7,9 +7,5 @@ export default function Learning({ learning }) {
     ragStatus === "red" ? styles.red : ragStatus === "amber" ? styles.amber : styles.green;
   const listItemClass = `${styles.listItem} ${colour}`;
 
-  return (
-    <li key={id} className={listItemClass}>
-      {name}
-    </li>
-  );
+  return <li className={listItemClass}>{name}</li>;
 }
