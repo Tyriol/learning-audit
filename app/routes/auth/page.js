@@ -82,7 +82,7 @@ export default function Auth() {
       return {
         type: "error",
         message:
-          "Password must be 8-32 characters with at least one uppercase letter, one lowercase letter, and one number",
+          "Password must be 8-32 characters with at least one uppercase letter, one lowercase letter, one number and one special character from this list: #?!@$%^&*-_",
       };
     }
 
