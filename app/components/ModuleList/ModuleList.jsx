@@ -35,7 +35,13 @@ export default function ModuleList() {
       {loading ? (
         <p>Your Modules Are Loading....</p>
       ) : (
-        <ul className={styles.uList}>{moduleCards}</ul>
+        <>
+          <div>
+            <p>Click on a module to see more details</p>
+            <p>And to add learnings to that module</p>
+          </div>
+          <ul className={styles.uList}>{moduleCards}</ul>
+        </>
       )}
     </section>
   );
