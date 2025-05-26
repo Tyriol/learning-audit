@@ -38,11 +38,16 @@ export default function Header() {
       </Link>
       <nav>
         <ul className={styles.nav}>
-          <li>
-            <Link href="/routes/dashboard" className={styles.navLink}>
-              Dashboard
-            </Link>
-          </li>
+          {isAuthenticated && (
+            <>
+              <li>
+                <Link href="/routes/dashboard" className={styles.navLink}>
+                  Dashboard
+                </Link>
+              </li>
+              <li className={styles.navLink}>Help</li>
+            </>
+          )}
           <li>
             {!isAuthenticated ? (
               <Link href="/routes/auth" className={styles.navLink}>
