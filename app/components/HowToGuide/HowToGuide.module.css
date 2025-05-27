@@ -11,3 +11,8 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   background-color: #fff;
 }
+
+.helpContainer p {
+  font-style: italic;
+  font-size: 0.85rem;
+}
