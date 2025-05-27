@@ -60,14 +60,14 @@ export default function NewModuleForm() {
         </label>
         <label className={styles.formLabel} htmlFor="course-module-description">
           Module Description:
-          <input
-            className={styles.formInput}
-            type="text"
-            name="description"
-            id="description"
-            placeholder="Description of the module..."
-          />
         </label>
+        <input
+          className={styles.formInput}
+          type="text"
+          name="description"
+          id="description"
+          placeholder="Description of the module..."
+        />
         {state && state.type === "error" ? <p className="error">{state.message}</p> : null}
         <button className={styles.button} type="submit">
           {isPending ? "Adding your new module" : "ADD"}
