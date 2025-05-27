@@ -9,15 +9,10 @@ import LearningList from "../LearningList/LearningList";
 
 export default function ModuleLearnings({ moduleId }) {
   const { moduleData, updateModule, learningData, loading } = useContext(ContentContext);
-  const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   const currentModule = moduleData.find((module) => module.id === moduleId);
   const moduleLearningsArray = learningData.filter((learning) => learning.module_id === moduleId);
-
-  const handleClick = () => {
-    setIsOpen(true);
-  };
 
   const handleEdit = async (prev, formData) => {
     const moduleName = formData.get("moduleName");
@@ -76,10 +71,7 @@ export default function ModuleLearnings({ moduleId }) {
           <button onClick={() => setIsEditing(true)}>Edit</button>
         </>
       )}
-      <button type="button" onClick={handleClick}>
-        Add a new learning
-      </button>
-      <Modal open={isOpen} onClose={() => setIsOpen(false)} title="Add a new learning">
+      <Modal openButtonText="Add a new learning" closeButtonText="Finished">
         <NewLearningForm />
       </Modal>
       <div>
