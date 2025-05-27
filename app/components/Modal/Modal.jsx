@@ -1,20 +1,29 @@
+"use client";
+
 import styles from "./Modal.module.css";
 
-export default function Modal({ open, onClose, children, title }) {
-  if (!open) return null;
+import { useRef } from "react";
 
+export default function ModalDialogue({ openButtonText, closeButtonText, children }) {
+  const dialogRef = useRef(null);
+
+  const showModal = () => {
+    dialogRef.current.showModal();
+  };
   return (
     <>
-      <div className={styles.overlay} />
-      <div className={styles.modal_content}>
-        <header className={styles.header}>
-          <h2 className={styles.title}>{title}</h2>
-          <button className={styles.button} onClick={onClose}>
-            Close
+      <button onClick={showModal} type="button">
+        {openButtonText}
+      </button>
+
+      <dialog className={styles.modal} ref={dialogRef}>
+        <div className={styles.modalContainer}>
+          {children}
+          <button type="button" onClick={() => dialogRef.current.close()}>
+            {closeButtonText}
           </button>
-        </header>
-        <section className={styles.main}>{children}</section>
-      </div>
+        </div>
+      </dialog>
     </>
   );
 }
