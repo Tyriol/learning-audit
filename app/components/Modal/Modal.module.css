@@ -22,3 +22,24 @@
 .modal::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.infoButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  font-size: 0.75rem;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: inherit;
+  color: inherit;
+  font-weight: bold;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.infoButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

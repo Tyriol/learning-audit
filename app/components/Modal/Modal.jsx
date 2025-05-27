@@ -4,7 +4,7 @@ import styles from "./Modal.module.css";
 
 import { useRef } from "react";
 
-export default function ModalDialogue({ title, openButtonText, closeButtonText, children }) {
+export default function Modal({ title, openButtonText, closeButtonText, isInfoModal, children }) {
   const dialogRef = useRef(null);
 
   const showModal = () => {
@@ -15,11 +15,19 @@ export default function ModalDialogue({ title, openButtonText, closeButtonText, 
     }
   };
 
+  const openButtonView = isInfoModal ? (
+    <span onClick={showModal} className={styles.infoButton}>
+      ?
+    </span>
+  ) : (
+    <button onClick={showModal} type="button">
+      {openButtonText}
+    </button>
+  );
+
   return (
     <>
-      <button onClick={showModal} type="button">
-        {openButtonText}
-      </button>
+      {openButtonView}
 
       <dialog className={styles.modal} ref={dialogRef} aria-labelledby="modal-title">
         <div className={styles.modalContainer}>
