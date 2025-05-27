@@ -71,7 +71,7 @@ export default function ModuleLearnings({ moduleId }) {
           <button onClick={() => setIsEditing(true)}>Edit</button>
         </>
       )}
-      <Modal openButtonText="Add a new learning" closeButtonText="Finished">
+      <Modal title="Add a learning" openButtonText="Add a new learning" closeButtonText="Finished">
         <NewLearningForm />
       </Modal>
       <div>
