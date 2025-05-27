@@ -45,7 +45,6 @@ export default function Header() {
                   Dashboard
                 </Link>
               </li>
-              <li className={styles.navLink}>Help</li>
             </>
           )}
           <li>
