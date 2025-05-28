@@ -1,11 +1,25 @@
 import styles from "./Learning.module.css";
 
+import { useRef } from "react";
+
+import Modal from "../Modal/Modal";
+
 export default function Learning({ learning }) {
+  const modalRef = useRef(null);
   const { id, rag_status: ragStatus, learning_name: name } = learning;
 
   const colour =
     ragStatus === "red" ? styles.red : ragStatus === "amber" ? styles.amber : styles.green;
   const listItemClass = `${styles.listItem} ${colour}`;
 
-  return <li className={listItemClass}>{name}</li>;
+  return (
+    <>
+      <li onClick={() => modalRef.current?.showModal()} className={listItemClass}>
+        {name}
+      </li>
+      <Modal ref={modalRef} showButton={false} title={name} closeButtonText="close">
+        Test
+      </Modal>
+    </>
+  );
 }
