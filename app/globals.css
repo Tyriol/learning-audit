@@ -39,6 +39,7 @@ button {
   font-weight: bold;
   border-radius: 0.25rem;
   border: 1px solid;
+  cursor: pointer;
 }
 
 .wrapper {
