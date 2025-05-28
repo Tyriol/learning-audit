@@ -1,8 +1,11 @@
 "use client";
 import { useContext } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./page.module.css";
 import { AuthContext } from "@/app/context/authContext";
+
+import heroImage from "../public/images/hero-image.png";
 
 export default function LandingPage() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -22,7 +25,15 @@ export default function LandingPage() {
           </Link>
         ) : null}
       </section>
-      <section aria-label="Screenshots section" className={styles.screenshots}></section>
+      <section aria-label="landing page image" className={styles.heroImgContainer}>
+        <Image
+          className={styles.heroImg}
+          src={heroImage}
+          width={500}
+          height={500}
+          alt="image of a person sitting down to plan their learning"
+        />
+      </section>
     </div>
   );
 }

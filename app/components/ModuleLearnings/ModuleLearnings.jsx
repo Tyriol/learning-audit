@@ -5,21 +5,14 @@ import { useContext, useState, useActionState } from "react";
 import { ContentContext } from "@/app/context/contentContext";
 import Modal from "../Modal/Modal";
 import NewLearningForm from "../FormsSections/NewLearningForm/NewLearningForm";
+import LearningList from "../LearningList/LearningList";
 
 export default function ModuleLearnings({ moduleId }) {
-  const { moduleData, updateModule, learningData } = useContext(ContentContext);
-  const [isOpen, setIsOpen] = useState(false);
+  const { moduleData, updateModule, learningData, loading } = useContext(ContentContext);
   const [isEditing, setIsEditing] = useState(false);
 
   const currentModule = moduleData.find((module) => module.id === moduleId);
   const moduleLearningsArray = learningData.filter((learning) => learning.module_id === moduleId);
-  const learnings = moduleLearningsArray.map((learning) => {
-    return <p key={learning.id}>{learning.learning_name}</p>;
-  });
-
-  const handleClick = () => {
-    setIsOpen(true);
-  };
 
   const handleEdit = async (prev, formData) => {
     const moduleName = formData.get("moduleName");
@@ -46,7 +39,9 @@ export default function ModuleLearnings({ moduleId }) {
 
   return (
     <section className={styles.container}>
-      {isEditing ? (
+      {loading ? (
+        <p>Loading</p>
+      ) : isEditing ? (
         <form className={styles.editForm} action={editAction}>
           <input
             className={styles.formInput}
@@ -76,13 +71,12 @@ export default function ModuleLearnings({ moduleId }) {
           <button onClick={() => setIsEditing(true)}>Edit</button>
         </>
       )}
-      <button type="button" onClick={handleClick}>
-        Add a new learning
-      </button>
-      <Modal open={isOpen} onClose={() => setIsOpen(false)} title="Add a new learning">
+      <Modal title="Add a learning" openButtonText="Add a new learning" closeButtonText="Finished">
         <NewLearningForm />
       </Modal>
-      <div>{learnings}</div>
+      <div>
+        <LearningList learningData={moduleLearningsArray} loading={loading} />
+      </div>
     </section>
   );
 }

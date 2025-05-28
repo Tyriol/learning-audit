@@ -14,10 +14,7 @@ const app = express();
 // middleware
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://learning-audit.saffagonerogue.me"
-        : "http://localhost:3000",
+    origin: `${process.env.CLIENT_URL}`,
     credentials: true,
   })
 );

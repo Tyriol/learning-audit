@@ -93,4 +93,4 @@
     - RAG status (maybe a colour??)
     - Notes \*\*
 
-- add data fetching library tanstack
+    TODO: Add ability to display notes on learning
