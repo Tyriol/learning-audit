@@ -1,9 +1,9 @@
 import styles from "./LearningList.module.css";
-import Learning from "../Learning/Learning";
+import LearningPill from "../LearningPill/LearningPill";
 
 export default function LearningList({ learningData, loading }) {
   const learningList = learningData.map((learning) => {
-    return <Learning key={learning.id} learning={learning} />;
+    return <LearningPill key={learning.id} learning={learning} />;
   });
   return loading ? (
     <p>Loading</p>

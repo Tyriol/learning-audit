@@ -1,10 +1,10 @@
-import styles from "./Learning.module.css";
+import styles from "./LearningPill.module.css";
 
 import { useRef } from "react";
 
 import Modal from "../Modal/Modal";
 
-export default function Learning({ learning }) {
+export default function LearningPill({ learning }) {
   const modalRef = useRef(null);
   const { id, rag_status: ragStatus, learning_name: name } = learning;
 
