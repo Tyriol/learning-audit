@@ -2,6 +2,7 @@ import styles from "./LearningPill.module.css";
 
 import { useRef } from "react";
 
+import Learning from "../Learning/Learning";
 import Modal from "../Modal/Modal";
 
 export default function LearningPill({ learning }) {
@@ -18,7 +19,7 @@ export default function LearningPill({ learning }) {
         {name}
       </li>
       <Modal ref={modalRef} showButton={false} title={name} closeButtonText="close">
-        Test
+        <Learning learning={learning} />
       </Modal>
     </>
   );
