@@ -87,7 +87,9 @@ export async function updateLearning(learning, id) {
     paramCounter++;
   }
 
-  if (setValues.length === 0) return;
+  if (setValues.length === 0) {
+    throw new Error("No valid fields provided for update.");
+  }
 
   queryParams.push(id);
 
