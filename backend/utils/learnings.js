@@ -92,8 +92,6 @@ export async function updateLearning(learning, id) {
   const queryText = `UPDATE learnings SET ${setValues.join(
     ", "
   )} WHERE id = $${paramCounter} RETURNING *`;
-  console.log(queryText);
-  console.log(queryParams);
 
   try {
     const result = await pool.query(queryText, queryParams);

@@ -59,15 +59,9 @@ export async function updateModule(module, id) {
   const queryText = `UPDATE modules SET ${setValues.join(
     ", "
   )} WHERE id = $${paramCounter} RETURNING *`;
-  console.log(queryText);
-  console.log(queryParams);
 
   try {
-    console.log("running query");
-
     const result = await pool.query(queryText, queryParams);
-    // console.log("result: ", result);
-
     return result.rows[0];
   } catch (error) {
     console.error("Error executing query:", {
