@@ -87,6 +87,8 @@ export async function updateLearning(learning, id) {
     paramCounter++;
   }
 
+  if (setValues.length === 0) return;
+
   queryParams.push(id);
 
   const queryText = `UPDATE learnings SET ${setValues.join(
@@ -103,5 +105,6 @@ export async function updateLearning(learning, id) {
       queryText,
       queryParams,
     });
+    throw error;
   }
 }
