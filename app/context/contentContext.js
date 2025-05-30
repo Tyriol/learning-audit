@@ -120,7 +120,7 @@ export function ContentProvider({ children }) {
     setLearningData(data.payload);
   };
 
-  const updateLearning = async (learningId, LearningName, notes, ragStatus) => {
+  const updateLearning = async (learningId, learningName, learningNotes, ragStatus) => {
     let accessToken = await getAccessToken();
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings/${learningId}`,
@@ -132,7 +132,7 @@ export function ContentProvider({ children }) {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ LearningName, notes, ragStatus }),
+        body: JSON.stringify({ learningName, learningNotes, ragStatus }),
       }
     );
     if (!response.ok) {
