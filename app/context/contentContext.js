@@ -27,8 +27,8 @@ export function ContentProvider({ children }) {
         return;
       }
       accessToken = localStorage.getItem("accesstoken");
-      return accessToken;
     }
+    return accessToken;
   };
 
   const fetchAllData = async () => {
@@ -123,7 +123,7 @@ export function ContentProvider({ children }) {
   const updateLearning = async (learningId, LearningName, notes, ragStatus) => {
     let accessToken = await getAccessToken();
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/modules/${learningId}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings/${learningId}`,
       {
         method: "PATCH",
         headers: {
@@ -136,7 +136,7 @@ export function ContentProvider({ children }) {
       }
     );
     if (!response.ok) {
-      console.error(response);
+      console.error(await response.json());
       return {
         type: "error",
         message: "There was an error while updating your learning entry",
