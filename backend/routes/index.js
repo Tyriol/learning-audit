@@ -157,7 +157,7 @@ router.patch("/api/learnings/:id", verifyAccess, async (req, res) => {
     console.error(error);
     res.status(500).json({
       status: "failure",
-      payload: error,
+      payload: error.message,
     });
   }
 });
