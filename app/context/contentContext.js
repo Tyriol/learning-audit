@@ -18,6 +18,19 @@ export function ContentProvider({ children }) {
     }
   }, [isAuthenticated]);
 
+  const getAccessToken = async () => {
+    let accessToken = localStorage.getItem("accesstoken");
+    if (!accessToken || !isAuthenticated) {
+      const refreshSuccessful = await refreshToken();
+      if (!refreshSuccessful) {
+        setError("Session expired. Please login again");
+        return;
+      }
+      accessToken = localStorage.getItem("accesstoken");
+    }
+    return accessToken;
+  };
+
   const fetchAllData = async () => {
     setLoading(true);
     try {
@@ -82,7 +95,7 @@ export function ContentProvider({ children }) {
       console.error(response);
       return {
         type: "error",
-        message: "There was an error while creating your new module entry",
+        message: "There was an error while updating your module entry",
       };
     }
     const jsonResponse = await response.json();
@@ -107,12 +120,42 @@ export function ContentProvider({ children }) {
     setLearningData(data.payload);
   };
 
+  const updateLearning = async (learningId, learningName, learningNotes, ragStatus) => {
+    let accessToken = await getAccessToken();
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings/${learningId}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ learningName, learningNotes, ragStatus }),
+      }
+    );
+    if (!response.ok) {
+      console.error(await response.json());
+      return {
+        type: "error",
+        message: "There was an error while updating your learning entry",
+      };
+    }
+    const jsonResponse = await response.json();
+    const updatedLearning = jsonResponse.payload;
+    setLearningData((prevLearningData) =>
+      prevLearningData.map((learning) => (learning.id === learningId ? updatedLearning : learning))
+    );
+  };
+
   const value = {
     moduleData,
     learningData,
     setModuleData,
     setLearningData,
     updateModule,
+    updateLearning,
     fetchAllData,
     loading,
     error,

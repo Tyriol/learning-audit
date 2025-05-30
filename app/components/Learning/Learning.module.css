@@ -1,33 +1,20 @@
-.listItem {
-  height: fit-content;
-  text-align: center;
-  min-width: 150px;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  align-content: center;
-  color: white;
-  font-weight: 500;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  transition: background-color 0.2s ease-in-out;
+.editForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-.red {
-  background-color: #c23333;
-  &:hover {
-    background-color: #e04b4b;
-  }
+.formInput {
+  width: 300px;
+  font-weight: 600;
+  font-style: italic;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid black;
 }
 
-.amber {
-  background-color: #d37506;
-  &:hover {
-    background-color: #f28c00;
-  }
-}
-
-.green {
-  background-color: #198754;
-  &:hover {
-    background-color: #27a36d;
-  }
+.formButtons {
+  display: flex;
+  gap: 1rem;
 }

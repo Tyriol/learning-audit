@@ -56,3 +56,57 @@ export async function createLearning(data) {
     throw error;
   }
 }
+
+export async function updateLearning(learning, id) {
+  const { learningName, description, ragStatus, learningNotes } = learning;
+  const setValues = [];
+  const queryParams = [];
+  let paramCounter = 1;
+
+  if (learningName !== undefined) {
+    setValues.push(`learning_name = $${paramCounter}`);
+    queryParams.push(learningName);
+    paramCounter++;
+  }
+
+  if (description !== undefined) {
+    setValues.push(`description = $${paramCounter}`);
+    queryParams.push(description);
+    paramCounter++;
+  }
+
+  if (ragStatus !== undefined) {
+    setValues.push(`rag_status = $${paramCounter}`);
+    queryParams.push(ragStatus);
+    paramCounter++;
+  }
+
+  if (learningNotes !== undefined) {
+    setValues.push(`learning_notes = $${paramCounter}`);
+    queryParams.push(learningNotes);
+    paramCounter++;
+  }
+
+  if (setValues.length === 0) {
+    throw new Error("No valid fields provided for update.");
+  }
+
+  queryParams.push(id);
+
+  const queryText = `UPDATE learnings SET ${setValues.join(
+    ", "
+  )} WHERE id = $${paramCounter} RETURNING *`;
+
+  try {
+    const result = await pool.query(queryText, queryParams);
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error executing query:", {
+      message: error.message,
+      stack: error.stack,
+      queryText,
+      queryParams,
+    });
+    throw error;
+  }
+}
