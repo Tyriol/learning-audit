@@ -10,9 +10,9 @@ export default function Learning({ learning }) {
   const { id, learning_name: name, learning_notes: notes, rag_status: rag, module_id } = learning;
 
   const handleEdit = async (prev, formData) => {
-    const learningName = formData.get("learningName");
-    const notes = formData.get("notes");
-    const ragStatus = formData.get("ragStatus");
+    const updatedLearningName = formData.get("learningName");
+    const updatedNotes = formData.get("notes");
+    const updatedRagStatus = formData.get("ragStatus");
 
     if (!learningName)
       return {
@@ -20,7 +20,7 @@ export default function Learning({ learning }) {
         message: "A learning name is required",
       };
     try {
-      await updateLearning(id, learningName, notes, ragStatus);
+      await updateLearning(id, updatedLearningName, updatedNotes, updatedRagStatus);
       setIsEditing(false);
     } catch (err) {
       console.error(err);
