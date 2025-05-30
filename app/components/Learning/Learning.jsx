@@ -14,7 +14,7 @@ export default function Learning({ learning }) {
     const updatedNotes = formData.get("notes");
     const updatedRagStatus = formData.get("ragStatus");
 
-    if (!learningName)
+    if (!updatedLearningName)
       return {
         type: "error",
         message: "A learning name is required",
