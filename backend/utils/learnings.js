@@ -110,3 +110,17 @@ export async function updateLearning(learning, id) {
     throw error;
   }
 }
+
+export async function deleteLearning(id) {
+  const query = `DELETE FROM learnings WHERE id = $1 RETURNING *`;
+  try {
+    const result = await pool.query(query, [id]);
+    return result.rows;
+  } catch (e) {
+    console.error("Error executing query", {
+      message: e.message,
+      stack: e.stack,
+      query,
+    });
+  }
+}

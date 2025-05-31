@@ -7,6 +7,7 @@ import {
   createLearning,
   getLearningsByModule,
   updateLearning,
+  deleteLearning,
 } from "../utils/learnings.js";
 import verifyAccess from "../utils/protected.js";
 
@@ -155,6 +156,31 @@ router.patch("/api/learnings/:id", verifyAccess, async (req, res) => {
     }
   } catch (error) {
     console.error(error);
+    res.status(500).json({
+      status: "failure",
+      payload: error.message,
+    });
+  }
+});
+
+// delete a learning
+router.delete("/api/learnings/:id", verifyAccess, async (req, res) => {
+  const user = req.user;
+  const id = req.params.id;
+  try {
+    if (user) {
+      const deletedLearning = await deleteLearning(id);
+      if (deletedLearning.length === 1) {
+        return res.status(200).json({
+          payload: deletedLearning,
+        });
+      } else {
+        return res.status(404).json({
+          payload: "A learning with that ID could not be found",
+        });
+      }
+    }
+  } catch (error) {
     res.status(500).json({
       status: "failure",
       payload: error.message,
