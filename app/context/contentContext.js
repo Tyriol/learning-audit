@@ -149,6 +149,39 @@ export function ContentProvider({ children }) {
     );
   };
 
+  const deleteLearning = async (learningId) => {
+    let accessToken = await getAccessToken();
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings/${learningId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("There was an error while deleting your learning entry");
+      }
+      const jsonResponse = await response.json();
+      const deletedLearning = jsonResponse.payload;
+      const learningIndex = learningData.findIndex((l) => l.id === deletedLearning.id);
+      setLearningData((prevLearningData) => {
+        return [
+          ...prevLearningData.slice(0, learningIndex),
+          ...prevLearningData.slice(learningIndex + 1),
+        ];
+      });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   const value = {
     moduleData,
     learningData,
@@ -156,6 +189,7 @@ export function ContentProvider({ children }) {
     setLearningData,
     updateModule,
     updateLearning,
+    deleteLearning,
     fetchAllData,
     loading,
     error,
