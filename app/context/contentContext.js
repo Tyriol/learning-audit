@@ -167,14 +167,8 @@ export function ContentProvider({ children }) {
       if (!response.ok) {
         throw new Error("There was an error while deleting your learning entry");
       }
-      const jsonResponse = await response.json();
-      const deletedLearning = jsonResponse.payload;
-      const learningIndex = learningData.findIndex((l) => l.id === deletedLearning.id);
       setLearningData((prevLearningData) => {
-        return [
-          ...prevLearningData.slice(0, learningIndex),
-          ...prevLearningData.slice(learningIndex + 1),
-        ];
+        return prevLearningData.filter((learning) => learning.id !== learningId);
       });
     } catch (error) {
       console.error(error);
