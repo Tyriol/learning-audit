@@ -156,7 +156,7 @@ router.delete("/api/learnings/:id", verifyAccess, async (req, res) => {
     });
   }
   try {
-    const deletedLearning = await deleteLearning(id);
+    const deletedLearning = await deleteLearning(id, user.id);
     if (deletedLearning) {
       return res.status(200).json({
         payload: deletedLearning,
