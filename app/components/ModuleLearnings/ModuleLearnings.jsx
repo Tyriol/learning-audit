@@ -2,14 +2,25 @@
 
 import styles from "./ModuleLearning.module.css";
 import { useContext, useState, useActionState } from "react";
+import { useRouter } from "next/navigation";
 import { ContentContext } from "@/app/context/contentContext";
 import Modal from "../Modal/Modal";
 import NewLearningForm from "../FormsSections/NewLearningForm/NewLearningForm";
 import LearningList from "../LearningList/LearningList";
 
 export default function ModuleLearnings({ moduleId }) {
-  const { moduleData, updateModule, learningData, loading } = useContext(ContentContext);
+  const router = useRouter();
+  const { moduleData, updateModule, deleteModule, learningData, loading } =
+    useContext(ContentContext);
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const deleteButtonStyle = {
+    backgroundColor: "#c23333",
+    color: "#fff",
+    fontWeight: "400",
+    border: "1px solid #000",
+  };
 
   const currentModule = moduleData.find((module) => module.id === moduleId);
   const moduleLearningsArray = learningData.filter((learning) => learning.module_id === moduleId);
@@ -35,11 +46,21 @@ export default function ModuleLearnings({ moduleId }) {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteModule(moduleId);
+      setIsDeleting(false);
+      router.push("/routes/dashboard");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const [editState, editAction, editPending] = useActionState(handleEdit, null);
 
   return (
     <section className={styles.container}>
-      {loading ? (
+      {loading || !currentModule ? (
         <p>Loading</p>
       ) : isEditing ? (
         <form className={styles.editForm} action={editAction}>
@@ -64,11 +85,24 @@ export default function ModuleLearnings({ moduleId }) {
             </button>
           </div>
         </form>
+      ) : isDeleting ? (
+        <>
+          <p>Are you sure you want to delete this Module?</p>
+          <p>Once it&apos;s gone...it&apos;s gone</p>
+          <p>And so are all it&apos;s learnings</p>
+          <div className={styles.formButtons}>
+            <button style={deleteButtonStyle} onClick={handleDelete}>
+              Delete
+            </button>
+            <button onClick={() => setIsDeleting(false)}>Cancel</button>
+          </div>
+        </>
       ) : (
         <>
           <h2>{currentModule.module_name}</h2>
           <p>{currentModule.description}</p>
           <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button onClick={() => setIsDeleting(true)}>Delete</button>
         </>
       )}
       <Modal title="Add a learning" openButtonText="Add a new learning" closeButtonText="Finished">
