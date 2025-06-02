@@ -20,19 +20,16 @@ router.get("/api/modules/", verifyAccess, async (req, res) => {
     if (user) {
       const modules = await getModules(user.id);
       res.status(200).json({
-        status: "success",
         payload: modules,
       });
     } else {
       res.status(401).json({
-        status: "failure",
         payload: "You don't have access to this resource",
       });
     }
   } catch (e) {
     console.error(e);
     res.status(500).json({
-      status: "failure",
       payload: e,
     });
   }
@@ -44,12 +41,10 @@ router.post("/api/modules/", async (req, res) => {
   try {
     const newModule = await createModule(data);
     res.status(201).json({
-      status: "success",
       payload: newModule,
     });
   } catch (e) {
     res.status(500).json({
-      status: "failure",
       payload: e.message,
     });
   }
@@ -65,24 +60,20 @@ router.patch("/api/modules/:id", verifyAccess, async (req, res) => {
       const updatedModule = await updateModule(moduleUpdates, id);
       if (!updatedModule) {
         return res.status(404).json({
-          status: "failure",
           payload: "Module not found",
         });
       }
       res.status(200).json({
-        status: "success",
         payload: updatedModule,
       });
     } else {
       res.status(401).json({
-        status: "failure",
         payload: "You don't have access to this resource",
       });
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      status: "failure",
       payload: error,
     });
   }
@@ -95,19 +86,16 @@ router.get("/api/learnings/", verifyAccess, async (req, res) => {
     if (user) {
       const learnings = await getLearnings(user.id);
       res.status(200).json({
-        status: "success",
         payload: learnings,
       });
     } else {
       res.status(401).json({
-        status: "failure",
         payload: "You don't have access to this resource",
       });
     }
   } catch (e) {
     console.error(e);
     res.status(500).json({
-      status: "failure",
       payload: e,
     });
   }
@@ -119,12 +107,10 @@ router.post("/api/learnings/", async (req, res) => {
   try {
     const newLearning = await createLearning(data);
     res.status(201).json({
-      status: "success",
       payload: newLearning,
     });
   } catch (e) {
     res.status(500).json({
-      status: "failure",
       payload: e.message,
     });
   }
@@ -140,24 +126,20 @@ router.patch("/api/learnings/:id", verifyAccess, async (req, res) => {
       const updatedLearning = await updateLearning(learningUpdates, id);
       if (!updatedLearning) {
         return res.status(404).json({
-          status: "failure",
           payload: "Learning not found",
         });
       }
       res.status(200).json({
-        status: "success",
         payload: updatedLearning,
       });
     } else {
       res.status(401).json({
-        status: "failure",
         payload: "You don't have access to this resource",
       });
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      status: "failure",
       payload: error.message,
     });
   }
@@ -175,7 +157,7 @@ router.delete("/api/learnings/:id", verifyAccess, async (req, res) => {
   }
   try {
     const deletedLearning = await deleteLearning(id);
-    if (deletedLearning.length === 1) {
+    if (deletedLearning) {
       return res.status(200).json({
         payload: deletedLearning,
       });
@@ -186,7 +168,6 @@ router.delete("/api/learnings/:id", verifyAccess, async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({
-      status: "failure",
       payload: error.message,
     });
   }
@@ -198,13 +179,11 @@ router.get("/api/learnings/:moduleId", async (req, res) => {
   try {
     const learnings = await getLearningsByModule(moduleId);
     res.status(200).json({
-      status: "success",
       payload: learnings,
     });
   } catch (e) {
     console.error(e);
     res.status(500).json({
-      status: "failure",
       payload: e,
     });
   }
