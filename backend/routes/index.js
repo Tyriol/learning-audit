@@ -79,6 +79,28 @@ router.patch("/api/modules/:id", verifyAccess, async (req, res) => {
   }
 });
 
+// delete a module (and all it's learnings)
+router.delete("/api/modules/:id", verifyAccess, async (req, res) => {
+  const user = req.user;
+  const moduleId = req.params.id;
+  try {
+    const deletedModule = await deleteModule(moduleId, user.id);
+    if (deletedModule) {
+      return res.status(200).json({
+        payload: deletedModule,
+      });
+    } else {
+      return res.status(404).json({
+        payload: "You don't have access to this resource",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      payload: error,
+    });
+  }
+});
+
 // route handler to get all learnings for a specific user
 router.get("/api/learnings/", verifyAccess, async (req, res) => {
   const user = req.user;
@@ -150,7 +172,7 @@ router.delete("/api/learnings/:id", verifyAccess, async (req, res) => {
   const user = req.user;
   const id = req.params.id;
   if (!user) {
-    // TODO: Update all endpoints to handle falsy user
+    // TODO: Update all endpoints to handle falsy user or trust the verify access to take care of it
     return res.status(401).json({
       payload: "You don't have access to this resource",
     });
