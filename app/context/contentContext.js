@@ -105,6 +105,45 @@ export function ContentProvider({ children }) {
     );
   };
 
+  const deleteModule = async (moduleId) => {
+    setLoading(true);
+    let accessToken = await getAccessToken();
+    if (!accessToken) {
+      setLoading(false);
+      return;
+    }
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/modules/${moduleId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = errorData.payload || "There was an error while deleting your module.";
+        throw new Error(errorMessage);
+      }
+      setModuleData((prevModuleData) => {
+        return prevModuleData.filter((module) => module.id !== moduleId);
+      });
+      setLearningData((prevLearningData) => {
+        return prevLearningData.filter((learning) => learning.module_id !== moduleId);
+      });
+    } catch (error) {
+      console.error("Error deleting module:", error);
+      setError("Failed to delete the module. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const fetchLearnings = async (accessToken) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings`, {
       method: "GET",
@@ -184,6 +223,7 @@ export function ContentProvider({ children }) {
     updateModule,
     updateLearning,
     deleteLearning,
+    deleteModule,
     fetchAllData,
     loading,
     error,
