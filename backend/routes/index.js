@@ -96,7 +96,7 @@ router.delete("/api/modules/:id", verifyAccess, async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({
-      payload: error.message || "An unexpected error occured",
+      payload: error.message || "An unexpected error occurred",
     });
   }
 });
