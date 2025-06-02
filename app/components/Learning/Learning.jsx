@@ -75,7 +75,7 @@ export default function Learning({ learning }) {
   ) : isDeleting ? (
     <>
       <p>Are you sure you want to delete this learning?</p>
-      <p>Once it's gone...it's gone</p>
+      <p>Once it&apos;s gone...it&apos;s gone</p>
       <div className={styles.formButtons}>
         <button style={deleteButtonStyle} onClick={handleDelete}>
           Delete
