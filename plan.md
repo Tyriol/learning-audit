@@ -93,4 +93,4 @@
     - RAG status (maybe a colour??)
     - Notes \*\*
 
-    TODO: Add ability to display notes on learning
+- Add ability to display notes on learning ✅

@@ -149,6 +149,33 @@ export function ContentProvider({ children }) {
     );
   };
 
+  const deleteLearning = async (learningId) => {
+    let accessToken = await getAccessToken();
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/learnings/${learningId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("There was an error while deleting your learning entry");
+      }
+      setLearningData((prevLearningData) => {
+        return prevLearningData.filter((learning) => learning.id !== learningId);
+      });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   const value = {
     moduleData,
     learningData,
@@ -156,6 +183,7 @@ export function ContentProvider({ children }) {
     setLearningData,
     updateModule,
     updateLearning,
+    deleteLearning,
     fetchAllData,
     loading,
     error,
