@@ -79,7 +79,7 @@ router.patch("/api/modules/:id", verifyAccess, async (req, res) => {
   }
 });
 
-// delete a module (and all it's learnings)
+// delete a module (and all its learnings)
 router.delete("/api/modules/:id", verifyAccess, async (req, res) => {
   const user = req.user;
   const moduleId = req.params.id;
@@ -96,7 +96,7 @@ router.delete("/api/modules/:id", verifyAccess, async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({
-      payload: error,
+      payload: error.message || "An unexpected error occured",
     });
   }
 });

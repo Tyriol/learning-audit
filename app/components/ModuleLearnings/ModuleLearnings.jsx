@@ -89,7 +89,7 @@ export default function ModuleLearnings({ moduleId }) {
         <>
           <p>Are you sure you want to delete this Module?</p>
           <p>Once it&apos;s gone...it&apos;s gone</p>
-          <p>And so are all it&apos;s learnings</p>
+          <p>And so are all its learnings</p>
           <div className={styles.formButtons}>
             <button style={deleteButtonStyle} onClick={handleDelete}>
               Delete

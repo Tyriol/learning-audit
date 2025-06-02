@@ -127,7 +127,7 @@ export function ContentProvider({ children }) {
       );
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        const errorMessage = errorData.message || "There was an error while deleting your module.";
+        const errorMessage = errorData.payload || "There was an error while deleting your module.";
         throw new Error(errorMessage);
       }
       setModuleData((prevModuleData) => {
