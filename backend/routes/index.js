@@ -167,18 +167,22 @@ router.patch("/api/learnings/:id", verifyAccess, async (req, res) => {
 router.delete("/api/learnings/:id", verifyAccess, async (req, res) => {
   const user = req.user;
   const id = req.params.id;
+  if (!user) {
+    // TODO: Update all endpoints to handle falsy user
+    return res.status(401).json({
+      payload: "You don't have access to this resource",
+    });
+  }
   try {
-    if (user) {
-      const deletedLearning = await deleteLearning(id);
-      if (deletedLearning.length === 1) {
-        return res.status(200).json({
-          payload: deletedLearning,
-        });
-      } else {
-        return res.status(404).json({
-          payload: "A learning with that ID could not be found",
-        });
-      }
+    const deletedLearning = await deleteLearning(id);
+    if (deletedLearning.length === 1) {
+      return res.status(200).json({
+        payload: deletedLearning,
+      });
+    } else {
+      return res.status(404).json({
+        payload: "A learning with that ID could not be found",
+      });
     }
   } catch (error) {
     res.status(500).json({
