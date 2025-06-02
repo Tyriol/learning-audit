@@ -133,6 +133,9 @@ export function ContentProvider({ children }) {
       setModuleData((prevModuleData) => {
         return prevModuleData.filter((module) => module.id !== moduleId);
       });
+      setLearningData((prevLearningData) => {
+        return prevLearningData.filter((learning) => learning.module_id !== moduleId);
+      });
     } catch (error) {
       console.error("Error deleting module:", error);
       setError("Failed to delete the module. Please try again.");
