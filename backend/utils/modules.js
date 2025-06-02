@@ -72,3 +72,18 @@ export async function updateModule(module, id) {
     });
   }
 }
+
+export async function deleteModule(id, userId) {
+  const query = `DELETE FROM modules WHERE id = $1 AND user_id = $2 RETURNING *`;
+  try {
+    const result = await pool.query(query, [id, userId]);
+    return result.rows[0];
+  } catch (e) {
+    console.error("Error executing query", {
+      message: e.message,
+      stack: e.stack,
+      query,
+    });
+    throw e;
+  }
+}

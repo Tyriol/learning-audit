@@ -1,7 +1,7 @@
 import express from "express";
 
 // helper imports
-import { getModules, createModule, updateModule } from "../utils/modules.js";
+import { getModules, createModule, updateModule, deleteModule } from "../utils/modules.js";
 import {
   getLearnings,
   createLearning,
