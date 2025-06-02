@@ -13,7 +13,7 @@ export async function getLearnings(userId) {
       stack: e.stack,
       query,
     });
-    throw error;
+    throw e;
   }
 }
 
@@ -29,7 +29,7 @@ export async function getLearningsByModule(moduleId) {
       stack: e.stack,
       query,
     });
-    throw error;
+    throw e;
   }
 }
 
@@ -53,7 +53,7 @@ export async function createLearning(data) {
       query,
       newLearning,
     });
-    throw error;
+    throw e;
   }
 }
 
@@ -115,12 +115,13 @@ export async function deleteLearning(id) {
   const query = `DELETE FROM learnings WHERE id = $1 RETURNING *`;
   try {
     const result = await pool.query(query, [id]);
-    return result.rows;
+    return result.rows[0];
   } catch (e) {
     console.error("Error executing query", {
       message: e.message,
       stack: e.stack,
       query,
     });
+    throw e;
   }
 }
