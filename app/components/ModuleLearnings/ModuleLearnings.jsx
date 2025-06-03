@@ -106,7 +106,7 @@ export default function ModuleLearnings({ moduleId }) {
         </>
       )}
       <Modal title="Add a learning" openButtonText="Add a new learning" closeButtonText="Finished">
-        <NewLearningForm />
+        <NewLearningForm moduleIdProp={currentModule.id} />
       </Modal>
       <div>
         <LearningList learningData={moduleLearningsArray} loading={loading} />

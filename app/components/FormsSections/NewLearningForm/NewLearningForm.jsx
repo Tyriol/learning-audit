@@ -3,12 +3,12 @@ import styles from "../NewForm.module.css";
 import { AuthContext } from "@/app/context/authContext";
 import { ContentContext } from "@/app/context/contentContext";
 
-export default function NewLearningForm() {
+export default function NewLearningForm({ moduleIdProp }) {
   const { user } = useContext(AuthContext);
   const { moduleData, setLearningData, loading } = useContext(ContentContext);
   const [state, submitNewLearning, isPending] = useActionState(async (prev, formData) => {
     const learningName = formData.get("learningName");
-    const moduleId = formData.get("moduleId");
+    const moduleId = moduleIdProp ? moduleIdProp : formData.get("moduleId");
     const ragStatus = formData.get("ragStatus");
     const learningNotes = formData.get("learningNotes");
     if (!learningName || !moduleId) {
@@ -59,27 +59,29 @@ export default function NewLearningForm() {
             className={styles.formInput}
           />
         </label>
-        <label className={styles.formLabel} htmlFor="moduleId">
-          For which module?
-          <select name="moduleId" id="moduleId" className={styles.formInput} defaultValue="">
-            {loading ? (
-              <option value="loading">Loading list...</option>
-            ) : (
-              <>
-                <option disabled value="">
-                  Select a module...
-                </option>
-                {moduleData.map((module) => {
-                  return (
-                    <option key={module.id} value={module.id}>
-                      {module.module_name}
-                    </option>
-                  );
-                })}
-              </>
-            )}
-          </select>
-        </label>
+        {!moduleIdProp ? (
+          <label className={styles.formLabel} htmlFor="moduleId">
+            For which module?
+            <select name="moduleId" id="moduleId" className={styles.formInput} defaultValue="">
+              {loading ? (
+                <option value="loading">Loading list...</option>
+              ) : (
+                <>
+                  <option disabled value="">
+                    Select a module...
+                  </option>
+                  {moduleData.map((module) => {
+                    return (
+                      <option key={module.id} value={module.id}>
+                        {module.module_name}
+                      </option>
+                    );
+                  })}
+                </>
+              )}
+            </select>
+          </label>
+        ) : null}
         <label className={styles.formLabel} htmlFor="ragStatus">
           Confidence level?
           <select name="ragStatus" id="ragStatus" className={styles.formInput}>
