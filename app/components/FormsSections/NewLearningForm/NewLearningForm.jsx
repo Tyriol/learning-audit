@@ -50,7 +50,7 @@ export default function NewLearningForm() {
     <div className={styles.wide}>
       <form className={styles.siteForm} action={submitNewLearning}>
         <label className={styles.formLabel} htmlFor="learningName">
-          What did I learn?
+          What are you learning?
           <input
             type="text"
             name="learningName"
@@ -81,6 +81,7 @@ export default function NewLearningForm() {
           </select>
         </label>
         <label className={styles.formLabel} htmlFor="ragStatus">
+          Confidence level?
           <select name="ragStatus" id="ragStatus" className={styles.formInput}>
             <option value="red">Red 🔴</option>
             <option value="amber">Amber 🟠</option>
@@ -92,7 +93,7 @@ export default function NewLearningForm() {
             rows="3"
             name="learningNotes"
             id="learningNotes"
-            placeholder="Thoughts worthy of noting in terms of my learning..."
+            placeholder="Thoughts worthy of noting in terms of my learning, or plan for improving my confidence..."
             className={styles.formInput}
           ></textarea>
         </label>

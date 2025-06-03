@@ -12,7 +12,7 @@ export default function Intro() {
   return (
     <>
       <h2>Hey again {user.username}</h2>
-      <p>What are you going to focus on today</p>
+      <p>What are you going to focus on today?</p>
       <p>Or would you like to...</p>
       <Modal title="Add a Module" openButtonText="Add a new module" closeButtonText="Finished">
         <NewModuleForm />
