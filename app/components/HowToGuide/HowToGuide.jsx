@@ -25,7 +25,7 @@ export default function HowToGuide() {
           <li>You can edit and delete it here as well.</li>
           <li>Use this Help icon anytime to revisit guidance.</li>
         </ul>
-        <small>I'll make this look less awful soon...</small>
+        <small>I&apos;ll make this look less awful soon...</small>
       </Modal>
     </div>
   );
