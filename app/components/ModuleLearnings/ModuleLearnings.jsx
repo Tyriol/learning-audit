@@ -58,38 +58,43 @@ export default function ModuleLearnings({ moduleId }) {
 
   const [editState, editAction, editPending] = useActionState(handleEdit, null);
 
+  const editForm = (
+    <form className={styles.editForm} action={editAction}>
+      <input
+        className={styles.formInput}
+        name="moduleName"
+        defaultValue={currentModule.module_name}
+      />
+      <textarea
+        className={styles.formInput}
+        rows={3}
+        name="description"
+        defaultValue={currentModule.description}
+      ></textarea>
+      <input name="moduleId" type="hidden" value={currentModule.id} />
+      <div className={styles.formButtons}>
+        <button type="submit" disabled={editPending}>
+          {editPending ? "Saving..." : "Save"}
+        </button>
+        <button type="button" onClick={() => setIsEditing(false)}>
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
+
   return (
     <section className={styles.container}>
       {loading || !currentModule ? (
         <p>Loading</p>
       ) : isEditing ? (
-        <form className={styles.editForm} action={editAction}>
-          <input
-            className={styles.formInput}
-            name="moduleName"
-            defaultValue={currentModule.module_name}
-          />
-          <textarea
-            className={styles.formInput}
-            rows={3}
-            name="description"
-            defaultValue={currentModule.description}
-          ></textarea>
-          <input name="moduleId" type="hidden" value={currentModule.id} />
-          <div className={styles.formButtons}>
-            <button type="submit" disabled={editPending}>
-              {editPending ? "Saving..." : "Save"}
-            </button>
-            <button type="button" onClick={() => setIsEditing(false)}>
-              Cancel
-            </button>
-          </div>
-        </form>
+        editForm
       ) : isDeleting ? (
         <>
+          <h2>{currentModule.module_name}</h2>
           <p>Are you sure you want to delete this Module?</p>
-          <p>Once it&apos;s gone...it&apos;s gone</p>
-          <p>And so are all its learnings</p>
+          <p>Once it&apos;s gone...it&apos;s gone.</p>
+          <p>And so are all its learnings.</p>
           <div className={styles.formButtons}>
             <button style={deleteButtonStyle} onClick={handleDelete}>
               Delete
@@ -101,16 +106,22 @@ export default function ModuleLearnings({ moduleId }) {
         <>
           <h2>{currentModule.module_name}</h2>
           <p>{currentModule.description}</p>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
-          <button onClick={() => setIsDeleting(true)}>Delete</button>
+          <div className={styles.formButtons}>
+            <button onClick={() => setIsEditing(true)}>Edit</button>
+            <button onClick={() => setIsDeleting(true)}>Delete</button>
+          </div>
+          <Modal
+            title="Add a learning"
+            openButtonText="Add a new learning"
+            closeButtonText="Finished"
+          >
+            <NewLearningForm moduleIdProp={currentModule.id} />
+          </Modal>
+          <div>
+            <LearningList learningData={moduleLearningsArray} loading={loading} />
+          </div>
         </>
       )}
-      <Modal title="Add a learning" openButtonText="Add a new learning" closeButtonText="Finished">
-        <NewLearningForm moduleIdProp={currentModule.id} />
-      </Modal>
-      <div>
-        <LearningList learningData={moduleLearningsArray} loading={loading} />
-      </div>
     </section>
   );
 }
