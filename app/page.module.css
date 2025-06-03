@@ -33,6 +33,7 @@
 }
 
 .heroImg {
-  width: 90%;
-  height: auto;
+  margin: 0 auto;
+  width: auto;
+  height: 70%;
 }
