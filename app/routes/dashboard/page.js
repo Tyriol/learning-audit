@@ -9,16 +9,18 @@ export default function Dashboard() {
   return (
     <ProtectedRoute>
       <div className={styles.container}>
-        <div className={styles.info}>
-          <Intro />
-        </div>
-        <div className={styles.learnings}>
-          <h3>Your Learnings</h3>
-          <DashBoardLearnings />
-        </div>
-        <div className={styles.modules}>
-          <h3>Your Modules</h3>
-          <ModuleList />
+        <div className={styles.containerContent}>
+          <div className={styles.info}>
+            <Intro />
+          </div>
+          <div className={styles.learnings}>
+            <h3>Your Learnings</h3>
+            <DashBoardLearnings />
+          </div>
+          <div className={styles.modules}>
+            <h3>Your Modules</h3>
+            <ModuleList />
+          </div>
         </div>
       </div>
     </ProtectedRoute>

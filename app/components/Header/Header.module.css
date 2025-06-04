@@ -1,10 +1,16 @@
+.container {
+  container-type: inline-size;
+  container-name: header;
+}
+
 .siteHeader {
   display: flex;
-  height: 8rem;
+  flex-direction: column;
+  padding: 1rem;
   background-color: #15616d;
-  justify-content: space-between;
   align-items: center;
   color: #ffecd1;
+  gap: 1rem;
 }
 
 .headerLink {
@@ -26,16 +32,16 @@
 .siteHeaderImage {
   height: 4rem;
   width: auto;
-  margin: 0 2rem;
+  margin-right: 2rem;
   border-radius: 1rem;
 }
 
 .nav {
   display: flex;
-  gap: 1rem;
-  margin-right: 2rem;
-  list-style: none;
   align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none;
 }
 
 .navLink {
@@ -52,4 +58,13 @@
 
 .navLink:hover {
   border: 1px solid #ffecd1;
+}
+
+@container header (min-width: 768px) {
+  .siteHeader {
+    flex-direction: row;
+    height: 8rem;
+    justify-content: space-between;
+    padding: 0 2rem;
+  }
 }

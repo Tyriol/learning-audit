@@ -5,7 +5,7 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  transform: translate(-50%, -100%);
+  transform: translate(-20%, -100%);
   padding: 0.25rem 0.5rem;
   border-radius: 500px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);

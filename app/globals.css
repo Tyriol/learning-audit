@@ -4,7 +4,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-size: 16px;
+  font-size: 12px;
   font-family: "Nunito", sans-serif;
 }
 
@@ -44,11 +44,17 @@ button {
 
 .wrapper {
   display: grid;
-  grid-template-rows: 8rem 1fr;
+  grid-template-rows: auto 1fr;
   width: 100%;
   height: 100dvh;
 }
 
 .error {
   color: red;
+}
+
+@media (min-width: 768px) {
+  * {
+    font-size: 16px;
+  }
 }

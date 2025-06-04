@@ -1,15 +1,20 @@
 .container {
-  max-width: 500px;
+  container-type: inline-size;
+  container-name: auth-form;
+}
+
+.containerContent {
+  max-width: 90%;
   height: fit-content;
   padding: 1.5rem;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin: 1rem auto;
+}
 
-  h2 {
-    font-size: 1.25rem;
-    text-align: center;
-  }
+.containerContent h2 {
+  font-size: 1.25rem;
+  text-align: center;
 }
 
 .form {
@@ -37,8 +42,15 @@
 
 .input > input {
   padding: 0.25rem;
+  font-size: 16px;
 }
 
 .error {
   color: red;
+}
+
+@container auth-form (min-width: 500px) {
+  .containerContent {
+    max-width: 500px;
+  }
 }
