@@ -29,7 +29,7 @@ async function resetDatabase() {
             id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
             updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-            user_id INT REFERENCES users(id),
+            user_id INT REFERENCES users(id) ON DELETE CASCADE,
             module_name VARCHAR(50) NOT NULL,
             description VARCHAR(255) NOT NULL
             );
@@ -42,8 +42,8 @@ async function resetDatabase() {
             created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
             updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
             learning_name VARCHAR(50) NOT NULL,
-            module_id INT REFERENCES modules(id),
-            user_id INT REFERENCES users(id),
+            module_id INT REFERENCES modules(id) ON DELETE CASCADE,
+            user_id INT REFERENCES users(id) ON DELETE CASCADE,
             rag_status VARCHAR(5),
             focused BOOLEAN,
             learning_notes VARCHAR(255)
