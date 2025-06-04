@@ -114,64 +114,66 @@ export default function Auth() {
 
   return (
     <div className={styles.container}>
-      {checkEmail ? (
-        <>
-          <p>Check your email to confirm your email address</p>
-          <p>If you don&apos;t see it, check your spam folder for the.learning.audit@gmail.com</p>
-        </>
-      ) : (
-        <>
-          <h2>{pageTitle}</h2>
-          <form className={styles.form} action={submitAction}>
-            <div className={styles.input}>
-              <label htmlFor="email" className={styles.formInput}>
-                Email Address:
-              </label>
-              <input id="email" name="email" type="email" autoComplete="username"></input>
-            </div>
-            {formView === "signup" ? (
+      <div className={styles.containerContent}>
+        {checkEmail ? (
+          <>
+            <p>Check your email to confirm your email address</p>
+            <p>If you don&apos;t see it, check your spam folder for the.learning.audit@gmail.com</p>
+          </>
+        ) : (
+          <>
+            <h2>{pageTitle}</h2>
+            <form className={styles.form} action={submitAction}>
               <div className={styles.input}>
-                <label htmlFor="username" className={styles.formInput}>
-                  Username:
+                <label htmlFor="email" className={styles.formInput}>
+                  Email Address:
                 </label>
-                <input id="username" name="username" type="text"></input>
+                <input id="email" name="email" type="email" autoComplete="username"></input>
               </div>
-            ) : null}
-            {formView !== "resetPassword" ? (
-              <div className={styles.input}>
-                <label htmlFor="password" className={styles.formInput}>
-                  Password:
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                ></input>
-              </div>
-            ) : null}
-            {state && state.type === "error" && <p className={styles.error}>{state.message}</p>}
-            {authError !== null && <p className={styles.error}>{authError}</p>}
-            <button type="submit">{submitButtonText}</button>
-          </form>
-          <p>
-            {formView === "signin" ? "Don't have an account? " : "Already have an account? "}
-            <a href="#" onClick={toggleFormView}>
-              {formView === "signin" ? "Sign up" : "Sign in"}
-            </a>{" "}
-            instead
-          </p>
-          {formView !== "resetPassword" ? (
+              {formView === "signup" ? (
+                <div className={styles.input}>
+                  <label htmlFor="username" className={styles.formInput}>
+                    Username:
+                  </label>
+                  <input id="username" name="username" type="text"></input>
+                </div>
+              ) : null}
+              {formView !== "resetPassword" ? (
+                <div className={styles.input}>
+                  <label htmlFor="password" className={styles.formInput}>
+                    Password:
+                  </label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                  ></input>
+                </div>
+              ) : null}
+              {state && state.type === "error" && <p className={styles.error}>{state.message}</p>}
+              {authError !== null && <p className={styles.error}>{authError}</p>}
+              <button type="submit">{submitButtonText}</button>
+            </form>
             <p>
-              Forgot your password?
-              <a href="#" onClick={() => setFormView("resetPassword")}>
-                {" "}
-                Reset it here
-              </a>
+              {formView === "signin" ? "Don't have an account? " : "Already have an account? "}
+              <a href="#" onClick={toggleFormView}>
+                {formView === "signin" ? "Sign up" : "Sign in"}
+              </a>{" "}
+              instead
             </p>
-          ) : null}
-        </>
-      )}
+            {formView !== "resetPassword" ? (
+              <p>
+                Forgot your password?
+                <a href="#" onClick={() => setFormView("resetPassword")}>
+                  {" "}
+                  Reset it here
+                </a>
+              </p>
+            ) : null}
+          </>
+        )}
+      </div>
     </div>
   );
 }
