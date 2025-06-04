@@ -4,7 +4,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-size: 16px;
+  font-size: 12px;
   font-family: "Nunito", sans-serif;
 }
 
@@ -51,4 +51,10 @@ button {
 
 .error {
   color: red;
+}
+
+@media (width > 1000px) {
+  * {
+    font-size: 16px;
+  }
 }
