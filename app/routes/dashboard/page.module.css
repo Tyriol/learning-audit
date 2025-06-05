@@ -4,15 +4,17 @@
 }
 
 .containerContent {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 2fr 2fr;
   background-color: #000;
   gap: 2px;
   text-align: center;
+  height: 100%;
+  max-height: calc(100vh - 9rem);
+  overflow: hidden;
 }
 
 .info {
-  grid-area: info;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,18 +25,18 @@
 }
 
 .learnings {
-  grid-area: learnings;
   background-color: #fff;
   padding: 1rem;
+  overflow-y: scroll;
 }
 
 .modules {
-  grid-area: modules;
   background-color: #fff;
   padding: 1rem 0;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow-y: scroll;
 }
 
 @container dashboard (min-width: 768px) {
@@ -47,5 +49,17 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     height: 100%;
+  }
+
+  .info {
+    grid-area: info;
+  }
+
+  .learnings {
+    grid-area: learnings;
+  }
+
+  .modules {
+    grid-area: modules;
   }
 }
