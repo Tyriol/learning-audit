@@ -17,7 +17,7 @@ export default function ModuleList() {
 
   const moduleCards = moduleData.map((module) => {
     return (
-      <li key={module.id} className={styles.uListItem}>
+      <li key={module.id}>
         <button
           onClick={(e) => handleClick(e)}
           className={styles.button}
@@ -31,18 +31,20 @@ export default function ModuleList() {
   });
 
   return (
-    <section className={styles.display}>
-      {loading ? (
-        <p>Your Modules Are Loading....</p>
-      ) : (
-        <>
-          <div>
-            <p>Click on a module to see more details</p>
-            <p>And to add learnings to that module</p>
-          </div>
-          <ul className={styles.uList}>{moduleCards}</ul>
-        </>
-      )}
-    </section>
+    <div className={styles.container}>
+      <section className={styles.display}>
+        {loading ? (
+          <p>Your Modules Are Loading....</p>
+        ) : (
+          <>
+            <div>
+              <p>Click on a module to see more details</p>
+              <p>And to add learnings to that module</p>
+            </div>
+            <ul className={styles.uList}>{moduleCards}</ul>
+          </>
+        )}
+      </section>
+    </div>
   );
 }
