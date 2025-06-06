@@ -71,16 +71,25 @@ export default function Auth() {
       (formView !== "resetPassword" && !password)
     ) {
       return {
+        email,
+        username,
+        password,
         type: "error",
         message: "All fields are required",
       };
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       return {
+        email,
+        username,
+        password,
         type: "error",
         message: "The email address is invalid",
       };
     } else if (!validPassword) {
       return {
+        email,
+        username,
+        password,
         type: "error",
         message:
           "Password must be 8-32 characters with at least one uppercase letter, one lowercase letter, one number and one special character from this list: #?!@$%^&*-_",
@@ -125,14 +134,25 @@ export default function Auth() {
                 <label htmlFor="email" className={styles.formInput}>
                   Email Address:
                 </label>
-                <input id="email" name="email" type="email" autoComplete="username"></input>
+                <input
+                  defaultValue={state ? state.email : null}
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="username"
+                ></input>
               </div>
               {formView === "signup" ? (
                 <div className={styles.input}>
                   <label htmlFor="username" className={styles.formInput}>
                     Username:
                   </label>
-                  <input id="username" name="username" type="text"></input>
+                  <input
+                    defaultValue={state ? state.username : null}
+                    id="username"
+                    name="username"
+                    type="text"
+                  ></input>
                 </div>
               ) : null}
               {formView !== "resetPassword" ? (
@@ -141,6 +161,7 @@ export default function Auth() {
                     Password:
                   </label>
                   <input
+                    defaultValue={state ? state.password : null}
                     id="password"
                     name="password"
                     type="password"
