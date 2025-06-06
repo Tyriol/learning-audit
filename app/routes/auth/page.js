@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import { useState, useActionState, useContext } from "react";
 import { AuthContext } from "@/app/context/authContext";
 import validatePassword from "@/app/utils/passwordValidation";
+import Spinner from "@/app/components/Spinner/Spinner";
 
 const handleSubmit = async (formView, email, username, password) => {
   try {
@@ -104,13 +105,9 @@ export default function Auth() {
 
   const pageTitle =
     formView === "signin" ? "Sign In" : formView === "resetPassword" ? "Reset Password" : "Sign Up";
-  const submitButtonText = isPending
-    ? "signing in"
-    : formView === "signin"
-    ? "Sign In"
-    : formView === "resetPassword"
-    ? "Get reset link"
-    : "Sign Up";
+
+  const submitButtonText =
+    formView === "signin" ? "Sign In" : formView === "resetPassword" ? "Get reset link" : "Sign Up";
 
   return (
     <div className={styles.container}>
@@ -153,7 +150,15 @@ export default function Auth() {
               ) : null}
               {state && state.type === "error" && <p className={styles.error}>{state.message}</p>}
               {authError !== null && <p className={styles.error}>{authError}</p>}
-              <button type="submit">{submitButtonText}</button>
+              <button type="submit">
+                {isPending ? (
+                  <div className={styles.spinner}>
+                    <Spinner />
+                  </div>
+                ) : (
+                  submitButtonText
+                )}
+              </button>
             </form>
             <p>
               {formView === "signin" ? "Don't have an account? " : "Already have an account? "}
