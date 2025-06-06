@@ -1,17 +1,23 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "../context/authContext";
+import Spinner from "../components/Spinner/Spinner";
 
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, isAuthLoading } = useContext(AuthContext);
   const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/");
+    if (!isAuthLoading) {
+      if (!isAuthenticated) {
+        router.push("/");
+      } else {
+        setAuthChecked(true);
+      }
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, isAuthLoading, router]);
 
-  return isAuthenticated ? children : null;
+  return isAuthLoading || !authChecked ? <p>Loading...</p> : children;
 }
