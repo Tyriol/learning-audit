@@ -5,7 +5,7 @@ import { AuthContext } from "@/app/context/authContext";
 import validatePassword from "@/app/utils/passwordValidation";
 import Spinner from "@/app/components/Spinner/Spinner";
 
-const handleSubmit = async (formView, email, username, password) => {
+const handleSubmit = async (formView, email, name, password) => {
   try {
     let endPoint = "";
     let payload = {};
@@ -22,7 +22,7 @@ const handleSubmit = async (formView, email, username, password) => {
         endPoint = "/auth/signup";
         payload = {
           email: email,
-          user_name: username,
+          user_name: name,
           password: password,
         };
         break;
@@ -60,19 +60,15 @@ export default function Auth() {
   const [checkEmail, setCheckEmail] = useState(false);
   const [state, submitAction, isPending] = useActionState(async (prev, formData) => {
     const email = formData.get("email");
-    const username = formData.get("username");
+    const name = formData.get("name");
     const password = formData.get("password");
     const validPassword = validatePassword(password);
 
     //
-    if (
-      !email ||
-      (formView === "signup" && !username) ||
-      (formView !== "resetPassword" && !password)
-    ) {
+    if (!email || (formView === "signup" && !name) || (formView !== "resetPassword" && !password)) {
       return {
         email,
-        username,
+        name,
         password,
         type: "error",
         message: "All fields are required",
@@ -80,7 +76,7 @@ export default function Auth() {
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       return {
         email,
-        username,
+        name,
         password,
         type: "error",
         message: "The email address is invalid",
@@ -88,7 +84,7 @@ export default function Auth() {
     } else if (!validPassword) {
       return {
         email,
-        username,
+        name,
         password,
         type: "error",
         message:
@@ -96,7 +92,7 @@ export default function Auth() {
       };
     }
 
-    const response = await handleSubmit(formView, email, username, password);
+    const response = await handleSubmit(formView, email, name, password);
     if (formView === "signin" && response.accesstoken && !isPending) {
       handleLogin(response.accesstoken);
     } else if (formView === "signup" && !isPending) {
@@ -139,18 +135,18 @@ export default function Auth() {
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="username"
+                  autoComplete="name"
                 ></input>
               </div>
               {formView === "signup" ? (
                 <div className={styles.input}>
-                  <label htmlFor="username" className={styles.formInput}>
-                    Username:
+                  <label htmlFor="name" className={styles.formInput}>
+                    Name:
                   </label>
                   <input
-                    defaultValue={state ? state.username : null}
-                    id="username"
-                    name="username"
+                    defaultValue={state ? state.name : null}
+                    id="name"
+                    name="name"
                     type="text"
                   ></input>
                 </div>
