@@ -1,14 +1,13 @@
 .wide {
   width: 100%;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 0 1rem;
 }
 
 .siteForm {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
   gap: 1rem;
 }
 
@@ -21,11 +20,12 @@
 }
 
 .button {
-  width: 100%;
+  width: 75%;
   padding: 0.5rem;
-  background-color: #ffecd1;
-  color: #001524;
+  background-color: #15616d;
+  color: #ffecd1;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
