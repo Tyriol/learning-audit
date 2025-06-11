@@ -8,8 +8,9 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     checkAuth();
@@ -47,6 +48,8 @@ export function AuthProvider({ children }) {
       console.error("Authentication check failed:", error);
       setIsAuthenticated(false);
       setUser(null);
+    } finally {
+      setAuthLoading(false);
     }
   };
 
@@ -100,6 +103,7 @@ export function AuthProvider({ children }) {
     isAuthenticated,
     user,
     authError,
+    authLoading,
     setIsAuthenticated,
     checkAuth,
     refreshToken,
