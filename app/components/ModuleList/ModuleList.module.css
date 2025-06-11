@@ -24,16 +24,15 @@
   border: none;
   min-width: 150px;
   border-radius: 0.5rem;
-  color: #001524;
-  background-color: #ff7d00;
+  color: #111827;
+  background-color: #b2dfdb;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   transition: background-color 0.2s ease-in-out;
   padding: 0.5rem;
 }
 
 .button:hover {
-  background-color: #78290f;
-  color: #ff7d00;
+  background-color: #80cbc4;
 }
 
 @container module-list (min-width: 500px) {

@@ -3,8 +3,9 @@ import styles from "./page.module.css";
 import { useState, useActionState, useContext } from "react";
 import { AuthContext } from "@/app/context/authContext";
 import validatePassword from "@/app/utils/passwordValidation";
+import Spinner from "@/app/components/Spinner/Spinner";
 
-const handleSubmit = async (formView, email, username, password) => {
+const handleSubmit = async (formView, email, name, password) => {
   try {
     let endPoint = "";
     let payload = {};
@@ -21,7 +22,7 @@ const handleSubmit = async (formView, email, username, password) => {
         endPoint = "/auth/signup";
         payload = {
           email: email,
-          user_name: username,
+          user_name: name,
           password: password,
         };
         break;
@@ -59,34 +60,39 @@ export default function Auth() {
   const [checkEmail, setCheckEmail] = useState(false);
   const [state, submitAction, isPending] = useActionState(async (prev, formData) => {
     const email = formData.get("email");
-    const username = formData.get("username");
+    const name = formData.get("name");
     const password = formData.get("password");
     const validPassword = validatePassword(password);
 
     //
-    if (
-      !email ||
-      (formView === "signup" && !username) ||
-      (formView !== "resetPassword" && !password)
-    ) {
+    if (!email || (formView === "signup" && !name) || (formView !== "resetPassword" && !password)) {
       return {
+        email,
+        name,
+        password,
         type: "error",
         message: "All fields are required",
       };
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       return {
+        email,
+        name,
+        password,
         type: "error",
         message: "The email address is invalid",
       };
     } else if (!validPassword) {
       return {
+        email,
+        name,
+        password,
         type: "error",
         message:
           "Password must be 8-32 characters with at least one uppercase letter, one lowercase letter, one number and one special character from this list: #?!@$%^&*-_",
       };
     }
 
-    const response = await handleSubmit(formView, email, username, password);
+    const response = await handleSubmit(formView, email, name, password);
     if (formView === "signin" && response.accesstoken && !isPending) {
       handleLogin(response.accesstoken);
     } else if (formView === "signup" && !isPending) {
@@ -104,13 +110,9 @@ export default function Auth() {
 
   const pageTitle =
     formView === "signin" ? "Sign In" : formView === "resetPassword" ? "Reset Password" : "Sign Up";
-  const submitButtonText = isPending
-    ? "signing in"
-    : formView === "signin"
-    ? "Sign In"
-    : formView === "resetPassword"
-    ? "Get reset link"
-    : "Sign Up";
+
+  const submitButtonText =
+    formView === "signin" ? "Sign In" : formView === "resetPassword" ? "Get reset link" : "Sign Up";
 
   return (
     <div className={styles.container}>
@@ -128,14 +130,25 @@ export default function Auth() {
                 <label htmlFor="email" className={styles.formInput}>
                   Email Address:
                 </label>
-                <input id="email" name="email" type="email" autoComplete="username"></input>
+                <input
+                  defaultValue={state ? state.email : null}
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                ></input>
               </div>
               {formView === "signup" ? (
                 <div className={styles.input}>
-                  <label htmlFor="username" className={styles.formInput}>
-                    Username:
+                  <label htmlFor="name" className={styles.formInput}>
+                    Name:
                   </label>
-                  <input id="username" name="username" type="text"></input>
+                  <input
+                    defaultValue={state ? state.name : null}
+                    id="name"
+                    name="name"
+                    type="text"
+                  ></input>
                 </div>
               ) : null}
               {formView !== "resetPassword" ? (
@@ -144,6 +157,7 @@ export default function Auth() {
                     Password:
                   </label>
                   <input
+                    defaultValue={state ? state.password : null}
                     id="password"
                     name="password"
                     type="password"
@@ -153,7 +167,15 @@ export default function Auth() {
               ) : null}
               {state && state.type === "error" && <p className={styles.error}>{state.message}</p>}
               {authError !== null && <p className={styles.error}>{authError}</p>}
-              <button type="submit">{submitButtonText}</button>
+              <button type="submit">
+                {isPending ? (
+                  <div className={styles.spinner}>
+                    <Spinner />
+                  </div>
+                ) : (
+                  submitButtonText
+                )}
+              </button>
             </form>
             <p>
               {formView === "signin" ? "Don't have an account? " : "Already have an account? "}

@@ -1,4 +1,4 @@
-import { useContext, useActionState } from "react";
+import { useContext, useActionState, useState } from "react";
 import styles from "../NewForm.module.css";
 import { AuthContext } from "@/app/context/authContext";
 import { ContentContext } from "@/app/context/contentContext";
@@ -6,6 +6,7 @@ import { ContentContext } from "@/app/context/contentContext";
 export default function NewModuleForm() {
   const { user } = useContext(AuthContext);
   const { setModuleData } = useContext(ContentContext);
+  const [isModuleAdded, setIsModuleAdded] = useState(false);
 
   const [state, submitNewModule, isPending] = useActionState(async (prev, formData) => {
     const moduleName = formData.get("moduleName");
@@ -35,7 +36,7 @@ export default function NewModuleForm() {
       const newModule = jsonResponse.payload;
       setModuleData((prevModuleData) => [...prevModuleData, newModule]);
 
-      alert(`New module added: ${JSON.stringify(newModule.module_name)}`);
+      setIsModuleAdded(true);
     } catch (err) {
       console.error(err);
       return {
@@ -47,32 +48,41 @@ export default function NewModuleForm() {
 
   return (
     <div className={styles.wide}>
-      <form className={styles.siteForm} action={submitNewModule}>
-        <label className={styles.formLabel} htmlFor="moduleName">
-          Add a new course Module:
+      {isModuleAdded ? (
+        <div className={styles.successMessage}>
+          <p>Your new module was added</p>
+          <button className={styles.button} onClick={() => setIsModuleAdded(false)}>
+            Add another
+          </button>
+        </div>
+      ) : (
+        <form className={styles.siteForm} action={submitNewModule}>
+          <label className={styles.formLabel} htmlFor="moduleName">
+            Add a new course Module:
+            <input
+              className={styles.formInput}
+              type="text"
+              name="moduleName"
+              id="moduleName"
+              placeholder="Module name..."
+            />
+          </label>
+          <label className={styles.formLabel} htmlFor="course-module-description">
+            Module Description:
+          </label>
           <input
             className={styles.formInput}
             type="text"
-            name="moduleName"
-            id="moduleName"
-            placeholder="Module name..."
+            name="description"
+            id="description"
+            placeholder="Description of the module..."
           />
-        </label>
-        <label className={styles.formLabel} htmlFor="course-module-description">
-          Module Description:
-        </label>
-        <input
-          className={styles.formInput}
-          type="text"
-          name="description"
-          id="description"
-          placeholder="Description of the module..."
-        />
-        {state && state.type === "error" ? <p className="error">{state.message}</p> : null}
-        <button className={styles.button} type="submit">
-          {isPending ? "Adding your new module" : "ADD"}
-        </button>
-      </form>
+          {state && state.type === "error" ? <p className="error">{state.message}</p> : null}
+          <button className={styles.button} type="submit">
+            {isPending ? "Adding your new module" : "ADD"}
+          </button>
+        </form>
+      )}
     </div>
   );
 }

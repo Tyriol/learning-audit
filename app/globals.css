@@ -42,6 +42,11 @@ button {
   cursor: pointer;
 }
 
+.button-container {
+  display: flex;
+  gap: 1rem;
+}
+
 .wrapper {
   display: grid;
   grid-template-rows: auto 1fr;

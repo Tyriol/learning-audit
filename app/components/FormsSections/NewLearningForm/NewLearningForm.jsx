@@ -1,4 +1,4 @@
-import { useContext, useActionState } from "react";
+import { useContext, useActionState, useState } from "react";
 import styles from "../NewForm.module.css";
 import { AuthContext } from "@/app/context/authContext";
 import { ContentContext } from "@/app/context/contentContext";
@@ -6,6 +6,8 @@ import { ContentContext } from "@/app/context/contentContext";
 export default function NewLearningForm({ moduleIdProp }) {
   const { user } = useContext(AuthContext);
   const { moduleData, setLearningData, loading } = useContext(ContentContext);
+  const [isLearningAdded, setIsLearningAdded] = useState(false);
+
   const [state, submitNewLearning, isPending] = useActionState(async (prev, formData) => {
     const learningName = formData.get("learningName");
     const moduleId = moduleIdProp ? moduleIdProp : formData.get("moduleId");
@@ -36,7 +38,7 @@ export default function NewLearningForm({ moduleIdProp }) {
       const jsonResponse = await response.json();
       const newLearning = jsonResponse.payload;
       setLearningData((prevLearnings) => [...prevLearnings, newLearning]);
-      alert(`New Learning ${learningName} added ... this message will be improved soon!`);
+      setIsLearningAdded(true);
     } catch (err) {
       console.error(err);
       return {
@@ -48,62 +50,71 @@ export default function NewLearningForm({ moduleIdProp }) {
 
   return (
     <div className={styles.wide}>
-      <form className={styles.siteForm} action={submitNewLearning}>
-        <label className={styles.formLabel} htmlFor="learningName">
-          What are you learning?
-          <input
-            type="text"
-            name="learningName"
-            id="learningName"
-            placeholder="Concept, skill or language"
-            className={styles.formInput}
-          />
-        </label>
-        {!moduleIdProp ? (
-          <label className={styles.formLabel} htmlFor="moduleId">
-            For which module?
-            <select name="moduleId" id="moduleId" className={styles.formInput} defaultValue="">
-              {loading ? (
-                <option value="loading">Loading list...</option>
-              ) : (
-                <>
-                  <option disabled value="">
-                    Select a module...
-                  </option>
-                  {moduleData.map((module) => {
-                    return (
-                      <option key={module.id} value={module.id}>
-                        {module.module_name}
-                      </option>
-                    );
-                  })}
-                </>
-              )}
+      {isLearningAdded ? (
+        <div className={styles.successMessage}>
+          <p>Your new learning was added</p>
+          <button className={styles.button} onClick={() => setIsLearningAdded(false)}>
+            Add another
+          </button>
+        </div>
+      ) : (
+        <form className={styles.siteForm} action={submitNewLearning}>
+          <label className={styles.formLabel} htmlFor="learningName">
+            What are you learning?
+            <input
+              type="text"
+              name="learningName"
+              id="learningName"
+              placeholder="Concept, skill or language"
+              className={styles.formInput}
+            />
+          </label>
+          {!moduleIdProp ? (
+            <label className={styles.formLabel} htmlFor="moduleId">
+              For which module?
+              <select name="moduleId" id="moduleId" className={styles.formInput} defaultValue="">
+                {loading ? (
+                  <option value="loading">Loading list...</option>
+                ) : (
+                  <>
+                    <option disabled value="">
+                      Select a module...
+                    </option>
+                    {moduleData.map((module) => {
+                      return (
+                        <option key={module.id} value={module.id}>
+                          {module.module_name}
+                        </option>
+                      );
+                    })}
+                  </>
+                )}
+              </select>
+            </label>
+          ) : null}
+          <label className={styles.formLabel} htmlFor="ragStatus">
+            Confidence level?
+            <select name="ragStatus" id="ragStatus" className={styles.formInput}>
+              <option value="red">Red 🔴</option>
+              <option value="amber">Amber 🟠</option>
+              <option value="green">Green 🟢</option>
             </select>
           </label>
-        ) : null}
-        <label className={styles.formLabel} htmlFor="ragStatus">
-          Confidence level?
-          <select name="ragStatus" id="ragStatus" className={styles.formInput}>
-            <option value="red">Red 🔴</option>
-            <option value="amber">Amber 🟠</option>
-            <option value="green">Green 🟢</option>
-          </select>
-        </label>
-        <label className={styles.formLabel} htmlFor="learningNotes">
-          <textarea
-            rows="3"
-            name="learningNotes"
-            id="learningNotes"
-            placeholder="Thoughts worthy of noting in terms of my learning, or plan for improving my confidence..."
-            className={styles.formInput}
-          ></textarea>
-        </label>
-        {state && state.type === "error" ? <p className="error">{state.message}</p> : null}
-        <button className={styles.button} type="submit">
-          {isPending ? "Adding your learning" : "ADD"}
-        </button>
-      </form>
+          <label className={styles.formLabel} htmlFor="learningNotes">
+            <textarea
+              rows="3"
+              name="learningNotes"
+              id="learningNotes"
+              placeholder="Thoughts worthy of noting in terms of my learning, or plan for improving my confidence..."
+              className={styles.formInput}
+            ></textarea>
+          </label>
+          {state && state.type === "error" ? <p className="error">{state.message}</p> : null}
+          <button className={styles.button} type="submit">
+            {isPending ? "Adding your learning" : "ADD"}
+          </button>
+        </form>
+      )}
     </div>
   );
 }
