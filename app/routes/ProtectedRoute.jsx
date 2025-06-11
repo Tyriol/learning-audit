@@ -19,5 +19,11 @@ export default function ProtectedRoute({ children }) {
     }
   }, [isAuthenticated, isAuthLoading, router]);
 
-  return isAuthLoading || !authChecked ? <p>Loading...</p> : children;
+  return isAuthLoading || !authChecked ? (
+    <div style={{ width: "4rem", height: "4rem", margin: "auto" }}>
+      <Spinner />
+    </div>
+  ) : (
+    children
+  );
 }
