@@ -2,7 +2,7 @@ import styles from "./Spinner.module.css";
 
 export default function Spinner() {
   return (
-    <div className={styles.container}>
+    <div role="status" aria-live="polite" className={styles.container}>
       <span className={styles.loader}></span>
     </div>
   );
