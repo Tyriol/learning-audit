@@ -1,8 +1,10 @@
 "use client";
 
+import styles from "./ConfirmEmail.module.css";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "@/app/context/authContext";
+import Spinner from "../Spinner/Spinner";
 
 export default function ConfirmEmail({ id, token }) {
   const router = useRouter();
@@ -39,6 +41,11 @@ export default function ConfirmEmail({ id, token }) {
   return isError ? (
     <div>There was an issue confirming your email, try again.</div>
   ) : (
-    <div>Confirming your email...</div>
+    <div className={styles.container}>
+      <div>Confirming your email...</div>
+      <div className={styles.spinner}>
+        <Spinner />
+      </div>
+    </div>
   );
 }
