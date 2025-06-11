@@ -135,7 +135,7 @@ export default function Auth() {
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="name"
+                  autoComplete="email"
                 ></input>
               </div>
               {formView === "signup" ? (
