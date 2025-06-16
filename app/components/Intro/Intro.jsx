@@ -6,11 +6,13 @@ import NewLearningForm from "../FormsSections/NewLearningForm/NewLearningForm";
 import Modal from "../Modal/Modal";
 
 export default function Intro() {
-  const { user } = useContext(AuthContext);
+  const { user, authLoading } = useContext(AuthContext);
 
-  if (!user) return <p>Loading your information...</p>;
+  if (!user || authLoading) return <p>Loading your information...</p>;
 
-  return (
+  return authLoading ? (
+    <p>loading</p>
+  ) : (
     <>
       <h2>Hey again {user.username}</h2>
       <p>What are you going to focus on today?</p>
