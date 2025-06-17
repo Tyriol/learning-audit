@@ -49,6 +49,7 @@ export default function ModuleLearnings({ moduleId }) {
   const handleDelete = async () => {
     try {
       await deleteModule(moduleId);
+      router.push("/routes/dashboard");
     } catch (error) {
       console.error(error);
     } finally {

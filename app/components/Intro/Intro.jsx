@@ -10,9 +10,7 @@ export default function Intro() {
 
   if (!user || authLoading) return <p>Loading your information...</p>;
 
-  return authLoading ? (
-    <p>loading</p>
-  ) : (
+  return (
     <>
       <h2>Hey again {user.username}</h2>
       <p>What are you going to focus on today?</p>
