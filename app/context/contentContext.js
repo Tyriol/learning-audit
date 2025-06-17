@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect, useContext, createContext } from "react";
+import { useRouter } from "next/navigation";
 import { AuthContext } from "./authContext";
 
 export const ContentContext = createContext();
 
 export function ContentProvider({ children }) {
+  const router = useRouter();
   const { isAuthenticated, refreshToken } = useContext(AuthContext);
   const [moduleData, setModuleData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -136,6 +138,7 @@ export function ContentProvider({ children }) {
       setLearningData((prevLearningData) => {
         return prevLearningData.filter((learning) => learning.module_id !== moduleId);
       });
+      router.push("/routes/dashboard");
     } catch (error) {
       console.error("Error deleting module:", error);
       setError("Failed to delete the module. Please try again.");

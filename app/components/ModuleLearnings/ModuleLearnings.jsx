@@ -49,16 +49,16 @@ export default function ModuleLearnings({ moduleId }) {
   const handleDelete = async () => {
     try {
       await deleteModule(moduleId);
-      setIsDeleting(false);
-      router.push("/routes/dashboard");
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
   const [editState, editAction, editPending] = useActionState(handleEdit, null);
 
-  const editForm = (
+  const editForm = !currentModule ? null : (
     <form className={styles.editForm} action={editAction}>
       <input
         className={styles.formInput}
