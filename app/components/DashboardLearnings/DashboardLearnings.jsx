@@ -7,5 +7,15 @@ import LearningList from "../LearningList/LearningList";
 export default function DashBoardLearnings() {
   const { learningData, loading } = useContext(ContentContext);
 
-  return <LearningList learningData={learningData} loading={loading} />;
+  return (
+    <>
+      <p>Filter by:</p>
+      <div className="button-container">
+        <button>Focused</button>
+        <button>RAG</button>
+        <button>Module</button>
+      </div>
+      <LearningList learningData={learningData} loading={loading} />
+    </>
+  );
 }
