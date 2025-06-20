@@ -1,21 +1,39 @@
 "use client";
 
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { ContentContext } from "@/app/context/contentContext";
 import LearningList from "../LearningList/LearningList";
 
 export default function DashBoardLearnings() {
   const { learningData, loading } = useContext(ContentContext);
+  console.log(learningData);
+  const [displayedLearnings, setDisplayedLearnings] = useState(learningData);
+  const [filter, setFilter] = useState("rag");
+
+  const statusOrder = { red: 1, amber: 2, green: 3 };
+
+  useEffect(() => {
+    switch (filter) {
+      case "rag":
+        setDisplayedLearnings(
+          learningData.sort((a, b) => statusOrder[a.rag_status] - statusOrder[b.rag_status])
+        );
+        break;
+      case "module":
+        setDisplayedLearnings(learningData.sort((a, b) => a.module_id - b.module_id));
+        break;
+    }
+  }, [filter, learningData, displayedLearnings]);
 
   return (
-    <>
-      <p>Filter by:</p>
+    <div className="container">
+      <p>Filter by: {filter}</p>
       <div className="button-container">
-        <button>Focused</button>
-        <button>RAG</button>
-        <button>Module</button>
+        <button onClick={() => setFilter("focused")}>Focused</button>
+        <button onClick={() => setFilter("rag")}>RAG</button>
+        <button onClick={() => setFilter("module")}>Module</button>
       </div>
-      <LearningList learningData={learningData} loading={loading} />
-    </>
+      <LearningList learningData={displayedLearnings} loading={loading} />
+    </div>
   );
 }
