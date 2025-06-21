@@ -6,7 +6,6 @@ import LearningList from "../LearningList/LearningList";
 
 export default function DashBoardLearnings() {
   const { learningData, loading } = useContext(ContentContext);
-  console.log(learningData);
   const [displayedLearnings, setDisplayedLearnings] = useState(learningData);
   const [filter, setFilter] = useState("rag");
 
@@ -23,6 +22,7 @@ export default function DashBoardLearnings() {
         setDisplayedLearnings(learningData.sort((a, b) => a.module_id - b.module_id));
         break;
     }
+    console.log(displayedLearnings);
   }, [filter, learningData, displayedLearnings]);
 
   return (
