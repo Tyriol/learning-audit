@@ -67,7 +67,7 @@ export default function NewModuleForm() {
               placeholder="Module name..."
             />
           </label>
-          <label className={styles.formLabel} htmlFor="course-module-description">
+          <label className={styles.formLabel} htmlFor="description">
             Module Description:
           </label>
           <input
