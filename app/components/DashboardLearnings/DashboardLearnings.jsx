@@ -12,18 +12,24 @@ export default function DashBoardLearnings() {
   const statusOrder = { red: 1, amber: 2, green: 3 };
 
   useEffect(() => {
+    if (!learningData) {
+      setDisplayedLearnings([]);
+      return;
+    }
     switch (filter) {
       case "rag":
         setDisplayedLearnings(
-          learningData.sort((a, b) => statusOrder[a.rag_status] - statusOrder[b.rag_status])
+          [...learningData].sort((a, b) => statusOrder[a.rag_status] - statusOrder[b.rag_status])
         );
         break;
       case "module":
-        setDisplayedLearnings(learningData.sort((a, b) => a.module_id - b.module_id));
+        setDisplayedLearnings([...learningData].sort((a, b) => a.module_id - b.module_id));
         break;
+      default:
+        setDisplayedLearnings([...learningData]);
     }
-    console.log(displayedLearnings);
-  }, [filter, learningData, displayedLearnings]);
+    console.log(filter, displayedLearnings);
+  }, [filter, learningData]);
 
   return (
     <div className="container">
