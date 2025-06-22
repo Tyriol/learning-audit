@@ -6,7 +6,7 @@ import LearningList from "../LearningList/LearningList";
 
 export default function DashBoardLearnings() {
   const { learningData, loading } = useContext(ContentContext);
-  const [displayedLearnings, setDisplayedLearnings] = useState(learningData);
+  const [displayedLearnings, setDisplayedLearnings] = useState([]);
   const [filter, setFilter] = useState("rag");
 
   const statusOrder = { red: 1, amber: 2, green: 3 };
