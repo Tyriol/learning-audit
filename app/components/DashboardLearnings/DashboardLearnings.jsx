@@ -25,10 +25,12 @@ export default function DashBoardLearnings() {
       case "module":
         setDisplayedLearnings([...learningData].sort((a, b) => a.module_id - b.module_id));
         break;
+      case "focused":
+        setDisplayedLearnings([...learningData].filter((learning) => learning.focused));
+        break;
       default:
         setDisplayedLearnings([...learningData]);
     }
-    console.log(filter, displayedLearnings);
   }, [filter, learningData]);
 
   return (
