@@ -38,8 +38,8 @@ export async function createLearning(data) {
   const { learningName, moduleId, ragStatus, learningNotes, userId } = data;
   if (!learningName || !moduleId) throw new Error("missing learning name or module id");
   const query = `
-        INSERT INTO learnings (learning_name, module_id, rag_status, learning_notes, user_id)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO learnings (learning_name, module_id, rag_status, learning_notes, user_id, focused)
+        VALUES ($1, $2, $3, $4, $5, false)
         RETURNING *;
     `;
   const newLearning = [learningName, moduleId, ragStatus, learningNotes, userId];
