@@ -8,13 +8,25 @@ export default function Learning({ learning }) {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const { updateLearning, deleteLearning } = useContext(ContentContext);
-  const { id, learning_name: name, learning_notes: notes, rag_status: rag, module_id } = learning;
+  const {
+    id,
+    learning_name: name,
+    learning_notes: notes,
+    rag_status: rag,
+    module_id,
+    focused,
+  } = learning;
 
   const deleteButtonStyle = {
     backgroundColor: "#c23333",
     color: "#fff",
     fontWeight: "400",
     border: "1px solid #000",
+  };
+
+  const focusToggle = async () => {
+    const newFocusedState = !focused;
+    await updateLearning(id, name, notes, rag, newFocusedState);
   };
 
   const handleEdit = async (prev, formData) => {
@@ -85,7 +97,10 @@ export default function Learning({ learning }) {
     </>
   ) : (
     <>
-      <p>{rag}</p>
+      <p>RAG Status: {rag}</p>
+      <button onClick={focusToggle} className={focused ? styles.focused : ""}>
+        Focus
+      </button>
       <p>{notes}</p>
       <div className={styles.formButtons}>
         <button type="button" onClick={() => setIsEditing(true)}>

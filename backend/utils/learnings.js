@@ -38,8 +38,8 @@ export async function createLearning(data) {
   const { learningName, moduleId, ragStatus, learningNotes, userId } = data;
   if (!learningName || !moduleId) throw new Error("missing learning name or module id");
   const query = `
-        INSERT INTO learnings (learning_name, module_id, rag_status, learning_notes, user_id)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO learnings (learning_name, module_id, rag_status, learning_notes, user_id, focused)
+        VALUES ($1, $2, $3, $4, $5, false)
         RETURNING *;
     `;
   const newLearning = [learningName, moduleId, ragStatus, learningNotes, userId];
@@ -58,7 +58,7 @@ export async function createLearning(data) {
 }
 
 export async function updateLearning(learning, id) {
-  const { learningName, description, ragStatus, learningNotes } = learning;
+  const { learningName, description, ragStatus, learningNotes, focused } = learning;
   const setValues = [];
   const queryParams = [];
   let paramCounter = 1;
@@ -84,6 +84,12 @@ export async function updateLearning(learning, id) {
   if (learningNotes !== undefined) {
     setValues.push(`learning_notes = $${paramCounter}`);
     queryParams.push(learningNotes);
+    paramCounter++;
+  }
+
+  if (focused !== undefined) {
+    setValues.push(`focused = $${paramCounter}`);
+    queryParams.push(focused);
     paramCounter++;
   }
 
